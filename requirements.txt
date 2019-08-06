@@ -1,0 +1,6 @@
+beautifulsoup4
+gender-guesser
+ipython
+lxml
+matplotlib
+pandas
