@@ -3,4 +3,7 @@ gender-guesser
 ipython
 lxml
 matplotlib
+numpy
+sklearn
 pandas
+seaborn
