@@ -4,6 +4,9 @@ ipython
 lxml
 matplotlib
 numpy
-sklearn
+nltk
 pandas
+psutil
 seaborn
+sklearn
+tabulate

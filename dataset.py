@@ -4,6 +4,7 @@ import pandas as pd
 
 from topics import TOPICS
 from IPython import embed
+import html
 
 from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -18,13 +19,23 @@ from scipy.sparse import csr_matrix
 from collections import Counter
 from copy import deepcopy
 
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+import seaborn as sns
+
 class Dataset:
 
 
     def __init__(self, dataset='dissertations'):
 
-        self.df = pd.read_csv(Path('data', 'doc_with_outcome_and_abstract_stm.csv'),
-                         encoding='windows-1252')
+
+        try:
+            self.df = pd.read_csv(Path('data', 'combined_data.csv'), encoding='utf-8')
+        except FileNotFoundError:
+            self.create_merged_and_cleaned_dataset()
+            self.df = pd.read_csv(Path('data', 'combined_data.csv'), encoding='utf-8')
+
 
         # earliest and latest year in dataset
         self.start_year = min(self.df.ThesisYear)
@@ -34,82 +45,11 @@ class Dataset:
         # no term filter active. When term filter is active, only documents mentioning the term
         # in the abstract are retained.
         self.term_filter = None
+        self.institution_filter = None
+        self.advisor_gender_filter = None
         self.topic_percentile_score_filters = []
         self.vocabulary_set = None
 
-        # creating the tokenized and lemmatized abstract takes time -> do it when the dataset
-        # first gets opened and store all tokenized abstracts
-        if not 'tokenized_abstract' in self.df.columns:
-            wnl = WordNetLemmatizer()
-            tokenizer = RegexpTokenizer(r'\b\w\w+\b')
-            tokenized_abstracts = []
-            for abstract in self.df['Abstract']:
-                tokenized_abstract = " ".join([wnl.lemmatize(t) for t in tokenizer.tokenize(abstract)])
-                tokenized_abstract = tokenized_abstract.lower()
-                tokenized_abstracts.append(tokenized_abstract)
-            self.df['tokenized_abstract'] = tokenized_abstracts
-            self.df.to_csv(Path('data', 'doc_with_outcome_and_abstract_stm.csv'))
-
-        # 8/14/19: load updated thesis field data from all_data.csv
-        if not 'ThesisProQuestFields' in self.df.columns:
-            fields_df = pd.read_csv(Path('data', 'all_data.csv'),
-                         encoding='ISO-8859-1')
-
-            # all_data.csv and the original csv file have different indexes
-            # -> sort by ID and reindex
-            fields_df = fields_df.sort_values(by='ID')
-            self.df = self.df.sort_values(by='ID')
-            fields_df['IDC'] = fields_df['ID']
-            self.df['IDC'] = self.df['ID']
-            fields_df = fields_df.set_index(keys=['IDC'])
-            self.df = self.df.set_index(keys=['IDC'])
-            assert np.all(self.df['ID'] == fields_df['ID'])
-            for field in ['ThesisProQuestFields', 'ThesisNrcFields',
-                          'Inferred NRC Department(NRC Area: SubField)']:
-                self.df[field] = fields_df[field]
-
-#            self.df['is_history'] = True
-#            self.df['is_history'][self.df['ThesisNrcFields'] == 'Business community'] = False
-#            self.df['is_history'][self.df['ThesisNrcFields'] == 'Home economics'] = False
-
-
-            selector_1 = self.df['ThesisProQuestFields'] != 'Business community'
-            selector_2 = self.df['ThesisProQuestFields'] != 'Home economics'
-            selector_3 = self.df['ThesisProQuestFields'] != 'Business costs'
-            selector_4 = self.df['Abstract'].str.contains(pat='histor', case=False) == True
-            self.df['is_history'] = (selector_1 & selector_2 & selector_3 | selector_4)
-
-            print("Eliminating home economics theses from dataset.")
-            self.df = self.df[self.df['is_history'] == True]
-
-            self.df.reset_index(inplace=True)
-
-
-#            self.print_differences_between_filtered_and_unfiltered_datasets()
-
-
-
-
-
-
-
-    def print_differences_between_filtered_and_unfiltered_datasets(self):
-        """
-        Prints a short analysis between the filtered and unfiltered datasets
-
-        :return:
-        """
-        out_docs = self.df[self.df['is_history'] == False]
-        in_docs = self.df[self.df['is_history'] == True]
-        print(f"Currently filtering out {len(out_docs)} non-historical dissertations.")
-
-        difs = []
-        topics_list = [f'topic.{id}' for id in range(1, 71)]
-        for topic in topics_list:
-            difs.append(abs(in_docs[topic].mean() - out_docs[topic].mean()))
-        for topic_id in np.argsort(np.array(difs))[::-1][:10]:
-            topic_str = topics_list[topic_id]
-            print(f'{topic_str}. Dif: {difs[topic_id]}.')
 
     def __len__(self):
         return len(self.df)
@@ -124,6 +64,10 @@ class Dataset:
     @property
     def name_full(self):
         n = self.name
+        if self.institution_filter:
+            n += f' {self.institution_filter}'
+        if self.advisor_gender_filter:
+            n += f' {self.advisor_gender_filter}'
         if self.topic_percentile_score_filters:
             for f in self.topic_percentile_score_filters:
                 topic_id = int(f['topic'][6:])
@@ -159,6 +103,75 @@ class Dataset:
         c.df = self.df.copy(deep=True)
         return c
 
+    def create_merged_and_cleaned_dataset(self):
+
+        self.df = pd.read_csv(Path('data', 'doc_with_outcome_and_abstract_stm.csv'),
+                              #                              encoding='utf-8')
+                              encoding='windows-1252')
+
+        print("creating and storing a merged, cleaned dataset at combined_data.csv")
+
+        # creating the tokenized and lemmatized abstract takes time -> do it when the dataset
+        # first gets opened and store all tokenized abstracts
+        print("tokenizing abstracts")
+        wnl = WordNetLemmatizer()
+        tokenizer = RegexpTokenizer(r'\b\w\w+\b')
+        tokenized_abstracts = []
+        for abstract in self.df['Abstract']:
+            # abstract contains html entities like &eacute -> remove
+            abstract = html.unescape(abstract)
+            # I have no idea what encoding proquest / the csv uses but apostrophes are parsed very
+            # weirdly -> replace
+            abstract = abstract.replace('?óé?¿é?ó', "'")
+            tokenized_abstract = " ".join([wnl.lemmatize(t) for t in tokenizer.tokenize(abstract)])
+            tokenized_abstract = tokenized_abstract.lower()
+            tokenized_abstracts.append(tokenized_abstract)
+        self.df['tokenized_abstract'] = tokenized_abstracts
+
+        # 8/14/19: load updated thesis field data from all_data.csv
+        fields_df = pd.read_csv(Path('data', 'all_data.csv'), encoding='ISO-8859-1')
+
+        # all_data.csv and the original csv file have different indexes
+        # -> sort by ID and reindex
+        fields_df = fields_df.sort_values(by='ID')
+        self.df = self.df.sort_values(by='ID')
+        fields_df['IDC'] = fields_df['ID']
+        self.df['IDC'] = self.df['ID']
+        fields_df = fields_df.set_index(keys=['IDC'])
+        self.df = self.df.set_index(keys=['IDC'])
+        assert np.all(self.df['ID'] == fields_df['ID'])
+        for field in ['ThesisProQuestFields', 'ThesisNrcFields',
+                      'Inferred NRC Department(NRC Area: SubField)']:
+            self.df[field] = fields_df[field]
+
+        # selector_1 = self.df['ThesisProQuestFields'] != 'Business community'
+        # selector_2 = self.df['ThesisProQuestFields'] != 'Home economics'
+        # selector_3 = self.df['ThesisProQuestFields'] != 'Business costs'
+        # selector_4 = self.df['Abstract'].str.contains(pat='histor', case=False) == True
+        # self.df['home_econ'] = (selector_1 & selector_2 & selector_3 | selector_4)
+
+        selector_1 = self.df['ThesisProQuestFields'].str.contains('histor', case=False) == True
+        selector_2 = self.df['Abstract'].str.contains('histor', case=False) == True
+        selector_3 = self.df['ThesisProQuestFields'].str.contains('Middle Ages') == True
+        selector_4 = self.df['ThesisProQuestFields'].str.contains('Ancient civilizations') == True
+        self.df['is_history'] = (selector_1 | selector_2 | selector_3 | selector_4)
+
+        # plot differences between historical and non-historical data
+        hist = self.df[self.df['is_history'] == True]
+        non_hist = self.df[self.df['is_history'] == False]
+        print(f'Historical dissertations: {len(hist)}. Non-historical dissertations: {len(non_hist)}')
+        difs = {}
+        for topic_id in range(1, 71):
+            dif = abs(np.mean(hist[f'topic.{topic_id}']) - np.mean(non_hist[f'topic.{topic_id}']))
+            difs[topic_id] = dif
+        sorted_topic_ids = [t[0] for t in sorted(difs.items(), key=lambda x: x[1], reverse=True)]
+        #        self.grid_plot_topics(sorted_topic_ids, hue='is_history', store_as_filename='history_filter.png')
+
+        print("Eliminating home economics theses from dataset.")
+        self.df = self.df[self.df['is_history'] == True]
+        self.df.reset_index(inplace=True)
+
+        self.df.to_csv(Path('data', 'combined_data.csv'))
 
     def topic_percentile_score_filter(self, topic, min_percentile_score=0, max_percentile_score=100):
         """
@@ -202,7 +215,7 @@ class Dataset:
 
 
     def filter(self, start_year=None, end_year=None, author_gender=None,
-               term_filter=None):
+               term_filter=None, institution_filter=None, advisor_gender=None):
         """
 
         :param start_year:    (int between 1976 and 2015)  earliest year to include
@@ -213,23 +226,40 @@ class Dataset:
 
         >>> d = Dataset()
         >>> len(d)
-        23246
+        21634
 
         # filter for years (inclusive) between 1985 and 1995
         >>> d.filter(start_year=1985, end_year=1995)
         >>> len(d)
-        6978
+        6532
 
         # filter by author gender
         >>> d.filter(author_gender='male')
         >>> len(d)
-        4195
+        4055
+
+        # filter by advisor gender
+        >>> d.filter(advisor_gender='female')
+        >>> len(d)
+        220
+
 
         # filter by term or regex
         # regex example: r'\bgender\b'
         >>> d.filter(term_filter='gender')
         >>> len(d)
-        136
+        13
+
+        # filter by institution
+        >>> d = Dataset()
+        >>> d.filter(institution_filter='harvard')
+        >>> len(d)
+        778
+
+        >>> d = Dataset()
+        >>> d.filter(institution_filter='not_harvard')
+        >>> len(d)
+        20856
 
         """
 
@@ -247,12 +277,102 @@ class Dataset:
             df = df[df.AdviseeGender == author_gender]
             self.author_gender = author_gender
 
+        if advisor_gender:
+            if not advisor_gender in ['male', 'female', 'unknown']:
+                raise ValueError(f'Author gender needs to be male or female but not {advisor_gender}')
+            df = df[df.AdvisorGender == advisor_gender]
+            self.advisor_gender = advisor_gender
+
+
         if term_filter:
             df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == True]
             self.term_filter = term_filter
 
+        if institution_filter:
+            if institution_filter.startswith('not_'):
+                institution_filter = institution_filter[4:]
+                df = df[df['ThesisInstitution'].str.contains(institution_filter, case=False) == False]
+            else:
+                df = df[df['ThesisInstitution'].str.contains(institution_filter, case=False) == True]
+            self.institution_filter = institution_filter
+
         self.df = df
         return self
+
+
+
+
+
+
+
+    def grid_plot_topics(self, sorted_topic_ids, hue,
+                         y_max=None, df=None, show_plot=True, store_as_filename=None):
+
+        """
+        Can be used to plot a 10x7 grid of all topics
+
+        :param df:
+        :param sorted_topic_ids: list(int)
+        :param hue:
+        :param y_max:
+        :return:
+
+        # show topic distribution from most female to most male
+        >>> d = Dataset()
+        >>> male = d.copy().filter(author_gender='male')
+        >>> female = d.copy().filter(author_gender='female')
+        >>> difs = {}
+        >>> for topic_id in range(1, 71):
+        ...     dif = np.mean(female.df[f'topic.{topic_id}']) - np.mean(male.df[f'topic.{topic_id}'])
+        ...     difs[topic_id] = dif
+        >>> sorted_topic_ids =  [t[0] for t in sorted(difs.items(), key = lambda x: x[1], reverse=True)]
+        >>> d.grid_plot_topics(sorted_topic_ids, hue='AdviseeGender')
+
+        """
+
+        if not df:
+            df = self.df
+
+        fig = plt.figure(figsize=(50,50))
+        gs = gridspec.GridSpec(nrows=10, ncols=7, figure=fig)
+
+        for ax_id, topic_id in enumerate(sorted_topic_ids):
+            print(ax_id, topic_id)
+            row = ax_id // 7
+            col = ax_id % 7
+            ax = fig.add_subplot(gs[row, col])
+            ax = sns.lineplot(x='ThesisYear', y=f'topic.{topic_id}', hue=hue,
+                              data=df, ax=ax)
+            ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
+            ax.set_xlim(1980, 2015)
+            if y_max:
+                ax.set_ylim(0, y_max)
+
+        if show_plot:
+            plt.show()
+        if store_as_filename:
+            fig.savefig(Path('data', 'plots', store_as_filename))
+
+
+
+
+    def print_differences_between_filtered_and_unfiltered_datasets(self):
+        """
+        Prints a short analysis between the filtered and unfiltered datasets
+
+        :return:
+        """
+        out_docs = self.df[self.df['is_history'] == False]
+        in_docs = self.df[self.df['is_history'] == True]
+        print(f"Currently filtering out {len(out_docs)} non-historical dissertations.")
+
+        difs = []
+        topics_list = [f'topic.{id}' for id in range(1, 71)]
+        for topic in topics_list:
+            difs.append(abs(in_docs[topic].mean() - out_docs[topic].mean()))
+        for topic_id in np.argsort(np.array(difs))[::-1][:10]:
+            topic_str = topics_list[topic_id]
+            print(f'{topic_str}. Dif: {difs[topic_id]}.')
 
     def get_vocabulary(self, exclude_stopwords=True, max_terms=None, min_appearances=None):
         """
@@ -347,13 +467,129 @@ class Dataset:
         else:
             return dtm
 
+def plot_adviser_gender():
 
+    d = Dataset()
+    d.filter(start_year=1980, end_year=2015)
+
+    fig = plt.figure(figsize=(50, 50))
+    gs = gridspec.GridSpec(nrows=10, ncols=7, figure=fig)
+
+    for ax_id, topic_id in enumerate(range(1, 71)):
+        print(ax_id)
+
+        row = ax_id // 7
+        col = ax_id % 7
+        ax = fig.add_subplot(gs[row, col])
+
+        male = np.zeros(2015-1980+1)
+        female = np.zeros(2015 - 1980 + 1)
+        unknown = np.zeros(2015 - 1980 + 1)
+
+        male_a = np.zeros(2015 - 1980 + 1)
+        female_a = np.zeros(2015 - 1980 + 1)
+
+
+        top = d.copy()
+        top.topic_percentile_score_filter(topic_id, min_percentile_score=80)
+        for _, row in top.df.iterrows():
+            year = row['ThesisYear']
+            advisor_gender = row['AdvisorGender']
+            advisee_gender = row['AdviseeGender']
+
+            if row['AdvisorGender'] == 'female':
+                female[row['ThesisYear'] - 1980] += 1
+            elif row['AdvisorGender'] == 'male':
+                male[row['ThesisYear'] - 1980] += 1
+            else:
+                unknown[row['ThesisYear'] - 1980] += 1
+
+            if advisee_gender == 'female':
+                female_a[year - 1980] += 1
+            elif advisee_gender == 'male':
+                male_a[year - 1980] += 1
+
+        # sns.lineplot(x=range(1980, 2016), y=unknown, ax=ax, label='unknown')
+        # sns.lineplot(x=range(1980, 2016), y=male, ax=ax, label='male')
+        # sns.lineplot(x=range(1980, 2016), y=female, ax=ax, label='female')
+        # sns.lineplot(x=range(1980, 2016), y=female_a, ax=ax, label='female_a')
+        # sns.lineplot(x=range(1980, 2016), y=male_a, ax=ax, label='male_a')
+        sns.lineplot(x=range(1980, 2016), y=female_a / (female_a+male_a), label='Advisee')
+        sns.lineplot(x=range(1980, 2016), y=female / (female+male), label='Advisor')
+
+
+        ax.legend()
+        ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
+
+    plt.show()
+
+    embed()
+
+
+
+
+
+
+
+    def grid_plot_topics(self, sorted_topic_ids, hue,
+                         y_max=None, df=None, show_plot=True, store_as_filename=None):
+
+        """
+        Can be used to plot a 10x7 grid of all topics
+
+        :param df:
+        :param sorted_topic_ids: list(int)
+        :param hue:
+        :param y_max:
+        :return:
+
+        # show topic distribution from most female to most male
+        >>> d = Dataset()
+        >>> male = d.copy().filter(author_gender='male')
+        >>> female = d.copy().filter(author_gender='female')
+        >>> difs = {}
+        >>> for topic_id in range(1, 71):
+        ...     dif = np.mean(female.df[f'topic.{topic_id}']) - np.mean(male.df[f'topic.{topic_id}'])
+        ...     difs[topic_id] = dif
+        >>> sorted_topic_ids =  [t[0] for t in sorted(difs.items(), key = lambda x: x[1], reverse=True)]
+        >>> d.grid_plot_topics(sorted_topic_ids, hue='AdviseeGender')
+
+        """
+
+        if not df:
+            df = self.df
+
+        fig = plt.figure(figsize=(50,50))
+        gs = gridspec.GridSpec(nrows=10, ncols=7, figure=fig)
+
+        for ax_id, topic_id in enumerate(sorted_topic_ids):
+            print(ax_id, topic_id)
+            row = ax_id // 7
+            col = ax_id % 7
+            ax = fig.add_subplot(gs[row, col])
+            ax = sns.lineplot(x='ThesisYear', y=f'topic.{topic_id}', hue=hue,
+                              data=df, ax=ax)
+            ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
+            ax.set_xlim(1980, 2015)
+            if y_max:
+                ax.set_ylim(0, y_max)
+
+        if show_plot:
+            plt.show()
+        if store_as_filename:
+            fig.savefig(Path('data', 'plots', store_as_filename))
 
 
 
 if __name__ == '__main__':
     d = Dataset('dissertations')
-    dtm = d.get_document_term_matrix(d.get_vocabulary(max_terms=10000), store_in_df=True)
+    d.filter(institution_filter='harvard')
+
+
+    plot_adviser_gender()
+
+
+
 
     embed()
 
