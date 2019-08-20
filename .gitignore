@@ -15,8 +15,6 @@ data/ngram1_vocabulary_dict\.pickle
 
 density_plot\.py
 
-divergence_analysis\.ipynb
-
 gender_data\.csv
 
 plot_gender_development\.py\.lprof
