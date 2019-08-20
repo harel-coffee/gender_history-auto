@@ -50,7 +50,7 @@ def load_ngrams_of_article(filename, ngrams):
     """
 
     if not ngrams in [1,2,3]:
-        raise ValueError(f'Ngrams are only available for 1,2, or 3 but not {ngrams}.')
+        raise ValueError(f'Ngrams are only available for 1')
 
     ngram_counter = Counter()
     with open(Path('data', f'ngram{ngrams}', f'{filename}-ngram{ngrams}.txt')) as f:

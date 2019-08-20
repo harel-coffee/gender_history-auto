@@ -1,6 +1,7 @@
 beautifulsoup4
 gender-guesser
 ipython
+jupyter
 lxml
 matplotlib
 numpy

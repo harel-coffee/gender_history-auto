@@ -1,4 +1,7 @@
 
+import random
+random.seed(0)
+
 from pathlib import Path
 import pandas as pd
 
@@ -6,7 +9,6 @@ from topics import TOPICS
 from IPython import embed
 import html
 
-from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 import numpy as np
@@ -23,6 +25,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
 import seaborn as sns
+
 
 class Dataset:
 
@@ -207,6 +210,7 @@ class Dataset:
             self.df[f'percentile_score_{topic}'] = self.df[topic].rank(pct=True) * 100 // 10 * 10
         self.df = self.df[self.df[f'percentile_score_{topic}'] >= min_percentile_score]
         self.df = self.df[self.df[f'percentile_score_{topic}'] <= max_percentile_score]
+        self.df = self.df.reset_index()
         self.topic_percentile_score_filters.append({
             'topic': topic,
             'min_percentile_score': min_percentile_score,
@@ -296,7 +300,7 @@ class Dataset:
                 df = df[df['ThesisInstitution'].str.contains(institution_filter, case=False) == True]
             self.institution_filter = institution_filter
 
-        self.df = df
+        self.df = df.reset_index()
         return self
 
 
@@ -374,7 +378,8 @@ class Dataset:
             topic_str = topics_list[topic_id]
             print(f'{topic_str}. Dif: {difs[topic_id]}.')
 
-    def get_vocabulary(self, exclude_stopwords=True, max_terms=None, min_appearances=None):
+    def get_vocabulary(self, exclude_stopwords=True, max_terms=None, min_appearances=None,
+                       include_2grams=False):
         """
         Returns a list of all terms that appear in the tokenized_abstract column
 
@@ -393,21 +398,54 @@ class Dataset:
         1000
 
         """
-        vocabulary = Counter()
-        for abstract in self.df['tokenized_abstract']:
-            for word in abstract.split():
-                vocabulary[word] += 1
 
-        if exclude_stopwords:
-            for term in stop_words.ENGLISH_STOP_WORDS.union({'wa', 'ha'}):
-                try:
-                    del vocabulary[term]
-                except KeyError:
-                    pass
-
-        vocab_list = []
         if not max_terms:
             max_terms = 1000000
+
+        vocabulary = Counter()
+        for abstract in self.df['tokenized_abstract']:
+            a = abstract.split()
+            for idx, word in enumerate(a):
+                vocabulary[word] += 1
+                if include_2grams:
+                    try:
+                        gram = '{} {}'.format(word, a[idx+1])
+                        vocabulary[gram] += 1
+                    except IndexError:
+                        pass
+
+
+
+        if exclude_stopwords:
+            clean_vocabulary = Counter()
+            stopwords = stop_words.ENGLISH_STOP_WORDS.union({'wa', 'ha',
+                                                     'óé', 'dotbelow', 'cyrillic'})
+
+            for ngram in vocabulary:
+                valid = True
+                for term in ngram.split():
+                    if term in stopwords:
+                        valid = False
+                if valid:
+                    clean_vocabulary[ngram] = vocabulary[ngram]
+            vocabulary = clean_vocabulary
+
+            # for term in :
+            #     try:
+            #         del vocabulary[term]
+            #     except KeyError:
+            #         pass
+            #
+            #
+            #     # TODO: fix this ugly implementation
+            #     for term2 in stop_words.ENGLISH_STOP_WORDS.union({'wa', 'ha', 'óé', 'dotbelow'}):
+            #         try:
+            #             del vocabulary['{} {}'.format(term, term2)]
+            #         except KeyError:
+            #             pass
+
+
+        vocab_list = []
         for word, count in vocabulary.most_common(max_terms):
             if min_appearances and count < min_appearances:
                 continue
@@ -467,6 +505,128 @@ class Dataset:
         else:
             return dtm
 
+    def print_dissertations_mentioning_terms_or_topics(self, terms, no_dissertations=5):
+        """
+        print dissertations that mention specific terms or topics,
+        can be weighted or unweighted
+
+        :param terms: list or dict
+        :param no_dissertations: number of dissertations to print, default: 5
+
+        >>> d = Dataset()
+        >>> terms = ['woman', 'female', 'women', 'feminist', 'gender']
+        >>> d.print_dissertations_mentioning_terms_or_topics(terms=terms, no_dissertations=2)
+        2014 Author: female  Advisor: female  Authors, Activists, Apostles: Women's Leadership in the New Christian Right
+        2006 Author: female  Advisor: male    Women on the march: Gender and anti-fascism in American communism, 1935--1939
+
+        # by default, each term has weight=1. However, terms can also be a dict of term weights
+        >>> terms = {'nurse': 1, 'drugs': 10}
+        >>> d.print_dissertations_mentioning_terms_or_topics(terms=terms, no_dissertations=2)
+        1997 Author: female  Advisor: male    Regulating beauty: Cosmetics in American culture from the 1906 Pure Food and Drugs Act to the 1938 Food, Drug and Cosmetic Act
+        1994 Author: female  Advisor: female  G.I. nurses at war: Gender and professionalization in the Army Nurse Corps during World War II
+
+        # topics also work:
+        >>> terms = ['topic.28']
+        >>> d.print_dissertations_mentioning_terms_or_topics(terms=terms, no_dissertations=2)
+        1989 Author: female  Advisor: unknown Day nurseries and wage-earning mothers in the United States, 1890-1930
+        1988 Author: female  Advisor: female  "Women adrift" and "urban pioneers": Self-supporting working women in America, 1880-1930
+
+        >>> terms = ['gay', 'homosexual', 'homosexuality', 'masculinity']
+        >>> d.print_dissertations_mentioning_terms_or_topics(terms=terms, no_dissertations=20)
+
+        """
+
+        # if input is a list, give each term weight 1
+        if isinstance(terms, list):
+            terms = {t: 1 for t in terms}
+
+        if list(terms.keys())[0].startswith('topic.'):
+            self.df['dissertation_weights'] = 0
+            for topic, weight in terms.items():
+                self.df['dissertation_weights'] += weight * self.df[topic]
+            for _, row in self.df.sort_values(by='dissertation_weights', ascending=False)[:no_dissertations].iterrows():
+                print('{} Author: {:7s} Advisor: {:7s} {}'.format(
+                    row['ThesisYear'], row['AdviseeGender'],
+                    row['AdvisorGender'], row['ThesisTitle']
+                ))
+        else:
+            dtm = self.get_document_term_matrix(vocabulary=terms.keys())
+            weights = np.array(list(terms.values()))
+            scores = dtm * weights
+
+            for i in scores.argsort()[::-1][:no_dissertations]:
+
+
+                print('{} Author: {:7s} Advisor: {:7s} {}'.format(
+                    self.df['ThesisYear'][i], self.df['AdviseeGender'][i],
+                    self.df['AdvisorGender'][i], self.df['ThesisTitle'][i]
+                ))
+
+    def print_examples_of_term_in_context(self, term, no_examples=10):
+        """
+        Finds examples of a term in the abstracts and prints them
+
+        >>> d = Dataset()
+        >>> d.print_examples_of_term_in_context('hegel', 2)
+        1987 PHILIP SCHAFF (1819-1893): PORTRAIT OF AN IMMIGRANT THEOLOGIAN         heology that accommodated such figure a hegel and schleiermacher tolerated liberal position yet rema
+        1995 State, society, and the market: Karl Sigmund Altenstein and the langua n idealism first by fichte and later by hegel thus the importance of his relationship to fichte and
+
+        :param term:
+        :return:
+        """
+
+        df = self.df[self.df['tokenized_abstract'].str.contains(pat=r'\b{}\b'.format(term))]
+        if len(df) == 0:
+            print(f'No dissertation abstracts mention {term}.')
+            return
+
+        while True:
+            try:
+                samples = df.sample(no_examples)
+                break
+            except ValueError:
+                no_examples -= 1
+
+        print(f'\n Found {len(df)} examples of {term}.')
+        for  _, row in samples.iterrows():
+
+            pos = row['tokenized_abstract'].find(term)
+            if pos > -1:
+                text = row['tokenized_abstract'][max(0, pos-40):pos+60]
+                print('{} {:7s} {:70s} {}'.format(
+                    row['ThesisYear'], row['AdviseeGender'], row['ThesisTitle'][:70], text,
+                ))
+
+
+    def normalize_dataset_by_5year_interval(self, no_docs_per_5year_interval=5000):
+
+#        dfs = {}
+
+        docs = []
+
+        for years_range in [(1976, 1984), (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
+                            (2005, 2009), (2010, 2015)]:
+            y1, y2 = years_range
+            if self.start_year >= y2 or self.end_year < y2:
+                continue
+#            dfs[years_range] = self.df[(self.df['ThesisYear'] >= y1) & (self.df['ThesisYear'] <= y2)]
+            df = self.df[(self.df['ThesisYear'] >= y1) & (self.df['ThesisYear'] <= y2)]
+            df = df.to_dict('records')
+
+            if len(df) == 0:
+                raise IndexError(f'Cannot generate dataset of {no_docs_per_5year_interval} docs for {y1}-{y2} for'
+                      f' {self.name_full} with 0 docs.')
+            if len(df) < 50:
+                print(f'WARNING. Generating dataset of {no_docs_per_5year_interval} docs for {y1}-{y2} for'
+                      f' {self.name} with only {len(df)} docs.')
+
+            for i in range(no_docs_per_5year_interval):
+                docs.append(random.sample(df, 1)[0])
+        self.df = pd.DataFrame(docs)
+
+
+
+
 def plot_adviser_gender():
 
     d = Dataset()
@@ -523,7 +683,6 @@ def plot_adviser_gender():
 
     plt.show()
 
-    embed()
 
 
 
@@ -581,6 +740,9 @@ def plot_adviser_gender():
 
 
 
+
+
+
 if __name__ == '__main__':
     d = Dataset('dissertations')
     d.filter(institution_filter='harvard')
@@ -588,8 +750,4 @@ if __name__ == '__main__':
 
     plot_adviser_gender()
 
-
-
-
-    embed()
 

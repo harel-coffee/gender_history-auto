@@ -96,7 +96,7 @@ def parse_article_metadata_from_xml(file_path):
     # Date
     article['year'] = int(article_meta.select('pub-date')[0].year.text)
     # TODO: Parse articles before 1970
-    if article['year'] < 1970:
+    if article['year'] < 1960:
         print("skipping, year: ", article['year'])
         return
 
@@ -206,13 +206,25 @@ def parse_contributor(contrib_xml):
     given_name = " ".join([x.capitalize() for x in given_name.split()])
     last_name = last_name.capitalize()
 
+    print(contrib_xml)
+
     # run gender guesser on the "main name", usually the first name but not always
     # e.g. for "H. Nelson" we want to run it on "Nelson" not "H."
-    main_name = given_name.split()[0]
-    if main_name[1] == '.' and len(given_name.split()) > 1:
-        main_name = given_name.split()[1]
-    gender = GENDER_GUESSER.get_gender(main_name, 'usa')
-    print(given_name, main_name, gender)
+    try:
+        main_name = given_name.split()[0]
+        if len(given_name.split()) > 1:
+            if len(main_name) == 1 or (len(main_name) == 2 and main_name[1] == '.'):
+                main_name = given_name.split()[1]
+        gender = GENDER_GUESSER.get_gender(main_name, 'usa')
+        print(given_name, main_name, gender)
+    except:
+
+        if last_name == 'Hoh-cheung':
+            last_name = 'Mui'
+            given_name = 'Hoh-Cheung'
+            gender = 'male'
+        else:
+            embed()
 
     return last_name, given_name, gender
 

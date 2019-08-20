@@ -73,10 +73,9 @@ def plot_gender_development_over_time(
     min_freq_total = 1
     max_freq_total = 0
 
-    print(selected_terms_or_topics)
 
-    for idx, year in enumerate(range(1985, 2011)):
-        time_slice = df[(df.ThesisYear >= year - 5) & (df.ThesisYear <= year + 5)]
+    for idx, year in enumerate(range(1982, 2013)):
+        time_slice = df[(df.ThesisYear >= year - 2) & (df.ThesisYear <= year + 2)]
         time_slice_female = time_slice[time_slice.AdviseeGender == 'female']
         time_slice_male = time_slice[time_slice.AdviseeGender == 'male']
 
@@ -212,9 +211,7 @@ if __name__ == '__main__':
     vocab = d.get_vocabulary(max_terms=200)
 
     plot_gender_development_over_time(
-        no_terms_or_topics_to_show=8,
-        data='terms_of_topic',
-        display_selector='most_divergent',
-        selected_terms_or_topics=28,
-        show_plot=True,
-        store_to_filename=None)
+        no_terms_or_topics_to_show=5,
+        data='topics',
+        display_selector='most_variable',
+        selected_terms_or_topics=28)

@@ -209,7 +209,7 @@ class StatisticalAnalysis:
         #     for term in self.vocabulary: results[term] = ''
         #     return results
 
-        print("starting cor coeff calc")
+        # print("starting cor coeff calc")
 
 
         tf_transformer = TfidfTransformer(use_idf=False)
@@ -277,7 +277,6 @@ class StatisticalAnalysis:
             print(correlation_results['plaintiff'])
         except:
             pass
-        print(len(correlation_results))
 
         return correlation_results
 
