@@ -23,7 +23,8 @@ def plot_gender_development_over_time(
         display_selector='most_frequent',
         selected_terms_or_topics=None,
         show_plot=True,
-        store_to_filename=None):
+        store_to_filename=None,
+        title=None):
 
     """
 
@@ -40,6 +41,8 @@ def plot_gender_development_over_time(
         if not isinstance(selected_terms_or_topics, int):
             raise ValueError("When displaying 'terms_of_topic', please pass a topic_id for param"
                              "selected_terms_or_topics")
+
+
 
     # 0: find terms or topics to display
     d = Dataset()
@@ -63,6 +66,14 @@ def plot_gender_development_over_time(
         title_name = f'terms of topic {topic_id}'
     else:
         raise ValueError('"data" has to be "terms" "topics" or "terms_of_topic"')
+
+    if not title:
+        if display_selector == 'most_frequent':
+            title = f'Most frequent {title_name} for female (top) and male authors (bottom)'
+        elif display_selector == 'most_divergent':
+            title = f'Most divergent {title_name} for female (top) and male authors (bottom)'
+        else:
+            title = f'Most variable {title_name} for female (top) and male authors (bottom)'
 
     df = d.df
 
@@ -163,23 +174,22 @@ def plot_gender_development_over_time(
                    color=color)
         legends.append(mpatches.Patch(color=color, label=legend))
 
+
+
     # 3: Plot
     if display_selector == 'most_frequent':
-        ax.set_title(f'Most frequent {title_name} for female (top) and male authors (bottom)',
-                     weight='bold', fontsize=18)
+        ax.set_title(title, weight='bold', fontsize=18)
         sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['mean_freq_total'], reverse=True)
         for t, t_data in sorted_items[:no_terms_or_topics_to_show]:
             draw_line(t, t_data, df)
     elif display_selector == 'most_divergent':
-        ax.set_title(f'Most divergent {title_name} for female (top) and male authors (bottom)',
-                     weight='bold', fontsize=18)
+        ax.set_title(title, weight='bold', fontsize=18)
         sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['mean_freq_score'], reverse=True)
         no_disp = no_terms_or_topics_to_show // 2
         for t, t_data in sorted_items[:no_disp] + sorted_items[::-1][:no_disp]:
             draw_line(t, t_data, df)
     elif display_selector == 'most_variable':
-        ax.set_title(f'Most variable {title_name} for female (top) and male authors (bottom)',
-                     weight='bold', fontsize=18)
+        ax.set_title(title, weight='bold', fontsize=18)
         # sort by mean_freq_range second to preserve colors between plots
         sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['freq_score_range'], reverse=True)
         sorted_items = sorted_items[:no_terms_or_topics_to_show]
@@ -191,7 +201,6 @@ def plot_gender_development_over_time(
         raise ValueError('display_selector has to be most_frequent, most_variable, or most_divergent')
 
     ax.legend(handles=legends, loc=4)
-    print(min_freq_total, max_freq_total)
 
     if show_plot:
         plt.show()
