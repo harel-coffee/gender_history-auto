@@ -558,30 +558,25 @@ if __name__ == '__main__':
 #                         c1_name='female advisor', c2_name='male advisor')
 
     # Loads the entire dataset of dissertations
-    d = Dataset()
-    d.topic_percentile_score_filter(24, min_percentile_score=80)
-#    d.filter(author_gender='male', start_year=2000, end_year=2015)
-#    d.filter(term_filter='race')
 
-#
+#    d.topic_percentile_score_filter(24, min_percentile_score=80)
+#    d.filter(author_gender='male', start_year=2000, end_year=2015)
+#    d.filter()
+    d = Dataset()
+    d.filter(start_year=1980, end_year=2004)
+
     # Create two sub-datasets, one for female authors and one for male authors
-    c1 = d.copy().filter(author_gender='female')
-    c2 = d.copy().filter(author_gender='male')
+    c1 = d.copy().filter(has_descendants=True)
+    c2 = d.copy().filter(has_descendants=False)
 
     # divergence_analysis(d, c1, c2, c1_name='female author', c2_name='male author',
     #                     topics_or_terms='terms', sort_by='frequency_score',
     #                     number_of_terms_to_print=80)
 
-
-
     divergence_analysis(d, c1, c2, topics_or_terms='topics',
-                        c1_name='female', c2_name='male', sort_by='dunning')
+                        c1_name='has descendants', c2_name='no descendants', sort_by='dunning')
 
-    c1.print_dissertations_mentioning_terms_or_topics()
 
-    # r = d.copy().filter(term_filter='gender')
-    # divergence_analysis(d, d, r, topics_or_terms='topics',
-    #                     c1_name='not race', c2_name='race')
 
 
     # divergence_analysis(d, c1, c2)

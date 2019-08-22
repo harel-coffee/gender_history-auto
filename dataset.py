@@ -50,6 +50,7 @@ class Dataset:
         self.term_filter = None
         self.institution_filter = None
         self.advisor_gender_filter = None
+        self.descendants_filter = None
         self.topic_percentile_score_filters = []
         self.vocabulary_set = None
 
@@ -188,18 +189,25 @@ class Dataset:
 
         >>> d = Dataset()
         >>> len(d)
-        23246
+        21634
 
         # select dissertations that score in the top decile (strongest) for the gender topic (28)
         >>> d.topic_percentile_score_filter(topic=28, min_percentile_score=90)
         >>> print(len(d), min(d.df['percentile_score_topic.28']))
-        2325 90.0
+        2164 90.0
 
         # select 50th-70th decile
         >>> d2 = Dataset()
         >>> d2.topic_percentile_score_filter('topic.28', min_percentile_score=50, max_percentile_score=70)
         >>> len(d2)
-        6974
+        6491
+
+        # filters can be combined
+        >>> d3 = Dataset()
+        >>> d3.topic_percentile_score_filter(14, min_percentile_score=80)
+        >>> d3.topic_percentile_score_filter(28, min_percentile_score=80)
+        >>> len(d3)
+        866
 
 
         """
@@ -219,7 +227,8 @@ class Dataset:
 
 
     def filter(self, start_year=None, end_year=None, author_gender=None,
-               term_filter=None, institution_filter=None, advisor_gender=None):
+               term_filter=None, institution_filter=None, advisor_gender=None,
+               has_descendants=None):
         """
 
         :param start_year:    (int between 1976 and 2015)  earliest year to include
@@ -265,6 +274,11 @@ class Dataset:
         >>> len(d)
         20856
 
+        >>> d = Dataset()
+        >>> d.filter(has_descendants=True)
+        >>> len(d)
+        1583
+
         """
 
         df = self.df
@@ -289,7 +303,11 @@ class Dataset:
 
 
         if term_filter:
-            df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == True]
+            if term_filter.startswith('not_'):
+                term_filter = term_filter[4:]
+                df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == False]
+            else:
+                df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == True]
             self.term_filter = term_filter
 
         if institution_filter:
@@ -300,13 +318,16 @@ class Dataset:
                 df = df[df['ThesisInstitution'].str.contains(institution_filter, case=False) == True]
             self.institution_filter = institution_filter
 
+        if has_descendants == True:
+            df = df[df.AnyDescendants == 1]
+            self.descendants_filter = True
+
+        if has_descendants == False:
+            df = df[df.AnyDescendants == 0]
+            self.descendants_filter = False
+
         self.df = df.reset_index()
         return self
-
-
-
-
-
 
 
     def grid_plot_topics(self, sorted_topic_ids, hue,
