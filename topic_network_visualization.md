@@ -28,6 +28,9 @@ we'll get a lot of unattached floating topics)
 - Keep the second strongest link if it has a correlation > 0.1
 - Keep all links with correlations > 0.2
 
+Again, these criteria are ad-hoc and chosen to make the graph look nice--they don't capture all
+relevant correlations. 
+
 ## Graph
 The color of the node indicates how gendered it is. Green -> female, brown -> male. Light gray (e.g. 
 development) indicates neutral topics.
