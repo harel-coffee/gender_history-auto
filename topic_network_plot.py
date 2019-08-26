@@ -1,6 +1,5 @@
 import networkx as nx
 from stats import StatisticalAnalysis
-from sklearn.decomposition import PCA
 from dataset import Dataset
 from topics import TOPICS
 import numpy as np
@@ -11,7 +10,13 @@ import matplotlib.pyplot as plt
 from IPython import embed
 
 
-def plot_topic_network():
+def generate_topic_network():
+    """
+    Generates a gexf network graph to be visualized with gephi
+
+
+    :return:
+    """
 
 
 
@@ -32,11 +37,12 @@ def plot_topic_network():
     G = nx.Graph()
     for i in range(70):
         topic_id = i + 1
+
+        # skip all the generic topics (this will be repeated a number of times. It's bad coding
+        # style, I know
         if topic_id in [53, 62, 69, 70]:
             continue
         topic = TOPICS[topic_id]['name']
-        if topic_id == 26:
-            print(topic, topic_id)
         G.add_node(
             topic,
             id=topic_id,
@@ -52,7 +58,6 @@ def plot_topic_network():
             continue
 
         topic = TOPICS[topic_id]['name']
-        # top 3 correlated topics (i, not topic_id)
 
         no_added = 0
         for correlated_i in np.array(correlated_terms[i])[0].argsort()[::-1][1:20]:
@@ -62,12 +67,12 @@ def plot_topic_network():
 
             topic2 = TOPICS[correlated_i + 1]['name']
             cor = correlated_terms[i, correlated_i]
-            if cor > 0.07 or (no_added == 1 and cor > 0.07) or no_added == 0:
+            if cor > 0.20 or (no_added == 1 and cor > 0.10) or no_added == 0:
                 G.add_edge(topic, topic2, weight=cor )
                 no_added += 1
 
-    nx.write_gexf(G, Path('data', 'networks', 'topics2.gexf'))
+    nx.write_gexf(G, Path('data', 'networks', 'topics_dense.gexf'))
 
 
 if __name__ == '__main__':
-    plot_topic_network()
+    generate_topic_network()

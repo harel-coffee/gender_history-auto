@@ -24,3 +24,5 @@ theses\.py
 data/metadata\.db
 .DS_Store
 .ipynb_checkpoints/divergence_analysis-checkpoint.ipynb
+
+\.ipynb_checkpoints/
