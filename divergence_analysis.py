@@ -47,7 +47,8 @@ def divergence_analysis(master_dataset:Dataset,
     s = StatisticalAnalysis(master_dtm, c1_dtm, c2_dtm, vocabulary)
     dunning, _ = s.dunning_log_likelihood()
     frequency_score, _ = s.frequency_score()
-#    correlated_terms = s.correlation_coefficient()
+    mwr, _ = s.mann_whitney_rho()
+    correlated_terms = s.correlation_coefficient()
 
     total_terms_all = master_dtm.sum()
     total_terms_c1 = c1_dtm.sum()
@@ -82,7 +83,9 @@ def divergence_analysis(master_dataset:Dataset,
             'frequency_total': count_all / total_terms_all,
             f'frequency {c1_name}': count_c1 / total_terms_c1,
             f'frequency {c2_name}': count_c2 / total_terms_c2,
-#            'correlated_terms': correlated_terms[vocabulary[term_idx]]
+
+            'mwr': mwr[term_idx],
+            'correlated_terms': correlated_terms[vocabulary[term_idx]]
         })
     df = pd.DataFrame(data)
 

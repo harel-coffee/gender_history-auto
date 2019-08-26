@@ -1,0 +1,619 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes class="node" mode="static">
+      <attribute id="0" title="frequency" type="float" />
+      <attribute id="1" title="dunning" type="double" />
+      <attribute id="2" title="freq_score" type="float" />
+      <attribute id="3" title="mwr" type="float" />
+    </attributes>
+    <meta>
+      <creator>NetworkX 2.3</creator>
+      <lastmodified>26/08/2019</lastmodified>
+    </meta>
+    <nodes>
+      <node id="1" label="Journalism">
+        <attvalues>
+          <attvalue for="0" value="0.010262473644633448" />
+          <attvalue for="1" value="382.11795525937214" />
+          <attvalue for="2" value="0.5382389313094792" />
+          <attvalue for="3" value="0.5660849189052908" />
+        </attvalues>
+      </node>
+      <node id="2" label="US Oil  / Regional (Oklahoma)">
+        <attvalues>
+          <attvalue for="0" value="0.003307119511047425" />
+          <attvalue for="1" value="-306.1733402725845" />
+          <attvalue for="2" value="0.43810676607727783" />
+          <attvalue for="3" value="0.45322036824599016" />
+        </attvalues>
+      </node>
+      <node id="3" label="Criminal Justice System">
+        <attvalues>
+          <attvalue for="0" value="0.007018278845613386" />
+          <attvalue for="1" value="-28.548120663239615" />
+          <attvalue for="2" value="0.4871753841415673" />
+          <attvalue for="3" value="0.49709209818260647" />
+        </attvalues>
+      </node>
+      <node id="4" label="Labor">
+        <attvalues>
+          <attvalue for="0" value="0.0035523527365258385" />
+          <attvalue for="1" value="143.69206399997847" />
+          <attvalue for="2" value="0.5398323530314867" />
+          <attvalue for="3" value="0.5714732880370651" />
+        </attvalues>
+      </node>
+      <node id="5" label="Eastern Europe">
+        <attvalues>
+          <attvalue for="0" value="0.008723497081260979" />
+          <attvalue for="1" value="-44.33265028097594" />
+          <attvalue for="2" value="0.48566126841130575" />
+          <attvalue for="3" value="0.47862033680545957" />
+        </attvalues>
+      </node>
+      <node id="6" label="US Political History; US Presidents">
+        <attvalues>
+          <attvalue for="0" value="0.010997545496810576" />
+          <attvalue for="1" value="-9428.897940629966" />
+          <attvalue for="2" value="0.30751169533399875" />
+          <attvalue for="3" value="0.40360746920513113" />
+        </attvalues>
+      </node>
+      <node id="7" label="Panama Canal">
+        <attvalues>
+          <attvalue for="0" value="0.004080894107608394" />
+          <attvalue for="1" value="6.10203621243943" />
+          <attvalue for="2" value="0.5077227580904069" />
+          <attvalue for="3" value="0.5137540211668408" />
+        </attvalues>
+      </node>
+      <node id="8" label="Rural">
+        <attvalues>
+          <attvalue for="0" value="0.012527621397245078" />
+          <attvalue for="1" value="1419.3268222774786" />
+          <attvalue for="2" value="0.5661345076771754" />
+          <attvalue for="3" value="0.5749434820623581" />
+        </attvalues>
+      </node>
+      <node id="9" label="Latin America">
+        <attvalues>
+          <attvalue for="0" value="0.009362170786724602" />
+          <attvalue for="1" value="7.447110591743581" />
+          <attvalue for="2" value="0.5056381049424769" />
+          <attvalue for="3" value="0.4981058260122353" />
+        </attvalues>
+      </node>
+      <node id="10" label="Civil rights">
+        <attvalues>
+          <attvalue for="0" value="0.009323257463483406" />
+          <attvalue for="1" value="531.3835436014597" />
+          <attvalue for="2" value="0.5471836174420157" />
+          <attvalue for="3" value="0.5433056623718866" />
+        </attvalues>
+      </node>
+      <node id="11" label="Medieval">
+        <attvalues>
+          <attvalue for="0" value="0.013094888960109087" />
+          <attvalue for="1" value="1759.7654215879666" />
+          <attvalue for="2" value="0.5718945120892004" />
+          <attvalue for="3" value="0.5113183372420297" />
+        </attvalues>
+      </node>
+      <node id="12" label="Ottoman empire">
+        <attvalues>
+          <attvalue for="0" value="0.008579963436673756" />
+          <attvalue for="1" value="-1578.978822091357" />
+          <attvalue for="2" value="0.41227509836309056" />
+          <attvalue for="3" value="0.42209524913637597" />
+        </attvalues>
+      </node>
+      <node id="13" label="US Progressive Era ">
+        <attvalues>
+          <attvalue for="0" value="0.016570282909355645" />
+          <attvalue for="1" value="44.140979390182565" />
+          <attvalue for="2" value="0.5103088085504263" />
+          <attvalue for="3" value="0.5169048057576685" />
+        </attvalues>
+      </node>
+      <node id="14" label="Hispanic ">
+        <attvalues>
+          <attvalue for="0" value="0.006863365720301377" />
+          <attvalue for="1" value="-14.765224004380457" />
+          <attvalue for="2" value="0.4906805154313327" />
+          <attvalue for="3" value="0.524019314333761" />
+        </attvalues>
+      </node>
+      <node id="15" label="Art/ African American Art/Dance">
+        <attvalues>
+          <attvalue for="0" value="0.009363085535592123" />
+          <attvalue for="1" value="4279.103469369062" />
+          <attvalue for="2" value="0.6299333750066122" />
+          <attvalue for="3" value="0.6224585827105664" />
+        </attvalues>
+      </node>
+      <node id="16" label="Islamic ">
+        <attvalues>
+          <attvalue for="0" value="0.006275946083063697" />
+          <attvalue for="1" value="16.812639349045753" />
+          <attvalue for="2" value="0.5103347850061698" />
+          <attvalue for="3" value="0.5436117333994377" />
+        </attvalues>
+      </node>
+      <node id="17" label="Quantitative Methods">
+        <attvalues>
+          <attvalue for="0" value="0.02419665422057872" />
+          <attvalue for="1" value="-42.45040588304573" />
+          <attvalue for="2" value="0.49158908398570883" />
+          <attvalue for="3" value="0.5080685118634133" />
+        </attvalues>
+      </node>
+      <node id="18" label="Native american">
+        <attvalues>
+          <attvalue for="0" value="0.009418684954700935" />
+          <attvalue for="1" value="-15.398730000836167" />
+          <attvalue for="2" value="0.4918789273686353" />
+          <attvalue for="3" value="0.48863818382541857" />
+        </attvalues>
+      </node>
+      <node id="19" label="Literary">
+        <attvalues>
+          <attvalue for="0" value="0.011317894827262642" />
+          <attvalue for="1" value="2261.6610882023124" />
+          <attvalue for="2" value="0.5872277716498963" />
+          <attvalue for="3" value="0.5902342381857487" />
+        </attvalues>
+      </node>
+      <node id="20" label="Violence">
+        <attvalues>
+          <attvalue for="0" value="0.00855416617902376" />
+          <attvalue for="1" value="12.128786270935393" />
+          <attvalue for="2" value="0.5075244135150929" />
+          <attvalue for="3" value="0.49637154818078777" />
+        </attvalues>
+      </node>
+      <node id="21" label="Roman empire">
+        <attvalues>
+          <attvalue for="0" value="0.005732783595081815" />
+          <attvalue for="1" value="-1266.8142173884307" />
+          <attvalue for="2" value="0.40370705826457487" />
+          <attvalue for="3" value="0.4093258971269579" />
+        </attvalues>
+      </node>
+      <node id="22" label="Cultural - gender/class">
+        <attvalues>
+          <attvalue for="0" value="0.01470907548012388" />
+          <attvalue for="1" value="9901.722636314153" />
+          <attvalue for="2" value="0.6561132055022347" />
+          <attvalue for="3" value="0.6458529908995647" />
+        </attvalues>
+      </node>
+      <node id="23" label="Economic/Business">
+        <attvalues>
+          <attvalue for="0" value="0.006527688955995193" />
+          <attvalue for="1" value="-2458.2929254348583" />
+          <attvalue for="2" value="0.37360812122720977" />
+          <attvalue for="3" value="0.44011094918926214" />
+        </attvalues>
+      </node>
+      <node id="24" label="Science">
+        <attvalues>
+          <attvalue for="0" value="0.01396371756207821" />
+          <attvalue for="1" value="-107.53065750701262" />
+          <attvalue for="2" value="0.48233678522429335" />
+          <attvalue for="3" value="0.5000008770581316" />
+        </attvalues>
+      </node>
+      <node id="25" label="Political Parties">
+        <attvalues>
+          <attvalue for="0" value="0.02227568444957012" />
+          <attvalue for="1" value="-5664.522584933085" />
+          <attvalue for="2" value="0.3965696012043321" />
+          <attvalue for="3" value="0.42244438950587926" />
+        </attvalues>
+      </node>
+      <node id="26" label="Labor (Union)">
+        <attvalues>
+          <attvalue for="0" value="0.015234642933530555" />
+          <attvalue for="1" value="-250.4398126667893" />
+          <attvalue for="2" value="0.4741410925681784" />
+          <attvalue for="3" value="0.5193260293534884" />
+        </attvalues>
+      </node>
+      <node id="27" label="Industry">
+        <attvalues>
+          <attvalue for="0" value="0.015120507850697976" />
+          <attvalue for="1" value="-2.3318137463863877" />
+          <attvalue for="2" value="0.49750843789106597" />
+          <attvalue for="3" value="0.49323826913601715" />
+        </attvalues>
+      </node>
+      <node id="28" label="Gender">
+        <attvalues>
+          <attvalue for="0" value="0.018019219057409632" />
+          <attvalue for="1" value="124040.80580796649" />
+          <attvalue for="2" value="0.9252891607224216" />
+          <attvalue for="3" value="0.8963028081932188" />
+        </attvalues>
+      </node>
+      <node id="29" label="Urban">
+        <attvalues>
+          <attvalue for="0" value="0.015747146753304984" />
+          <attvalue for="1" value="102.46998866165632" />
+          <attvalue for="2" value="0.5160872082623615" />
+          <attvalue for="3" value="0.5415695235744544" />
+        </attvalues>
+      </node>
+      <node id="30" label="World War II: Pacific Theater">
+        <attvalues>
+          <attvalue for="0" value="0.0152728965" />
+          <attvalue for="1" value="-264.9596173402124" />
+          <attvalue for="2" value="0.47343076837537845" />
+          <attvalue for="3" value="0.48644719466723724" />
+        </attvalues>
+      </node>
+      <node id="31" label="French revolution">
+        <attvalues>
+          <attvalue for="0" value="0.011646936499121753" />
+          <attvalue for="1" value="-275.6406756204351" />
+          <attvalue for="2" value="0.4689329159458656" />
+          <attvalue for="3" value="0.474913871333257" />
+        </attvalues>
+      </node>
+      <node id="32" label="Colonialism">
+        <attvalues>
+          <attvalue for="0" value="0.01277220713145974" />
+          <attvalue for="1" value="-19.37175705628397" />
+          <attvalue for="2" value="0.4921794257641609" />
+          <attvalue for="3" value="0.49694025582405554" />
+        </attvalues>
+      </node>
+      <node id="33" label="Education">
+        <attvalues>
+          <attvalue for="0" value="0.01743236541906259" />
+          <attvalue for="1" value="3515.1184404111664" />
+          <attvalue for="2" value="0.5876117424140298" />
+          <attvalue for="3" value="0.5764071896862594" />
+        </attvalues>
+      </node>
+      <node id="34" label="Church">
+        <attvalues>
+          <attvalue for="0" value="0.023216479642876955" />
+          <attvalue for="1" value="-1806.993596424756" />
+          <attvalue for="2" value="0.44332601120856846" />
+          <attvalue for="3" value="0.5056338519151009" />
+        </attvalues>
+      </node>
+      <node id="35" label="Family/Household">
+        <attvalues>
+          <attvalue for="0" value="0.007715392992419341" />
+          <attvalue for="1" value="17031.347442913033" />
+          <attvalue for="2" value="0.7685088450813118" />
+          <attvalue for="3" value="0.712768368101565" />
+        </attvalues>
+      </node>
+      <node id="36" label="Medical">
+        <attvalues>
+          <attvalue for="0" value="0.010149680257049088" />
+          <attvalue for="1" value="11380.03586159779" />
+          <attvalue for="2" value="0.6979783418235008" />
+          <attvalue for="3" value="0.6765511296174829" />
+        </attvalues>
+      </node>
+      <node id="37" label="Jewish">
+        <attvalues>
+          <attvalue for="0" value="0.006962671670333734" />
+          <attvalue for="1" value="323.28145038881667" />
+          <attvalue for="2" value="0.5426438431412764" />
+          <attvalue for="3" value="0.5211221998861784" />
+        </attvalues>
+      </node>
+      <node id="38" label="Slavery">
+        <attvalues>
+          <attvalue for="0" value="0.015990218625127117" />
+          <attvalue for="1" value="-562.8694498516961" />
+          <attvalue for="2" value="0.46204978489915505" />
+          <attvalue for="3" value="0.48374048642356304" />
+        </attvalues>
+      </node>
+      <node id="39" label="History of the West (Industry)">
+        <attvalues>
+          <attvalue for="0" value="0.013326532829111584" />
+          <attvalue for="1" value="-239.35015827332427" />
+          <attvalue for="2" value="0.47296269719763295" />
+          <attvalue for="3" value="0.4900513070102811" />
+        </attvalues>
+      </node>
+      <node id="40" label="Civil War">
+        <attvalues>
+          <attvalue for="0" value="0.01346929691846168" />
+          <attvalue for="1" value="-7146.300623751777" />
+          <attvalue for="2" value="0.3494058137098207" />
+          <attvalue for="3" value="0.43378995116656077" />
+        </attvalues>
+      </node>
+      <node id="41" label="East Asia">
+        <attvalues>
+          <attvalue for="0" value="0.00915156194577979" />
+          <attvalue for="1" value="-1476.1550797655536" />
+          <attvalue for="2" value="0.4179657218229109" />
+          <attvalue for="3" value="0.42446471294621946" />
+        </attvalues>
+      </node>
+      <node id="42" label="Intellectual">
+        <attvalues>
+          <attvalue for="0" value="0.028139176377091613" />
+          <attvalue for="1" value="-6332.83770443474" />
+          <attvalue for="2" value="0.40281300398405245" />
+          <attvalue for="3" value="0.44809035283692467" />
+        </attvalues>
+      </node>
+      <node id="43" label="Development">
+        <attvalues>
+          <attvalue for="0" value="0.04526685962891744" />
+          <attvalue for="1" value="22.7814594989768" />
+          <attvalue for="2" value="0.504488002687745" />
+          <attvalue for="3" value="0.5262593297058743" />
+        </attvalues>
+      </node>
+      <node id="44" label="British History">
+        <attvalues>
+          <attvalue for="0" value="0.019408550496903022" />
+          <attvalue for="1" value="-13568.44430424416" />
+          <attvalue for="2" value="0.32658580802608617" />
+          <attvalue for="3" value="0.37540225024623297" />
+        </attvalues>
+      </node>
+      <node id="45" label="Music">
+        <attvalues>
+          <attvalue for="0" value="0.009109668561107516" />
+          <attvalue for="1" value="339.89124486712717" />
+          <attvalue for="2" value="0.5382774699981668" />
+          <attvalue for="3" value="0.5533377738296805" />
+        </attvalues>
+      </node>
+      <node id="46" label="History of the West (Frontier)">
+        <attvalues>
+          <attvalue for="0" value="0.016095138592169732" />
+          <attvalue for="1" value="-1304.5152844287204" />
+          <attvalue for="2" value="0.4421503298408224" />
+          <attvalue for="3" value="0.46146687838939005" />
+        </attvalues>
+      </node>
+      <node id="47" label="Classics">
+        <attvalues>
+          <attvalue for="0" value="0.011761349108116853" />
+          <attvalue for="1" value="-447.36216438406973" />
+          <attvalue for="2" value="0.46053575796358165" />
+          <attvalue for="3" value="0.48398166405352316" />
+        </attvalues>
+      </node>
+      <node id="48" label="Sexuality">
+        <attvalues>
+          <attvalue for="0" value="0.007346731340944809" />
+          <attvalue for="1" value="16681.100968744904" />
+          <attvalue for="2" value="0.7718388962376782" />
+          <attvalue for="3" value="0.7531365045707417" />
+        </attvalues>
+      </node>
+      <node id="49" label="Labor (Organizations)">
+        <attvalues>
+          <attvalue for="0" value="0.016122587952112417" />
+          <attvalue for="1" value="740.6180775775974" />
+          <attvalue for="2" value="0.5424212381160833" />
+          <attvalue for="3" value="0.555444805819107" />
+        </attvalues>
+      </node>
+      <node id="50" label="Agrarian/Rural">
+        <attvalues>
+          <attvalue for="0" value="0.02057432073680318" />
+          <attvalue for="1" value="-1833.665988304323" />
+          <attvalue for="2" value="0.43929966701546375" />
+          <attvalue for="3" value="0.44674740320672934" />
+        </attvalues>
+      </node>
+      <node id="51" label="legal">
+        <attvalues>
+          <attvalue for="0" value="0.013722977596930757" />
+          <attvalue for="1" value="103.27655667542194" />
+          <attvalue for="2" value="0.517294583361333" />
+          <attvalue for="3" value="0.5276051375661227" />
+        </attvalues>
+      </node>
+      <node id="52" label="Central and Eastern Europe/ 20th Century">
+        <attvalues>
+          <attvalue for="0" value="0.01764691389659795" />
+          <attvalue for="1" value="-5724.693559808515" />
+          <attvalue for="2" value="0.3828860369049543" />
+          <attvalue for="3" value="0.3992639656926914" />
+        </attvalues>
+      </node>
+      <node id="54" label="Sports">
+        <attvalues>
+          <attvalue for="0" value="0.0053881207902375895" />
+          <attvalue for="1" value="-688.4463014711628" />
+          <attvalue for="2" value="0.42712329394716775" />
+          <attvalue for="3" value="0.4887915309842155" />
+        </attvalues>
+      </node>
+      <node id="55" label="Military">
+        <attvalues>
+          <attvalue for="0" value="0.024404678820421556" />
+          <attvalue for="1" value="-34723.468401208076" />
+          <attvalue for="2" value="0.2508541318117035" />
+          <attvalue for="3" value="0.34888166851895114" />
+        </attvalues>
+      </node>
+      <node id="56" label="Civil Rights">
+        <attvalues>
+          <attvalue for="0" value="0.014318364767495609" />
+          <attvalue for="1" value="92.69166633091709" />
+          <attvalue for="2" value="0.5160456297910168" />
+          <attvalue for="3" value="0.5229831302543072" />
+        </attvalues>
+      </node>
+      <node id="57" label="New England">
+        <attvalues>
+          <attvalue for="0" value="0.014189185565776093" />
+          <attvalue for="1" value="-38.098749728837674" />
+          <attvalue for="2" value="0.48958856233593523" />
+          <attvalue for="3" value="0.5058578623564558" />
+        </attvalues>
+      </node>
+      <node id="58" label="African American">
+        <attvalues>
+          <attvalue for="0" value="0.014430944926781916" />
+          <attvalue for="1" value="1342.808627113076" />
+          <attvalue for="2" value="0.5600505768814679" />
+          <attvalue for="3" value="0.5720337237310515" />
+        </attvalues>
+      </node>
+      <node id="59" label="Film/Art">
+        <attvalues>
+          <attvalue for="0" value="0.008243040708237035" />
+          <attvalue for="1" value="2675.4980930339298" />
+          <attvalue for="2" value="0.6102856892791222" />
+          <attvalue for="3" value="0.6032086882357967" />
+        </attvalues>
+      </node>
+      <node id="60" label="Italian Renaissance">
+        <attvalues>
+          <attvalue for="0" value="0.00786837396796709" />
+          <attvalue for="1" value="-442.8199703622586" />
+          <attvalue for="2" value="0.45189821659469115" />
+          <attvalue for="3" value="0.472650242172668" />
+        </attvalues>
+      </node>
+      <node id="61" label="Cultural - symbolic myth">
+        <attvalues>
+          <attvalue for="0" value="0.011064040257002866" />
+          <attvalue for="1" value="1350.964281561157" />
+          <attvalue for="2" value="0.5686029055495663" />
+          <attvalue for="3" value="0.5710756111815206" />
+        </attvalues>
+      </node>
+      <node id="63" label="Cultural - Identity construction">
+        <attvalues>
+          <attvalue for="0" value="0.03825370593172783" />
+          <attvalue for="1" value="11618.042354044272" />
+          <attvalue for="2" value="0.6068143223412684" />
+          <attvalue for="3" value="0.6195536593291627" />
+        </attvalues>
+      </node>
+      <node id="64" label="Christian">
+        <attvalues>
+          <attvalue for="0" value="0.01694898117819636" />
+          <attvalue for="1" value="-497.9563399693561" />
+          <attvalue for="2" value="0.46535681240780585" />
+          <attvalue for="3" value="0.4889624549222172" />
+        </attvalues>
+      </node>
+      <node id="65" label="Biography ; US Presidents">
+        <attvalues>
+          <attvalue for="0" value="0.02008970730918924" />
+          <attvalue for="1" value="-1495.970602631467" />
+          <attvalue for="2" value="0.4445810299548364" />
+          <attvalue for="3" value="0.46523158586401336" />
+        </attvalues>
+      </node>
+      <node id="66" label="Political ">
+        <attvalues>
+          <attvalue for="0" value="0.017951071015484887" />
+          <attvalue for="1" value="-297.51940832589753" />
+          <attvalue for="2" value="0.47403476332890343" />
+          <attvalue for="3" value="0.46623292803007893" />
+        </attvalues>
+      </node>
+      <node id="67" label="International Relations/Latin America">
+        <attvalues>
+          <attvalue for="0" value="0.015206499586114449" />
+          <attvalue for="1" value="-8259.062303180224" />
+          <attvalue for="2" value="0.3475925927565159" />
+          <attvalue for="3" value="0.41128307238182676" />
+        </attvalues>
+      </node>
+      <node id="68" label="Political; Government">
+        <attvalues>
+          <attvalue for="0" value="0.02334723404964408" />
+          <attvalue for="1" value="-351.8707700254008" />
+          <attvalue for="2" value="0.47524765543468916" />
+          <attvalue for="3" value="0.4721835047803898" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="1" target="19" weight="0.18429865864136147" />
+      <edge id="1" source="2" target="68" weight="0.05057355806051371" />
+      <edge id="2" source="3" target="51" weight="0.15546358284562184" />
+      <edge id="3" source="3" target="20" weight="0.11117617864983681" />
+      <edge id="4" source="4" target="49" weight="0.11764839902458674" />
+      <edge id="5" source="5" target="63" weight="0.1838074677231886" />
+      <edge id="6" source="5" target="30" weight="0.13977291458993515" />
+      <edge id="7" source="6" target="44" weight="0.15180249106395663" />
+      <edge id="8" source="6" target="68" weight="0.14491357225248444" />
+      <edge id="9" source="6" target="30" weight="0.1424666607538248" />
+      <edge id="10" source="6" target="67" weight="0.13181477239792247" />
+      <edge id="11" source="7" target="65" weight="0.08721989870845866" />
+      <edge id="12" source="8" target="43" weight="0.21023688884842423" />
+      <edge id="13" source="8" target="29" weight="0.19727915193532056" />
+      <edge id="14" source="8" target="46" weight="0.1598056601629458" />
+      <edge id="15" source="9" target="46" weight="0.09793565339862839" />
+      <edge id="16" source="10" target="51" weight="0.22136196033178304" />
+      <edge id="17" source="10" target="56" weight="0.1676675226777299" />
+      <edge id="18" source="10" target="25" weight="0.1634924153673401" />
+      <edge id="19" source="11" target="66" weight="0.16685839468887248" />
+      <edge id="20" source="12" target="16" weight="0.11232304866145401" />
+      <edge id="21" source="13" target="43" weight="0.22935540215753816" />
+      <edge id="22" source="13" target="68" weight="0.1740611633079643" />
+      <edge id="23" source="14" target="67" weight="0.09891866983525607" />
+      <edge id="24" source="15" target="45" weight="0.10173021941301247" />
+      <edge id="25" source="17" target="23" weight="0.16325088975986618" />
+      <edge id="26" source="17" target="43" weight="0.1274811397479792" />
+      <edge id="27" source="17" target="35" weight="0.12094918766120298" />
+      <edge id="28" source="18" target="46" weight="0.17185383953529218" />
+      <edge id="29" source="19" target="42" weight="0.1422247294558174" />
+      <edge id="30" source="19" target="64" weight="0.13690873934976883" />
+      <edge id="31" source="21" target="47" weight="0.07620272391441268" />
+      <edge id="32" source="22" target="63" weight="0.18386535490096842" />
+      <edge id="33" source="22" target="28" weight="0.1311510054981704" />
+      <edge id="34" source="22" target="48" weight="0.11750934493808367" />
+      <edge id="35" source="23" target="50" weight="0.14100866044667337" />
+      <edge id="36" source="24" target="42" weight="0.22288701401057737" />
+      <edge id="37" source="25" target="49" weight="0.1577883281055907" />
+      <edge id="38" source="25" target="31" weight="0.09582391179380104" />
+      <edge id="39" source="26" target="49" weight="0.10289117950262625" />
+      <edge id="40" source="27" target="50" weight="0.11232640252051145" />
+      <edge id="41" source="28" target="49" weight="0.17990735814419836" />
+      <edge id="42" source="28" target="48" weight="0.1393330435375334" />
+      <edge id="43" source="28" target="35" weight="0.13818808850150668" />
+      <edge id="44" source="29" target="43" weight="0.1647501539603046" />
+      <edge id="45" source="30" target="58" weight="0.15575512637826058" />
+      <edge id="46" source="30" target="44" weight="0.128065611029567" />
+      <edge id="47" source="30" target="54" weight="0.03950141073439845" />
+      <edge id="48" source="32" target="63" weight="0.14336545000453477" />
+      <edge id="49" source="32" target="46" weight="0.10583470603330458" />
+      <edge id="50" source="33" target="56" weight="0.08234606058686081" />
+      <edge id="51" source="34" target="64" weight="0.1316582984980633" />
+      <edge id="52" source="34" target="57" weight="0.09605516124786609" />
+      <edge id="53" source="35" target="36" weight="0.05784875543321091" />
+      <edge id="54" source="37" target="63" weight="0.04163352312543952" />
+      <edge id="55" source="38" target="58" weight="0.20331844693721418" />
+      <edge id="56" source="38" target="40" weight="0.18755738529346294" />
+      <edge id="57" source="39" target="46" weight="0.14571544954770685" />
+      <edge id="58" source="40" target="65" weight="0.11053789470670528" />
+      <edge id="59" source="40" target="55" weight="0.09300295054848746" />
+      <edge id="60" source="41" target="66" weight="0.10836950810599698" />
+      <edge id="61" source="43" target="49" weight="0.19600146729088516" />
+      <edge id="62" source="43" target="50" weight="0.13036450807037436" />
+      <edge id="63" source="43" target="66" weight="0.12926690978083033" />
+      <edge id="64" source="44" target="52" weight="0.12283914713278922" />
+      <edge id="65" source="44" target="67" weight="0.11086192184699767" />
+      <edge id="66" source="47" target="61" weight="0.076626124985497" />
+      <edge id="67" source="49" target="56" weight="0.19142216081850527" />
+      <edge id="68" source="56" target="58" weight="0.2477534085530735" />
+      <edge id="69" source="59" target="63" weight="0.07185576288771675" />
+      <edge id="70" source="60" target="64" weight="0.07027627561176422" />
+      <edge id="71" source="61" target="63" weight="0.12875669622715216" />
+    </edges>
+  </graph>
+</gexf>

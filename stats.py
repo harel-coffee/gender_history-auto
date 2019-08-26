@@ -187,7 +187,7 @@ class StatisticalAnalysis:
 
         return log_likelihoods.tolist(), log_likelihoods_p
 
-    def correlation_coefficient(self):
+    def correlation_coefficient(self, return_correlation_matrix=False):
         """
         Calculate the correlation coefficients between all tokens and store the top 5 correlated
         1-grams.
@@ -278,7 +278,10 @@ class StatisticalAnalysis:
         except:
             pass
 
-        return correlation_results
+        if return_correlation_matrix:
+            return corr_coeffs
+        else:
+            return correlation_results
 
     @staticmethod
     def _get_p_value_as_string(p: float):

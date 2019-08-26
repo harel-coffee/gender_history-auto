@@ -4,6 +4,7 @@ ipython
 jupyter
 lxml
 matplotlib
+networkx
 numpy
 nltk
 pandas
