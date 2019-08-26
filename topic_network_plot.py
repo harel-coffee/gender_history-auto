@@ -73,6 +73,48 @@ def generate_topic_network():
 
     nx.write_gexf(G, Path('data', 'networks', 'topics_dense.gexf'))
 
+    embed()
+
+def plotly_graph():
+    """
+    Create interactive plotly graph
+
+    :return:
+    """
+    import plotly.graph_objects as go
+    import chart_studio.plotly as py
+
+    d = Dataset()
+    vocabulary = [f'topic.{i}' for i in range(1, 71)]
+    d_dtm = d.get_document_topic_matrix()
+    male = d.copy().filter(author_gender='male')
+    female = d.copy().filter(author_gender='female')
+    c1_dtm = female.get_document_topic_matrix() * 300
+    c2_dtm = male.get_document_topic_matrix() * 300
+    s = StatisticalAnalysis(d_dtm, c1_dtm, c2_dtm, vocabulary)
+    correlated_terms = s.correlation_coefficient(return_correlation_matrix=True)
+    for i in range(70):
+        correlated_terms[i, i] = 0
+
+
+    l = [TOPICS[i]['name'] for i in range(1, 71)]
+
+    # interactive viz with plotly
+    fig = go.Figure(data=go.Heatmap(
+        z=correlated_terms,
+        x=l,
+        y=l))
+
+    fig.show()
+
+    # online with plotly
+    data = go.Heatmap(
+            z=correlated_terms,
+            x=l,
+            y=l)
+
+    py.plot([data], filename='topic_cors')
 
 if __name__ == '__main__':
-    generate_topic_network()
+#    generate_topic_network()
+    plotly_graph()

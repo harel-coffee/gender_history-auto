@@ -34,6 +34,10 @@ development) indicates neutral topics.
 
 The size of the node indicates its overall frequency, i.e. the large the more frequent the topic is.
 
+For a final version, I can reorganize this plot such that the female topics are towards the left side
+of the graph and the male topics towards the right side. However, since our topic model will still change,
+I didn't want to spend time on this for the moment.
+
 ![alt text](https://github.com/srisi/gender_history/raw/master/data/networks/gephi_thin.png)
 
 Notes and observations:
@@ -56,8 +60,15 @@ to many other topics. The premier ghettoized topics that we have captured are Je
 history, and Islamic/Ottoman history. They are all barely connected to any other topics. 
 - There's an obvious problem to this interpretation of course: maybe it just indicates that the topic model
 can neatly capture some topics/themes while others come to reset in-between a number of them.
+- An alternative interpretation is that topics like Jewish or medical history may have evolved substantially during the period we 
+cover. However, some key terms that all historians in this area use ("jewish", "disease") have
+remained the same and allow us to identify them quickly.
 
-<figure>
-<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plot.ly/~stephan.risi/254.embed"></iframe>
-</figure>
+
+Here's a denser but I think less useful version:
+
+![alt text](https://github.com/srisi/gender_history/raw/master/data/networks/gephi_dense.png)
+
+
+
 
