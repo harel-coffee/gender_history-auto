@@ -31,6 +31,8 @@ we'll get a lot of unattached floating topics)
 Again, these criteria are ad-hoc and chosen to make the graph look nice--they don't capture all
 relevant correlations. 
 
+Here's a complete heatmap of [topic-topic correlations](https://plot.ly/~stephan.risi/254/)
+
 ## Graph
 The color of the node indicates how gendered it is. Green -> female, brown -> male. Light gray (e.g. 
 development) indicates neutral topics.
