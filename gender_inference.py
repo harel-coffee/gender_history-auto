@@ -116,24 +116,6 @@ def compare_name_guessers():
             'dif_naive_complex': abs(score_naive - score_complex)
         })
 
-    embed()
-        #
-        # ...: first_name = row.AdviseeID.split(',')[1].replace('_', ' ').split(':')[0].split()[
-        #     0].capitalize()
-        # ...: gender = GENDER_GUESSER.get_gender(first_name, 'usa')
-        # ...: row['first_name'] = first_name
-        # ...: row['gender_guesser'] = gender
-        # ...: s1 = gs[row['AdviseeGender.1']]
-        # ...: s2 = gs[gender]
-        # ...: print(s1, s2)
-        # ...: row['proq_score'] = s1
-        # ...: row['guesser_score'] = s2
-        # ...: row['dif'] = s1 - s2
-        # ...: row['dif_abs'] = abs(s1 - s2)
-        # ...: g[gender] += 1
-        # ...: print(row)
-        # ...:     except: print("here")
-
 
 def guess_gender_of_name(human_name:HumanName):
     """

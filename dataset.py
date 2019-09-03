@@ -211,11 +211,15 @@ class Dataset:
 
 
         """
-
-        if isinstance(topic, int):
+        if not isinstance(topic, str):
             topic = f'topic.{topic}'
+
         if not f'percentile_score_{topic}' in self.df.columns:
-            self.df[f'percentile_score_{topic}'] = self.df[topic].rank(pct=True) * 100 // 10 * 10
+            # add all of the topics at once because if we filter topics twice, the ranks would be
+            # influenced by the first selection
+            for i in range(1, 71):
+                t = f'topic.{i}'
+                self.df[f'percentile_score_{t}'] = self.df[t].rank(pct=True) * 100 // 10 * 10
         self.df = self.df[self.df[f'percentile_score_{topic}'] >= min_percentile_score]
         self.df = self.df[self.df[f'percentile_score_{topic}'] <= max_percentile_score]
         self.df = self.df.reset_index()

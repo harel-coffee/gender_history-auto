@@ -4,6 +4,7 @@ from dataset import Dataset
 from topics import TOPICS
 import numpy as np
 from pathlib import Path
+from divergence_analysis import divergence_analysis
 
 import matplotlib.pyplot as plt
 
@@ -61,15 +62,30 @@ def generate_topic_network():
 
         no_added = 0
         for correlated_i in np.array(correlated_terms[i])[0].argsort()[::-1][1:20]:
+            topic2_id = correlated_i + 1
 
-            if correlated_i + 1 in [53, 62, 69, 70]:
+            if topic2_id in [53, 62, 69, 70]:
                 continue
 
-            topic2 = TOPICS[correlated_i + 1]['name']
+            topic2 = TOPICS[topic2_id]['name']
             cor = correlated_terms[i, correlated_i]
             if cor > 0.20 or (no_added == 1 and cor > 0.10) or no_added == 0:
                 G.add_edge(topic, topic2, weight=cor )
                 no_added += 1
+
+                c1 = d.copy()
+                c1.topic_percentile_score_filter(topic_id, min_percentile_score=80)
+                c1.topic_percentile_score_filter(topic2_id, min_percentile_score=80)
+
+                c2 = d.copy()
+                c2.topic_percentile_score_filter(topic_id, max_percentile_score=80)
+                c2.topic_percentile_score_filter(topic2_id, max_percentile_score=80)
+
+                div = divergence_analysis(d, c1, c2, print_results=False, min_appearances_per_term=10,
+                                          c1_name='intersection')
+
+                print('{:30} {:30s} {:5.3f} {}'.format(topic, topic2, cor, ", ".join(div['term'][-5:][::-1])))
+
 
     nx.write_gexf(G, Path('data', 'networks', 'topics_dense.gexf'))
 
@@ -116,5 +132,5 @@ def plotly_graph():
     py.plot([data], filename='topic_cors')
 
 if __name__ == '__main__':
-#    generate_topic_network()
-    plotly_graph()
+    generate_topic_network()
+#    plotly_graph()
