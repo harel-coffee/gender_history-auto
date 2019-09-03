@@ -4,6 +4,7 @@ ipython
 jupyter
 lxml
 matplotlib
+nameparser
 networkx
 numpy
 nltk

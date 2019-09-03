@@ -1,6 +1,6 @@
 ,AdviseeID,first_name,AdviseeGender.1,gender_guesser,score_proquest,score_guesser,,dif,dif_abs
 872,joukova_eugenia_e.:0,_margaret_passoth:0,female,,5,#N/A,,#N/A,#N/A
-6122,gordon_leah_n.:0,_margaret_passoth:0,female,,5,#N/A,,#N/A,#N/A
+6122,gordon_leah_n.:0,_margaret_passoth:0,female,1341,5,#N/A,,#N/A,#N/A
 256,"perez,_haven_abraham:0",Haven,male,female,1,5,,-4,4
 713,"stone,_shelley_clyde,_iii:0",Shelley,male,female,1,5,,-4,4
 1527,"menzies,_glen_wesley:0",Glen,female,male,5,1,,4,4
