@@ -1,6 +1,9 @@
 from dataset import Dataset
 from nameparser import HumanName
 from IPython import embed
+from pathlib import Path
+import json
+import pandas as pd
 
 from collections import defaultdict, Counter
 
@@ -76,8 +79,7 @@ def compare_name_guessers():
 
     d = Dataset()
 
-    c = defaultdict(Counter)
-    ctot = Counter()
+    stanford_name_to_gender_dict = {}
 
     df = []
     for _, row in d.df.iterrows():
@@ -85,18 +87,18 @@ def compare_name_guessers():
         name = " ".join([x.capitalize() for x in name.split()])
         human_name = HumanName(name)
 
+
+
         guess_proquest = row['AdviseeGender.1']
         score_proquest = GENDER_SCORE[guess_proquest]
 
-        guess_naive = GENDER_GUESSER.get_gender(human_name.first, 'usa')
+        stanford_name_to_gender_dict[human_name.first] = guess_proquest
+
+        guess_naive = guess_gender_first_name_only_usa(human_name)
         score_naive = GENDER_SCORE[guess_naive]
 
-        guess_complex = guess_gender_of_name(human_name)
+        guess_complex = guess_gender_with_middle_name_and_international_names(human_name)
         score_complex = GENDER_SCORE[guess_complex]
-
-#        guesser_gender = guess_gender_of_name(human_name)
-#        c[guesser_gender][human_name.first] += 1
-#        ctot[guesser_gender] += 1
 
         df.append({
             'name_raw':     row.AdviseeID,
@@ -116,21 +118,128 @@ def compare_name_guessers():
             'dif_naive_complex': abs(score_naive - score_complex)
         })
 
+    # store dict of stanford names to gender
+    with open(Path('data', 'stanford_name_to_gender.json'), 'w') as out:
+        json.dump(stanford_name_to_gender_dict, out)
 
-def guess_gender_of_name(human_name:HumanName):
+    embed()
+
+
+with open(Path('data', 'stanford_name_to_gender.json'), 'r') as infile:
+    STANFORD_NAME_TO_GENDER = json.load(infile)
+
+
+
+def guess_gender_stanford(human_name: HumanName):
+    """
+    Returns the gender guessed by the model trained by Dan's group at Stanford
+
+    (uses the dissertation dataset for inference)
+
+    >>> h = HumanName('Perez, Ali Abraham')
+    >>> guess_gender_stanford(h)
+    'female'
+
+    :param human_name:
+    :return:
+    """
+
+    if human_name.first in STANFORD_NAME_TO_GENDER:
+        return STANFORD_NAME_TO_GENDER[human_name.first]
+    else:
+        return 'unknown'
+
+
+CENSUS_DF = pd.read_csv(Path('data', 'census_gender.csv'), sep=';')
+CENSUS_NAME_TO_MALE_PROBABILITY = {}
+for _, row in CENSUS_DF.iterrows():
+    CENSUS_NAME_TO_MALE_PROBABILITY[row['firstname']] = row['percm']
+
+
+def guess_gender_census(human_name: HumanName, return_type='gender'):
+    """
+    Use census data to infer gender.
+
+
+    >>> h = HumanName('Perez, Ali Abraham')
+    >>> guess_gender_census(h, return_type='gender')
+    'andy'
+
+    # the function can also be used to get the probabily that a name is male in the census
+    >>> guess_gender_census(h, return_type='probability_male')
+    '72% male'
+
+
+    :param human_name:
+    :param return_type:
+    :return:
+    """
+
+    if human_name.first.lower() in CENSUS_NAME_TO_MALE_PROBABILITY:
+        male_prob = CENSUS_NAME_TO_MALE_PROBABILITY[human_name.first.lower()]
+        if male_prob < 5:
+            inferred_gender = 'female'
+        elif male_prob < 15:
+            inferred_gender = 'mostly_female'
+        elif male_prob < 85:
+            inferred_gender = 'andy'
+        elif male_prob < 95:
+            inferred_gender = 'mostly_male'
+        else:
+            inferred_gender = 'male'
+
+        if return_type == 'gender':
+            return inferred_gender
+        elif return_type == 'probability_male':
+            return '{:2.0f}% male'.format(male_prob)
+
+    else:
+        return 'unknown'
+
+
+
+
+
+
+def guess_gender_first_name_only_usa(human_name: HumanName):
+    """
+    Guesses the gender of a HumanName object
+    Uses only the first name and only the U.S. dictionary.
+
+    >>> h = HumanName('Perez, Ali Abraham')
+    >>> guess_gender_with_middle_name_and_international_names(h)
+    'male'
+
+    :param human_name:
+    :return:
+    """
+
+    if human_name.first in GENDERED_NAMES:
+        return GENDERED_NAMES[human_name.first]
+    else:
+        return GENDER_GUESSER.get_gender(human_name.first, 'usa')
+
+
+def guess_gender_with_middle_name_and_international_names(human_name:HumanName):
     """
     Guesses the gender of a complete HumanName object
+    Uses first and middle name and both u.s. and international dictionaries.
+
+    >>> h = HumanName('Perez, Haven')
+    >>> guess_gender_first_name_only_usa(h)
+    'andy'
 
     :param human_name:
     :return:
 
 
     >>> h = HumanName('Perez, Haven')
-    >>> guess_gender_of_name(h)
-    andy
+    >>> guess_gender_first_name_only_usa(h)
+    'andy'
 
     >>> h = HumanName('Perez, Haven Abraham')
-    male
+    >>> guess_gender_with_middle_name_and_international_names(h)
+    'male'
 
     """
 
