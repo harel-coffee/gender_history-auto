@@ -6,6 +6,12 @@ import pandas
 from collections import defaultdict
 
 def generate_journal_csv():
+    """
+    Uses the JSTOR_full_cleaned database to generate a csv that lists the number of research articles
+    by journal and decade from 1940 to the present, english only.
+
+    :return:
+    """
 
     journal_data = defaultdict(defaultdict)
 
