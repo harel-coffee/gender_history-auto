@@ -26,3 +26,5 @@ data/metadata\.db
 .ipynb_checkpoints/divergence_analysis-checkpoint.ipynb
 
 \.ipynb_checkpoints/
+
+data/JSTOR_full_cleaned\.db
