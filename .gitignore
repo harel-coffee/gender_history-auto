@@ -5,6 +5,7 @@ data/ngram1
 data/ngram2
 data/ngram3
 data/*.csv
+data/journal_texts
 data/plots/decile_plots
 experiments/
 configuration\.py

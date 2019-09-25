@@ -140,12 +140,21 @@ def guess_gender_stanford(human_name: HumanName):
     >>> guess_gender_stanford(h)
     'female'
 
+
+
     :param human_name:
     :return:
     """
 
+    if len(human_name.first) == 1:
+        name_to_guess = human_name.middle
+    elif len(human_name.first) == 2 and human_name.first[1] == '.':
+        name_to_guess = human_name.middle
+    else:
+        name_to_guess = human_name.first
+
     if human_name.first in STANFORD_NAME_TO_GENDER:
-        return STANFORD_NAME_TO_GENDER[human_name.first]
+        return STANFORD_NAME_TO_GENDER[name_to_guess]
     else:
         return 'unknown'
 
@@ -154,6 +163,59 @@ CENSUS_DF = pd.read_csv(Path('data', 'census_gender.csv'), sep=';')
 CENSUS_NAME_TO_MALE_PROBABILITY = {}
 for _, row in CENSUS_DF.iterrows():
     CENSUS_NAME_TO_MALE_PROBABILITY[row['firstname']] = row['percm']
+
+HAND_CODED_DF = pd.read_csv(Path('data', 'journal_author_genders.csv'))
+HAND_CODED_DF.fillna('',inplace=True)
+NAME_TO_HAND_CODED_GENDER = {}
+for _, row in HAND_CODED_DF.iterrows():
+    full_name = row['first_name']
+    if row['last_name']: full_name += f' {row["last_name"]}'
+    NAME_TO_HAND_CODED_GENDER[full_name] = row['final_gender']
+
+
+def get_hand_coded_gender(human_name: HumanName):
+    """
+    Uses the hand-coded gender data. Returns 'unknown' if name is not in dataset
+
+
+    >>> h = HumanName('Palmier, Leslie H.')
+    >>> get_hand_coded_gender(h)
+    'male'
+
+    >>> h = HumanName('Palmier, Leslie Henry')
+    >>> get_hand_coded_gender(h)
+    'n/a'
+
+    >>> h = HumanName('Purcell, Edward A.')
+    >>> get_hand_coded_gender(h)
+    'male'
+
+
+    :param human_name:
+    :return:
+    """
+    full_name = human_name.first
+    if human_name.middle:
+        full_name += f' {human_name.middle}'
+    if human_name.last:
+        full_name += f' {human_name.last}'
+
+
+
+#    print("fn hand coded", full_name, full_name in NAME_TO_HAND_CODED_GENDER)
+#    print(f'last: {human_name.last}. middle: {human_name.middle}. first: {human_name.first}.')
+
+
+    if full_name in NAME_TO_HAND_CODED_GENDER:
+        gender = NAME_TO_HAND_CODED_GENDER[full_name]
+        if gender == '':
+            gender = 'unknown'
+        return gender
+    else:
+        print(full_name, "n/a")
+        return 'n/a'
+
+
 
 
 def guess_gender_census(human_name: HumanName, return_type='gender'):
@@ -169,14 +231,30 @@ def guess_gender_census(human_name: HumanName, return_type='gender'):
     >>> guess_gender_census(h, return_type='probability_male')
     '72% male'
 
+    >>> h = HumanName('Perez, A. Abraham')
+    >>> guess_gender_census(h)
+    'male'
+
+    >>> h = HumanName('Perez, A Abraham')
+    >>> guess_gender_census(h)
+    'male'
+
 
     :param human_name:
     :param return_type:
     :return:
     """
 
-    if human_name.first.lower() in CENSUS_NAME_TO_MALE_PROBABILITY:
-        male_prob = CENSUS_NAME_TO_MALE_PROBABILITY[human_name.first.lower()]
+    if len(human_name.first) == 1:
+        name_to_guess = human_name.middle.lower()
+    elif len(human_name.first) == 2 and human_name.first[1] == '.':
+        name_to_guess = human_name.middle.lower()
+    else:
+        name_to_guess = human_name.first.lower()
+
+
+    if name_to_guess in CENSUS_NAME_TO_MALE_PROBABILITY:
+        male_prob = CENSUS_NAME_TO_MALE_PROBABILITY[name_to_guess]
         if male_prob < 5:
             inferred_gender = 'female'
         elif male_prob < 15:
