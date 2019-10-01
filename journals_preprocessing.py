@@ -277,13 +277,17 @@ def get_author_info(ID_doi, ID_jstor):
     
     combined_names = "; ".join(names)
 
-#    print(combined_gender, combined_names)
-    
     return combined_names, combined_gender
     
 
 
 def get_names_and_genders_from_journals():
+
+    """
+    Creates a csv that identifies names that we need to clean by hand.
+
+    :return:
+    """
 
 
     authors_counter = Counter()
@@ -345,9 +349,5 @@ def get_names_and_genders_from_journals():
 
 
 if __name__ == '__main__':
-#    get_names_and_genders_from_journals()
-    generate_journal_dataset(dataset_type='general_journals', dataset_items='sections')
-#    fix_ambiguous()
-#    extract()
 
-#    generate_journal_csv('books')
+    generate_journal_dataset(dataset_type='AHR', dataset_items='sections')

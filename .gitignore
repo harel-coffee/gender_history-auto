@@ -29,3 +29,5 @@ data/metadata\.db
 \.ipynb_checkpoints/
 
 data/JSTOR_full_cleaned\.db
+
+data/stanford_name_to_gender\.json
