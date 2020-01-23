@@ -31,3 +31,19 @@ data/metadata\.db
 data/JSTOR_full_cleaned\.db
 
 data/stanford_name_to_gender\.json
+
+data/dissertations/
+
+data/journal_csv/doc_with_topiccovars_stm_GENJ_100_full_Sherl\.csv
+
+data/journal_csv/general_journals\.csv
+
+data/journal_csv/general_journals_full_texts\.csv
+
+data/journal_csv/topic_words_stm_GENJ_100\.csv
+
+data/plots/author_genders_journals\.png
+
+data/plots/topic_plots_by_male_female\.png
+
+data/plots/topic_plots_by_overall_weight\.png

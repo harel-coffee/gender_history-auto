@@ -2,15 +2,22 @@
 import random
 random.seed(0)
 
+from collections import defaultdict
+
+from sklearn.preprocessing import MinMaxScaler
+
+from matplotlib.collections import LineCollection
+from scipy.interpolate import make_interp_spline, BSpline
+
+from scipy.interpolate import interp1d
+
+import matplotlib.patches as mpatches
 from pathlib import Path
 import pandas as pd
 
-from topics import TOPICS
 from IPython import embed
 import html
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import RegexpTokenizer
 import numpy as np
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -29,20 +36,11 @@ import seaborn as sns
 
 class Dataset:
 
-
-    def __init__(self, dataset='dissertations'):
-
-
-        try:
-            self.df = pd.read_csv(Path('data', 'combined_data.csv'), encoding='utf-8')
-        except FileNotFoundError:
-            self.create_merged_and_cleaned_dataset()
-            self.df = pd.read_csv(Path('data', 'combined_data.csv'), encoding='utf-8')
-
+    def __init__(self):
 
         # earliest and latest year in dataset
-        self.start_year = min(self.df.ThesisYear)
-        self.end_year = max(self.df.ThesisYear)
+        self.start_year = min(self.df.year)
+        self.end_year = max(self.df.year)
         # male and female authors
         self.author_gender = 'both'
         # no term filter active. When term filter is active, only documents mentioning the term
@@ -76,7 +74,7 @@ class Dataset:
             for f in self.topic_percentile_score_filters:
                 topic_id = int(f['topic'][6:])
                 n += f' percentile score between {f["min_percentile_score"]}th and ' \
-                     f'{f["max_percentile_score"]}th for {TOPICS[topic_id]["name"]}'
+                     f'{f["max_percentile_score"]}th for {self.topics[topic_id]["name"]}'
         return n
 
     @property
@@ -98,84 +96,43 @@ class Dataset:
         return self.vocabulary_set
 
     def copy(self):
-        c = Dataset()
-        attrs = self.__dict__.copy()
-        del attrs['df']
-        for attr in attrs:
-            setattr(c, attr, deepcopy(getattr(self, attr)))
 
-        c.df = self.df.copy(deep=True)
-        return c
+        return deepcopy(self)
+        # embed()
+        #
+        # c = Dataset()
+        # attrs = self.__dict__.copy()
+        # del attrs['df']
+        # for attr in attrs:
+        #     setattr(c, attr, deepcopy(getattr(self, attr)))
+        #
+        # c.df = self.df.copy(deep=True)
+        # return c
 
-    def create_merged_and_cleaned_dataset(self):
+    def load_topic_data(self, file_path):
+        """
 
-        self.df = pd.read_csv(Path('data', 'doc_with_outcome_and_abstract_stm.csv'),
-                              #                              encoding='utf-8')
-                              encoding='windows-1252')
+        :param file_path: Path
+        :return:
+        """
+        topics = {}
+        df = pd.read_csv(file_path)
 
-        print("creating and storing a merged, cleaned dataset at combined_data.csv")
+        for _, row in df.iterrows():
+            topic_id = int(row['Topic'])
+            terms_prob = row['prob'].split(", ")
+            terms_frex = row['frex'].split(", ")
+            topics[topic_id] = {
+                'name': row['Topic Labels'],
+                'terms_prob': terms_prob,
+                'terms_frex': terms_frex,
+                'terms_both': terms_prob + terms_frex
+            }
+        return topics
 
-        # creating the tokenized and lemmatized abstract takes time -> do it when the dataset
-        # first gets opened and store all tokenized abstracts
-        print("tokenizing abstracts")
-        wnl = WordNetLemmatizer()
-        tokenizer = RegexpTokenizer(r'\b\w\w+\b')
-        tokenized_abstracts = []
-        for abstract in self.df['Abstract']:
-            # abstract contains html entities like &eacute -> remove
-            abstract = html.unescape(abstract)
-            # I have no idea what encoding proquest / the csv uses but apostrophes are parsed very
-            # weirdly -> replace
-            abstract = abstract.replace('?óé?¿é?ó', "'")
-            tokenized_abstract = " ".join([wnl.lemmatize(t) for t in tokenizer.tokenize(abstract)])
-            tokenized_abstract = tokenized_abstract.lower()
-            tokenized_abstracts.append(tokenized_abstract)
-        self.df['tokenized_abstract'] = tokenized_abstracts
 
-        # 8/14/19: load updated thesis field data from all_data.csv
-        fields_df = pd.read_csv(Path('data', 'all_data.csv'), encoding='ISO-8859-1')
 
-        # all_data.csv and the original csv file have different indexes
-        # -> sort by ID and reindex
-        fields_df = fields_df.sort_values(by='ID')
-        self.df = self.df.sort_values(by='ID')
-        fields_df['IDC'] = fields_df['ID']
-        self.df['IDC'] = self.df['ID']
-        fields_df = fields_df.set_index(keys=['IDC'])
-        self.df = self.df.set_index(keys=['IDC'])
-        assert np.all(self.df['ID'] == fields_df['ID'])
-        for field in ['ThesisProQuestFields', 'ThesisNrcFields',
-                      'Inferred NRC Department(NRC Area: SubField)']:
-            self.df[field] = fields_df[field]
 
-        # selector_1 = self.df['ThesisProQuestFields'] != 'Business community'
-        # selector_2 = self.df['ThesisProQuestFields'] != 'Home economics'
-        # selector_3 = self.df['ThesisProQuestFields'] != 'Business costs'
-        # selector_4 = self.df['Abstract'].str.contains(pat='histor', case=False) == True
-        # self.df['home_econ'] = (selector_1 & selector_2 & selector_3 | selector_4)
-
-        selector_1 = self.df['ThesisProQuestFields'].str.contains('histor', case=False) == True
-        selector_2 = self.df['Abstract'].str.contains('histor', case=False) == True
-        selector_3 = self.df['ThesisProQuestFields'].str.contains('Middle Ages') == True
-        selector_4 = self.df['ThesisProQuestFields'].str.contains('Ancient civilizations') == True
-        self.df['is_history'] = (selector_1 | selector_2 | selector_3 | selector_4)
-
-        # plot differences between historical and non-historical data
-        hist = self.df[self.df['is_history'] == True]
-        non_hist = self.df[self.df['is_history'] == False]
-        print(f'Historical dissertations: {len(hist)}. Non-historical dissertations: {len(non_hist)}')
-        difs = {}
-        for topic_id in range(1, 71):
-            dif = abs(np.mean(hist[f'topic.{topic_id}']) - np.mean(non_hist[f'topic.{topic_id}']))
-            difs[topic_id] = dif
-        sorted_topic_ids = [t[0] for t in sorted(difs.items(), key=lambda x: x[1], reverse=True)]
-        #        self.grid_plot_topics(sorted_topic_ids, hue='is_history', store_as_filename='history_filter.png')
-
-        print("Eliminating home economics theses from dataset.")
-        self.df = self.df[self.df['is_history'] == True]
-        self.df.reset_index(inplace=True)
-
-        self.df.to_csv(Path('data', 'combined_data.csv'))
 
     def topic_percentile_score_filter(self, topic, min_percentile_score=0, max_percentile_score=100):
         """
@@ -288,15 +245,15 @@ class Dataset:
         df = self.df
 
         if start_year:
-            df = df[df.ThesisYear >= start_year]
+            df = df[df.year >= start_year]
             self.start_year = start_year
         if end_year:
-            df = df[df.ThesisYear <= end_year]
+            df = df[df.year <= end_year]
             self.end_year = end_year
         if author_gender:
             if not author_gender in ['male', 'female']:
                 raise ValueError(f'Author gender needs to be male or female but not {author_gender}')
-            df = df[df.AdviseeGender == author_gender]
+            df = df[df.author_genders == author_gender]
             self.author_gender = author_gender
 
         if advisor_gender:
@@ -309,9 +266,9 @@ class Dataset:
         if term_filter:
             if term_filter.startswith('not_'):
                 term_filter = term_filter[4:]
-                df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == False]
+                df = df[df['text'].str.contains(pat=term_filter, regex=True) == False]
             else:
-                df = df[df['tokenized_abstract'].str.contains(pat=term_filter, regex=True) == True]
+                df = df[df['text'].str.contains(pat=term_filter, regex=True) == True]
             self.term_filter = term_filter
 
         if institution_filter:
@@ -334,79 +291,10 @@ class Dataset:
         return self
 
 
-    def grid_plot_topics(self, sorted_topic_ids, hue,
-                         y_max=None, df=None, show_plot=True, store_as_filename=None):
-
-        """
-        Can be used to plot a 10x7 grid of all topics
-
-        :param df:
-        :param sorted_topic_ids: list(int)
-        :param hue:
-        :param y_max:
-        :return:
-
-        # show topic distribution from most female to most male
-        >>> d = Dataset()
-        >>> male = d.copy().filter(author_gender='male')
-        >>> female = d.copy().filter(author_gender='female')
-        >>> difs = {}
-        >>> for topic_id in range(1, 71):
-        ...     dif = np.mean(female.df[f'topic.{topic_id}']) - np.mean(male.df[f'topic.{topic_id}'])
-        ...     difs[topic_id] = dif
-        >>> sorted_topic_ids =  [t[0] for t in sorted(difs.items(), key = lambda x: x[1], reverse=True)]
-        >>> d.grid_plot_topics(sorted_topic_ids, hue='AdviseeGender')
-
-        """
-
-        if not df:
-            df = self.df
-
-        fig = plt.figure(figsize=(50,50))
-        gs = gridspec.GridSpec(nrows=10, ncols=7, figure=fig)
-
-        for ax_id, topic_id in enumerate(sorted_topic_ids):
-            print(ax_id, topic_id)
-            row = ax_id // 7
-            col = ax_id % 7
-            ax = fig.add_subplot(gs[row, col])
-            ax = sns.lineplot(x='ThesisYear', y=f'topic.{topic_id}', hue=hue,
-                              data=df, ax=ax)
-            ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
-            ax.set_xlim(1980, 2015)
-            if y_max:
-                ax.set_ylim(0, y_max)
-
-        if show_plot:
-            plt.show()
-        if store_as_filename:
-            fig.savefig(Path('data', 'plots', store_as_filename))
-
-
-
-
-    def print_differences_between_filtered_and_unfiltered_datasets(self):
-        """
-        Prints a short analysis between the filtered and unfiltered datasets
-
-        :return:
-        """
-        out_docs = self.df[self.df['is_history'] == False]
-        in_docs = self.df[self.df['is_history'] == True]
-        print(f"Currently filtering out {len(out_docs)} non-historical dissertations.")
-
-        difs = []
-        topics_list = [f'topic.{id}' for id in range(1, 71)]
-        for topic in topics_list:
-            difs.append(abs(in_docs[topic].mean() - out_docs[topic].mean()))
-        for topic_id in np.argsort(np.array(difs))[::-1][:10]:
-            topic_str = topics_list[topic_id]
-            print(f'{topic_str}. Dif: {difs[topic_id]}.')
-
     def get_vocabulary(self, exclude_stopwords=True, max_terms=None, min_appearances=None,
                        include_2grams=False):
         """
-        Returns a list of all terms that appear in the tokenized_abstract column
+        Returns a list of all terms that appear in the text column
 
         :return: list
 
@@ -428,7 +316,7 @@ class Dataset:
             max_terms = 1000000
 
         vocabulary = Counter()
-        for abstract in self.df['tokenized_abstract']:
+        for abstract in self.df['text']:
             a = abstract.split()
             for idx, word in enumerate(a):
                 vocabulary[word] += 1
@@ -454,20 +342,6 @@ class Dataset:
                 if valid:
                     clean_vocabulary[ngram] = vocabulary[ngram]
             vocabulary = clean_vocabulary
-
-            # for term in :
-            #     try:
-            #         del vocabulary[term]
-            #     except KeyError:
-            #         pass
-            #
-            #
-            #     # TODO: fix this ugly implementation
-            #     for term2 in stop_words.ENGLISH_STOP_WORDS.union({'wa', 'ha', 'óé', 'dotbelow'}):
-            #         try:
-            #             del vocabulary['{} {}'.format(term, term2)]
-            #         except KeyError:
-            #             pass
 
 
         vocab_list = []
@@ -495,7 +369,7 @@ class Dataset:
         :return: csr_matrix
         """
 
-        topics_str_list = [f'topic.{i}' for i in range(1, 71)]
+        topics_str_list = [f'X{i}' for i in range(1, 101)]
         dtm = csr_matrix(self.df[topics_str_list].to_numpy())
         return dtm
 
@@ -522,7 +396,7 @@ class Dataset:
         """
 
         vectorizer = CountVectorizer(vocabulary=vocabulary)
-        dtm = vectorizer.fit_transform(self.df['tokenized_abstract'].to_list())
+        dtm = vectorizer.fit_transform(self.df['text'].to_list())
 
         if store_in_df:
             dtm_df = pd.DataFrame(dtm.toarray(), columns=vocabulary)
@@ -565,15 +439,27 @@ class Dataset:
         if isinstance(terms, list):
             terms = {t: 1 for t in terms}
 
+        out = ''
+
         if list(terms.keys())[0].startswith('topic.'):
             self.df['dissertation_weights'] = 0
             for topic, weight in terms.items():
                 self.df['dissertation_weights'] += weight * self.df[topic]
             for _, row in self.df.sort_values(by='dissertation_weights', ascending=False)[:no_dissertations].iterrows():
-                print('{} Author: {:7s} Advisor: {:7s} {}'.format(
-                    row['ThesisYear'], row['AdviseeGender'],
+                out += ('\n{} Author: {:7s} Advisor: {:7s} {}'.format(
+                    row['Year'], row['author_genders'],
                     row['AdvisorGender'], row['ThesisTitle']
                 ))
+
+        elif list(terms.keys())[0].startswith('X'):
+            topic = list(terms.keys())[0]
+            self.df['article_weights'] = 0
+            for _, row in self.df.sort_values(by=topic, ascending=False)[:no_dissertations].iterrows():
+                out += ('\n{} {:7s}. Title: {}. Authors: {}.'.format(row.year, row.author_genders,
+                                                                 row.title, row.authors))
+
+
+
         else:
             dtm = self.get_document_term_matrix(vocabulary=terms.keys())
             weights = np.array(list(terms.values()))
@@ -582,10 +468,35 @@ class Dataset:
             for i in scores.argsort()[::-1][:no_dissertations]:
 
 
-                print('{} Author: {:7s} Advisor: {:7s} {}'.format(
-                    self.df['ThesisYear'][i], self.df['AdviseeGender'][i],
+                out +=('{} Author: {:7s} Advisor: {:7s} {}'.format(
+                    self.df['Year'][i], self.df['author_genders'][i],
                     self.df['AdvisorGender'][i], self.df['ThesisTitle'][i]
                 ))
+        return out
+
+
+    def print_topics_and_text_samples(self, file_path):
+        """
+        prints ids, names, terms, sample docs for each topic
+
+        :param file_path:
+        :return:
+        """
+        print("here")
+        out = ''
+        for i in range(1, 101):
+            topic = self.topics[i]
+            out += '\n\nTopic ID: {:3s}. Topic Name: {}'.format(str(i), topic['name'])
+            out += f'\nterms, prob: {topic["terms_prob"][:10]}'
+            out += f'\nterms, frex: {topic["terms_frex"][:10]}\nExamples:'
+
+            out += self.print_dissertations_mentioning_terms_or_topics([f'X{i}'], no_dissertations=10)
+
+        print(out)
+        with open('tset.txt', 'w') as outf: outf.write(out)
+
+
+
 
     def print_examples_of_term_in_context(self, term, no_examples=10):
         """
@@ -600,9 +511,9 @@ class Dataset:
         :return:
         """
 
-        df = self.df[self.df['tokenized_abstract'].str.contains(pat=r'\b{}\b'.format(term))]
+        df = self.df[self.df['text'].str.contains(pat=r'\b{}\b'.format(term))]
         if len(df) == 0:
-            print(f'No dissertation abstracts mention {term}.')
+            print(f'No texts mention {term}.')
             return
 
         while True:
@@ -615,11 +526,11 @@ class Dataset:
         print(f'\n Found {len(df)} examples of {term}.')
         for  _, row in samples.iterrows():
 
-            pos = row['tokenized_abstract'].find(term)
+            pos = row['text'].find(term)
             if pos > -1:
-                text = row['tokenized_abstract'][max(0, pos-40):pos+60]
+                text = row['text'][max(0, pos-40):pos+60]
                 print('{} {:7s} {:70s} {}'.format(
-                    row['ThesisYear'], row['AdviseeGender'], row['ThesisTitle'][:70], text,
+                    row['year'], row['author_genders'], row['title'][:70], text,
                 ))
 
 
@@ -634,8 +545,8 @@ class Dataset:
             y1, y2 = years_range
             if self.start_year >= y2 or self.end_year < y2:
                 continue
-#            dfs[years_range] = self.df[(self.df['ThesisYear'] >= y1) & (self.df['ThesisYear'] <= y2)]
-            df = self.df[(self.df['ThesisYear'] >= y1) & (self.df['ThesisYear'] <= y2)]
+#            dfs[years_range] = self.df[(self.df['Year'] >= y1) & (self.df['Year'] <= y2)]
+            df = self.df[(self.df['year'] >= y1) & (self.df['year'] <= y2)]
             df = df.to_dict('records')
 
             if len(df) == 0:
@@ -650,6 +561,447 @@ class Dataset:
         self.df = pd.DataFrame(docs)
 
 
+    def grid_plot_topics(self, sorted_topic_ids, hue,
+                         y_max=None, df=None, show_plot=True, store_as_filename=None):
+        """
+        Can be used to plot a 10x7 grid of all topics
+
+        :param df:
+        :param sorted_topic_ids: list(int)
+        :param hue:
+        :param y_max:
+        :return:
+
+        # show topic distribution from most female to most male
+        >>> d = Dataset()
+        >>> male = d.copy().filter(author_gender='male')
+        >>> female = d.copy().filter(author_gender='female')
+        >>> difs = {}
+        >>> for topic_id in range(1, 71):
+        ...     dif = np.mean(female.df[f'topic.{topic_id}']) - np.mean(male.df[f'topic.{topic_id}'])
+        ...     difs[topic_id] = dif
+        >>> sorted_topic_ids =  [t[0] for t in sorted(difs.items(), key = lambda x: x[1], reverse=True)]
+        >>> d.grid_plot_topics(sorted_topic_ids, hue='author_genders')
+
+        """
+
+        print("Creating topic gridplot")
+
+        if not df:
+            df = self.df
+
+        fig = plt.figure(figsize=(50, 50))
+        gs = gridspec.GridSpec(nrows=10, ncols=10, figure=fig)
+
+        for ax_id, topic_id in enumerate(sorted_topic_ids):
+
+            print(ax_id, topic_id)
+            row = ax_id // 10
+            col = ax_id % 10
+            ax = fig.add_subplot(gs[row, col])
+            ax = sns.lineplot(x='year', y=f'X{topic_id}', hue=hue,
+                              data=df, ax=ax)
+            ax.set_title(f'{topic_id}: {self.topics[topic_id]["name"]}')
+            ax.set_xlim(self.start_year, self.end_year)
+            if y_max:
+                ax.set_ylim(0, y_max)
+
+        if show_plot:
+            plt.show()
+        if store_as_filename:
+            fig.savefig(Path('data', 'plots', store_as_filename))
+
+    def get_data(self, data_type, token_list, smoothing):
+
+        # load text info and turn it into term frequencies
+        if data_type == 'terms':
+            self.get_document_term_matrix(vocabulary=token_list, store_in_df=True)
+            for idx, row in self.df.iterrows():
+                text_len = len(row.text.split())
+                self.df.at[idx, 'text_len'] = text_len
+            for t in token_list:
+                self.df[t] = self.df[t] / self.df['text_len']
+
+        data = {}
+        for t in token_list:
+            data[t] = defaultdict(list)
+
+        df = self.df
+
+        for idx, year in enumerate(range(self.start_year, self.end_year)):
+            time_slice = df[(df.year >= year - smoothing) & (df.year <= year + smoothing)]
+            time_slice_female = time_slice[time_slice.author_genders == 'female']
+            time_slice_male = time_slice[time_slice.author_genders == 'male']
+
+            for t in token_list:
+                freq_both = time_slice[t].mean()
+                freq_female = time_slice_female[t].mean()
+                freq_male = time_slice_male[t].mean()
+
+
+                # if a term doesn't appear, it is neutral
+                if (freq_male + freq_female) == 0:
+                    freq_score = 0.5
+                else:
+                    freq_score = freq_female / (freq_female + freq_male)
+
+                data[t]['year'].append(year)
+                data[t]['freq_score'].append(freq_score)
+                data[t]['freq_both'].append(freq_both)
+
+        for t in token_list:
+            data[t]['mean_freq_score'] = np.mean(data[t]['freq_score'])
+            data[t]['mean_freq_both'] = np.mean(data[t]['freq_both'])
+            data[t]['freq_score_range'] = max(data[t]['freq_score']) - min(data[t]['freq_score'])
+
+        return data
+
+
+
+
+
+    def plot_topic_grid(self, smoothing=5):
+
+        from divergence_analysis import divergence_analysis
+        c1 = self.copy().filter(author_gender='male')
+        c2 = self.copy().filter(author_gender='female')
+        topic_df = divergence_analysis(self, c1, c2, topics_or_terms='topics',
+                            c1_name='male', c2_name='female', sort_by='dunning',
+                            number_of_terms_to_print=50)
+
+        topic_ids_sorted = [r['index'] + 1 for _, r in topic_df.iterrows()]
+        topic_names_sorted = [f'X{tid}' for tid in topic_ids_sorted]
+
+        data = self.get_data(data_type='topics', token_list=topic_names_sorted,
+                             smoothing=smoothing)
+
+        fig = plt.figure(figsize=(50, 50))
+        gs = gridspec.GridSpec(nrows=10, ncols=10, figure=fig)
+
+        for ax_id, topic_id in enumerate(topic_ids_sorted):
+            print(ax_id, topic_id)
+            row = ax_id // 10
+            col = ax_id % 10
+            ax = fig.add_subplot(gs[row, col])
+
+            t = f'X{topic_id}'
+            x = data[t]['year']
+            y = data[t]['freq_both']
+            freq_scores = data[t]['freq_score']
+            x_lin = np.linspace(min(data[t]['year']), max(data[t]['year']), 1000)
+            spl = make_interp_spline(x, y, k=2)
+            y_lin = spl(x_lin)
+            spl_freq_score = make_interp_spline(x, freq_scores, k=1)
+            freq_score_lin = spl_freq_score(x_lin)
+
+            points = np.array([x_lin, y_lin]).T.reshape(-1, 1, 2)
+            segments = np.concatenate([points[:-1], points[1:]], axis=1)
+            norm = plt.Normalize(0.2, 0.8)
+
+            lc = LineCollection(segments, cmap='coolwarm', norm=norm)
+            # Set the values used for colormapping
+            lc.set_array(freq_score_lin)
+            lc.set_linewidth(2)
+            line = ax.add_collection(lc)
+            ax.set_xlim(x_lin.min(), x_lin.max())
+            ax.set_ylim(0, y_lin.max() * 1.1)
+
+            ax.set_title(topic_df.at[ax_id, 'term'])
+
+        plt.savefig(Path('data', 'plots', f'topic_plots.png'))
+        plt.show()
+
+
+
+    def plot_topic_grid_of_selected_topics(self, selected_topic_ids, smoothing=5):
+
+        # topic_ids_sorted = [r['index'] + 1 for _, r in topic_df.iterrows()]
+
+        topic_names_sorted = [f'X{tid}' for tid in selected_topic_ids]
+
+        data = self.get_data(data_type='topics', token_list=topic_names_sorted,
+                             smoothing=smoothing)
+
+        n_rows = 10
+        n_cols = 10
+        fig = plt.figure(figsize=(50, 50))
+        gs = gridspec.GridSpec(nrows=n_rows, ncols=n_cols, figure=fig)
+
+        for ax_id, topic_id in enumerate(selected_topic_ids):
+            print(ax_id, topic_id)
+            row = ax_id // n_cols
+            col = ax_id % n_cols
+            ax = fig.add_subplot(gs[row, col])
+
+            t = f'X{topic_id}'
+            x = data[t]['year']
+            y = data[t]['freq_both']
+            freq_scores = data[t]['freq_score']
+            x_lin = np.linspace(min(data[t]['year']), max(data[t]['year']), 1000)
+            spl = make_interp_spline(x, y, k=2)
+            y_lin = spl(x_lin)
+            spl_freq_score = make_interp_spline(x, freq_scores, k=1)
+            freq_score_lin = spl_freq_score(x_lin)
+
+            points = np.array([x_lin, y_lin]).T.reshape(-1, 1, 2)
+            segments = np.concatenate([points[:-1], points[1:]], axis=1)
+            norm = plt.Normalize(0.2, 0.8)
+
+            lc = LineCollection(segments, cmap='coolwarm', norm=norm)
+            # Set the values used for colormapping
+            lc.set_array(freq_score_lin)
+            lc.set_linewidth(2)
+            line = ax.add_collection(lc)
+            ax.set_xlim(x_lin.min(), x_lin.max())
+            ax.set_ylim(0, max(y_lin) * 1.1)
+
+            ax.set_title(f'({topic_id}) {self.topics[topic_id]["name"]}')
+
+        plt.savefig(Path('data', 'plots', f'selected_topics.png'))
+        plt.show()
+
+
+
+
+    def plot_londa(self,
+                   data_type,
+                   term_or_topic_list,
+                   smoothing=3):
+
+        data = self.get_data(data_type=data_type, token_list=term_or_topic_list,
+                             smoothing=smoothing)
+
+        # 2: Set up plot
+        fig = plt.figure(figsize=(12, 12))
+        gs = gridspec.GridSpec(nrows=1,
+                               ncols=1,
+                               figure=fig,
+                               width_ratios=[1],
+                               height_ratios=[1],
+                               wspace=0.2, hspace=0.05
+                               )
+
+        ax = fig.add_subplot(gs[0, 0])
+        ax.set_ylim(0, 1)
+        ax.set_xlim(self.start_year + 2, self.end_year - 2)
+        ax.set_axisbelow(True)
+        ax.grid(which='major', axis='both')
+
+        for t in term_or_topic_list:
+            x = data[t]['year']
+            y = data[t]['freq_both']
+            freq_scores = data[t]['freq_score']
+            x_lin = np.linspace(min(data[t]['year']), max(data[t]['year']), 1000)
+            spl = make_interp_spline(x, y, k=2)
+            y_lin = spl(x_lin)
+            spl_freq_score = make_interp_spline(x, freq_scores, k=1)
+            freq_score_lin = spl_freq_score(x_lin)
+
+            # points[0] = (x[0], y[0]
+            points = np.array([x_lin, y_lin]).T.reshape(-1, 1, 2)
+            # segments[0] = 2x2 matrix. segments[0][0] = points[0]; segments[0][1] = points[1]
+            segments = np.concatenate([points[:-1], points[1:]], axis=1)
+            norm = plt.Normalize(0.2, 0.8)
+
+            lc = LineCollection(segments, cmap='coolwarm', norm=norm)
+            # Set the values used for colormapping
+            lc.set_array(freq_score_lin)
+            lc.set_linewidth(4)
+            line = ax.add_collection(lc)
+
+
+        fig.colorbar(line, ax=ax)
+
+        ax.set_xlim(x_lin.min(), x_lin.max())
+        ax.set_ylim(0, y_lin.max() * 1.1)
+
+        plt.savefig(Path('data', 'plots', f'plot_londa.png'))
+        plt.show()
+
+
+
+    def plot_gender_development_over_time(self,
+            no_terms_or_topics_to_show=8,
+            data='topics',
+            display_selector='most_frequent',
+            selected_terms_or_topics=None,
+            show_plot=True,
+            store_to_filename=None,
+            title=None,
+            smoothing=3
+
+          ):
+
+        """
+
+        :param no_terms_or_topics_to_show: int
+        :param data: 'topics', 'terms', 'terms_of_topics'
+        :param display_selector: 'most_frequent', 'most_divergent', 'most_variable'
+        :param selected_terms_or_topics: topic_id or list of terms
+        :param show_plot: bool
+        :param store_to_filename: bool or str
+        :return:
+        """
+
+        if data == 'terms_of_topic':
+            if not isinstance(selected_terms_or_topics, int):
+                raise ValueError("When displaying 'terms_of_topic', please pass a topic_id for param"
+                                 "selected_terms_or_topics")
+
+        # 0: find terms or topics to display
+        if data == 'topics':
+            selected_terms_or_topics = [f'topic.{id}' for id in range(1, 71)]
+            title_name = 'topics'
+        elif data == 'terms':
+            vocab = []
+            for t in selected_terms_or_topics:
+                vocab.append(t)
+            self.get_document_term_matrix(vocabulary=vocab, store_in_df=True)
+            title_name = 'terms'
+        elif data == 'terms_of_topic':
+            vocab = []
+            topic_id = selected_terms_or_topics
+            for term in self.topics[topic_id]['terms_prob']:
+                if term in self.vocabulary:
+                    vocab.append(term)
+            selected_terms_or_topics = vocab
+            self.get_document_term_matrix(vocabulary=vocab, store_in_df=True)
+            title_name = f'terms of topic {topic_id}'
+        else:
+            raise ValueError('"data" has to be "terms" "topics" or "terms_of_topic"')
+
+        if not title:
+            if display_selector == 'most_frequent':
+                title = f'Most frequent {title_name} for female (top) and male authors (bottom)'
+            elif display_selector == 'most_divergent':
+                title = f'Most divergent {title_name} for female (top) and male authors (bottom)'
+            else:
+                title = f'Most variable {title_name} for female (top) and male authors (bottom)'
+
+        df = self.df
+
+        # 1: Load data
+        data = {}
+        for t in selected_terms_or_topics:
+            data[t] = defaultdict(list)
+        min_freq_total = 1
+        max_freq_total = 0
+
+        for idx, year in enumerate(range(self.start_year, self.end_year)):
+
+            time_slice = df[(df.year >= year - smoothing) & (df.year <= year + smoothing)]
+            time_slice_female = time_slice[time_slice.author_genders == 'female']
+            time_slice_male = time_slice[time_slice.author_genders == 'male']
+
+            for t in selected_terms_or_topics:
+                freq_total = time_slice[t].mean()
+                freq_female = time_slice_female[t].mean()
+                freq_male = time_slice_male[t].mean()
+
+                # if a term doesn't appear, it is neutral
+                if (freq_male + freq_female) == 0:
+                    freq_score = 0.5
+                else:
+                    freq_score = freq_female / (freq_female + freq_male)
+
+                data[t]['year'].append(year)
+                data[t]['freq_score'].append(freq_score)
+                data[t]['freq_total'].append(freq_total)
+
+                if freq_total < min_freq_total:
+                    min_freq_total = freq_total
+                if freq_total > max_freq_total:
+                    max_freq_total = freq_total
+
+        for t in terms:
+            data[t]['mean_freq_score'] = np.mean(data[t]['freq_score'])
+            data[t]['mean_freq_total'] = np.mean(data[t]['freq_total'])
+            data[t]['freq_score_range'] = max(data[t]['freq_score']) - min(data[t]['freq_score'])
+
+        # 2: Set up plot
+        fig = plt.figure(figsize=(12, 12))
+        gs = gridspec.GridSpec(nrows=1,
+                               ncols=1,
+                               figure=fig,
+                               width_ratios=[1],
+                               height_ratios=[1],
+                               wspace=0.2, hspace=0.05
+                               )
+
+        ax = fig.add_subplot(gs[0, 0])
+        ax.set_ylim(0, 1)
+        ax.set_xlim(self.start_year + 2, self.end_year -2)
+        ax.set_axisbelow(True)
+        ax.grid(which='major', axis='both')
+
+        dot_scaler = MinMaxScaler((0.0, 50.0))
+        dot_scaler.fit(np.array([min_freq_total, max_freq_total]).reshape(-1, 1))
+        legends = []
+
+        def draw_line(t, t_data, df):
+            """
+            Draws one line depending on t (term or topic string) and t_data (dict of data belonging
+            to t)
+
+            :param t: str
+            :param t_data: dict
+            :return:
+            """
+            y = t_data['freq_score']
+            x = t_data['year']
+            frequencies = t_data['freq_total']
+            if t.startswith('topic.'):
+                legend = self.topics[int(t[6:])]['name']
+            else:
+                legend = '{:10s} ({})'.format(t, df[t].sum())
+
+            x_spline = np.linspace(min(x), max(x), ((self.end_year - 2) - (self.start_year + 2)) * 1000)
+            spl = make_interp_spline(x, y, k=1)  # BSpline object
+            y_spline = spl(x_spline)
+
+            line_interpolater = interp1d(x, frequencies)
+            line_widths = line_interpolater(x_spline)
+            line_widths = dot_scaler.transform(line_widths.reshape(-1, 1)).flatten()
+
+            try:
+                color = sns.color_palette()[len(legends)]
+            except IndexError:
+                color = sns.cubehelix_palette(100, start=2, rot=0, dark=0, light=.95)[len(legends)]
+
+            ax.scatter(x_spline, y_spline, s=line_widths, antialiased=True,
+                       color=color)
+            legends.append(mpatches.Patch(color=color, label=legend))
+
+        # 3: Plot
+        if display_selector == 'most_frequent':
+            ax.set_title(title, weight='bold', fontsize=18)
+            sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['mean_freq_total'], reverse=True)
+            for t, t_data in sorted_items[:no_terms_or_topics_to_show]:
+                draw_line(t, t_data, df)
+        elif display_selector == 'most_divergent':
+            ax.set_title(title, weight='bold', fontsize=18)
+            sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['mean_freq_score'], reverse=True)
+            no_disp = no_terms_or_topics_to_show // 2
+            for t, t_data in sorted_items[:no_disp] + sorted_items[::-1][:no_disp]:
+                draw_line(t, t_data, df)
+        elif display_selector == 'most_variable':
+            ax.set_title(title, weight='bold', fontsize=18)
+            # sort by mean_freq_range second to preserve colors between plots
+            sorted_items = sorted(data.items(), key=lambda k_v: k_v[1]['freq_score_range'], reverse=True)
+            sorted_items = sorted_items[:no_terms_or_topics_to_show]
+            sorted_items = sorted(sorted_items, key=lambda k_v: k_v[1]['mean_freq_score'], reverse=True)
+            for t, t_data in sorted_items:
+                draw_line(t, t_data, df)
+
+        else:
+            raise ValueError('display_selector has to be most_frequent, most_variable, or most_divergent')
+
+        ax.legend(handles=legends, loc=4)
+
+        if show_plot:
+            plt.show()
+        if store_to_filename:
+            fig.savefig(Path('data', store_to_filename))
 
 
 def plot_adviser_gender():
@@ -678,16 +1030,16 @@ def plot_adviser_gender():
         top = d.copy()
         top.topic_percentile_score_filter(topic_id, min_percentile_score=80)
         for _, row in top.df.iterrows():
-            year = row['ThesisYear']
+            year = row['Year']
             advisor_gender = row['AdvisorGender']
-            advisee_gender = row['AdviseeGender']
+            advisee_gender = row['author_genders']
 
             if row['AdvisorGender'] == 'female':
-                female[row['ThesisYear'] - 1980] += 1
+                female[row['Year'] - 1980] += 1
             elif row['AdvisorGender'] == 'male':
-                male[row['ThesisYear'] - 1980] += 1
+                male[row['Year'] - 1980] += 1
             else:
-                unknown[row['ThesisYear'] - 1980] += 1
+                unknown[row['Year'] - 1980] += 1
 
             if advisee_gender == 'female':
                 female_a[year - 1980] += 1
@@ -704,7 +1056,7 @@ def plot_adviser_gender():
 
 
         ax.legend()
-        ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
+        ax.set_title(f'{topic_id}: {d.topics[topic_id]["name"]}')
 
     plt.show()
 
@@ -715,64 +1067,13 @@ def plot_adviser_gender():
 
 
 
-    def grid_plot_topics(self, sorted_topic_ids, hue,
-                         y_max=None, df=None, show_plot=True, store_as_filename=None):
-
-        """
-        Can be used to plot a 10x7 grid of all topics
-
-        :param df:
-        :param sorted_topic_ids: list(int)
-        :param hue:
-        :param y_max:
-        :return:
-
-        # show topic distribution from most female to most male
-        >>> d = Dataset()
-        >>> male = d.copy().filter(author_gender='male')
-        >>> female = d.copy().filter(author_gender='female')
-        >>> difs = {}
-        >>> for topic_id in range(1, 71):
-        ...     dif = np.mean(female.df[f'topic.{topic_id}']) - np.mean(male.df[f'topic.{topic_id}'])
-        ...     difs[topic_id] = dif
-        >>> sorted_topic_ids =  [t[0] for t in sorted(difs.items(), key = lambda x: x[1], reverse=True)]
-        >>> d.grid_plot_topics(sorted_topic_ids, hue='AdviseeGender')
-
-        """
-
-        if not df:
-            df = self.df
-
-        fig = plt.figure(figsize=(50,50))
-        gs = gridspec.GridSpec(nrows=10, ncols=7, figure=fig)
-
-        for ax_id, topic_id in enumerate(sorted_topic_ids):
-            print(ax_id, topic_id)
-            row = ax_id // 7
-            col = ax_id % 7
-            ax = fig.add_subplot(gs[row, col])
-            ax = sns.lineplot(x='ThesisYear', y=f'topic.{topic_id}', hue=hue,
-                              data=df, ax=ax)
-            ax.set_title(f'{topic_id}: {TOPICS[topic_id]["name"]}')
-            ax.set_xlim(1980, 2015)
-            if y_max:
-                ax.set_ylim(0, y_max)
-
-        if show_plot:
-            plt.show()
-        if store_as_filename:
-            fig.savefig(Path('data', 'plots', store_as_filename))
-
 
 
 
 
 
 if __name__ == '__main__':
-    d = Dataset('dissertations')
-    d.filter(institution_filter='harvard')
 
-
-    plot_adviser_gender()
+    pass
 
 

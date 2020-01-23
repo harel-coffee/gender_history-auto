@@ -219,6 +219,8 @@ if __name__ == '__main__':
     d = Dataset()
     vocab = d.get_vocabulary(max_terms=200)
 
+
+
     plot_gender_development_over_time(
         no_terms_or_topics_to_show=5,
         data='topics',

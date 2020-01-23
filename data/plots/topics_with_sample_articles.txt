@@ -1,0 +1,1501 @@
+
+
+Topic ID: 1  . Topic Name: Noise (volume / year)
+terms, prob: ['histori', 'book', 'work', 'studi', 'publish', 'historian', 'first', 'histor', 'year', 'volum']
+terms, frex: ['volum', 'book', 'publish', 'biographi', 'edit', 'chapter', 'page', 'biograph', 'monograph', 'reader']
+Examples:
+1966 male   . Title: Three Decades of Research on Gustavus Adolphus. Authors: Ernst Ekman.
+1969 unknown. Title: Errata. Authors: None.
+1969 unknown. Title: Errata. Authors: None.
+1974 unknown. Title: Book Reviews. Authors: None.
+1963 male   . Title: Sacral Kingship and Charisma (Review). Authors: Percy Ernst Schramm.
+1983 female . Title: Growing Like Topsy: Research Guides to Women's History. Authors: Darlene R. Roth.
+1966 male   . Title: Recent Writings on William III. Authors: Stephen B. Baxter.
+1994 male   . Title: Introduction. Authors: Alberto Herrera.
+1951 male   . Title: Critical Note on the Documents on German Foreign Policy, 1918-1945. Authors: Gerhard L. Weinberg.
+1966 male   . Title: The Napoleonic Invasion of Russia and Recent Soviet Historical Writing. Authors: Barry Hollingsworth.
+
+Topic ID: 2  . Topic Name: Dutch History
+terms, prob: ['van', 'dutch', 'centuri', 'amsterdam', 'netherland', 'social', 'citi', 'der', 'het', 'also']
+terms, frex: ['bladelin', 'dumolyn', 'alkmaar', 'rgerschaft', 'haemer', 'ghent', 'inv.nr', 'schepenen', 'hugonet', 'kuyper']
+Examples:
+2008 male   . Title: "Criers and Shouters". The Discourse on Radical Urban Rebels in Late Medieval Flanders. Authors: Jan Dumolyn.
+2012 male   . Title: The Late Medieval "Crisis of the Nobility" Reconsidered: The Case of Flanders. Authors: Frederik Buylaert.
+2010 unknown. Title: Calvinist Pilgrimages And Popish Encounters: Religious Identity And Sacred Space On The Dutch Grand Tour (1598-1685). Authors: Gerrit Verhoeven.
+2007 unknown. Title: "Vivre Noblement": Material Culture and Elite Identity in Late Medieval Flanders. Authors: Wim De Clercq; Jelle Haemers; Jan Dumolyn.
+2009 unknown. Title: Factionalism and State Power in the Flemish Revolt (1482-1492). Authors: Jelle Haemers.
+2006 male   . Title: Nobles, Patricians and Officers: The Making of a Regional Political Elite in Late Medieval Flanders. Authors: Jan Dumolyn.
+2006 unknown. Title: "So That Every Subject Knows How to Behave": Social Disciplining in Early Modern Bohemia. Authors: Sheilagh Ogilvie.
+2002 male   . Title: Urban Space and Political Conflict in Late Medieval Flanders. Authors: Marc Boone.
+1968 male   . Title: Town and Countryside: Social and Economic Tensions in Fourteenth-Century Flanders. Authors: David M. Nicholas.
+2012 female . Title: Dirty Politics or "Harmonie"? Defining Corruption in Early Modern Amsterdam and Hamburg. Authors: Mary Lindemann.
+
+Topic ID: 3  . Topic Name: Noise (publication)
+terms, prob: ['press', 'new', 'london', 'york', 'vol', '1955', 'univers', '1957', '1958', 'pari']
+terms, frex: ['21s', '35s', '18s', '42s', '45s', '25s', 'musterschmidt', 'otava', '15s', 'kolehmainen']
+Examples:
+1960 male   . Title: Bibliography. Authors: Leon J. Apt.
+1955 unknown. Title: Bibliography and Notices. Authors: None.
+1957 unknown. Title: Bibliography. Authors: None.
+1957 unknown. Title: Bibliography. Authors: None.
+1959 male   . Title: Bibliography. Authors: Leon J. Apt.
+1959 male   . Title: Bibliography. Authors: Robin S. Oggins.
+1958 male   . Title: Bibliography. Authors: David R. Davis.
+1957 unknown. Title: Bibliography. Authors: None.
+1958 male   . Title: Bibliography. Authors: David R. Davis.
+1958 unknown. Title: Bibliography. Authors: None.
+
+Topic ID: 4  . Topic Name: Migration
+terms, prob: ['immigr', 'irish', 'migrat', 'emigr', 'ethnic', 'ireland', 'american', 'new', 'america', 'migrant']
+terms, frex: ['johnstown', 'tipperari', 'norwegian-american', 'puck', 'slovak', 'irish', 'irishmen', 'anti-irish', 'norse-american', 'post-famin']
+Examples:
+1985 male   . Title: "Irish All the Time:" Ethnic Consciousness among the Irish in Worcester, Massachusetts, 1880-1905. Authors: Timothy J. Meagher.
+1976 male   . Title: Immigration and Modernization: The Case of Slavic Peasants in Industrial America. Authors: John Bodnar.
+1981 male   . Title: "A Fanatic Heart": The Cause of Irish-American Nationalism in Pittsburgh during the Gilded Age. Authors: Victor A. Walsh.
+2012 male   . Title: Moving beyond "Rags to Riches": New York's Irish Famine Immigrants and Their Surprising Savings Accounts. Authors: Tyler Anbinder.
+2004 male   . Title: "Where Everyone Goes to Meet Everyone Else": The Translocal Creation of a Slovak Immigrant Community. Authors: Robert Zecker.
+1984 female . Title: 'For Bread with Butter': Life-Worlds of Peasant-Immigrants from East Central Europe, 1880-1914. Authors: Ewa Morawska.
+1989 female . Title: Labor Migrations of Poles in the Atlantic World Economy, 1880-1914. Authors: Ewa Morawska.
+2006 male   . Title: Babes in Bondage? Debt Shifting by German Immigrants in Early America. Authors: Farley Grubb.
+1965 male   . Title: Sweden's Constructive Opposition to Emigration. Authors: Franklin D. Scott.
+2007 male   . Title: Beyond "Voting with Their Feet": Toward a Conceptual History of "America" in European Migrant Sending Communities, 1860S to 1914. Authors: Max Paul Friedman.
+
+Topic ID: 5  . Topic Name: World History
+terms, prob: ['world', 'histori', 'modern', 'europ', 'european', 'global', 'western', 'univers', 'centuri', 'new']
+terms, frex: ['unesco', 'eurocentr', 'global', 'wallerstein', 'mcneill', 'needham', 'toynbe', 'huxley', 'blaut', 'world-system']
+Examples:
+2005 male   . Title: Globalization and the Great Convergence: Rethinking World History in the Long Term. Authors: David Northrup.
+1998 male   . Title: Comparing Global History to World History. Authors: Bruce Mazlish.
+1995 male   . Title: Marshall G. S. Hodgson and the Hemispheric Interregional Approach to World History. Authors: Edmund Burke.
+2001 unknown. Title: Erratum: China, the West, and World History in Joseph Needham's "Science and Civilisation in China". Authors: None.
+2002 male   . Title: Efflorescences and Economic Growth in World History: Rethinking the "Rise of the West" and the Industrial Revolution. Authors: Jack A. Goldstone.
+1992 male   . Title: Periodization in European and World History. Authors: William A. Green.
+2007 unknown. Title: Reconstructing World History in the People's Republic of China since the 1980s. Authors: Luo Xu.
+2012 unknown. Title: The Global View of History in China. Authors: Liu Xincheng.
+1991 male   . Title: A Plea for World System History. Authors: Andre Gunder Frank.
+1991 male   . Title: Graduate Teaching in World History. Authors: Philip D. Curtin.
+
+Topic ID: 6  . Topic Name: Political History
+terms, prob: ['state', 'govern', 'polici', 'nation', 'public', 'program', 'servic', 'committe', 'administr', 'offici']
+terms, frex: ['pension', 'welfar', 'fund', 'program', 'insur', 'retir', 'rfaa', 'committe', 'unemploy', 'implement']
+Examples:
+1970 male   . Title: The "Industrial-Military Complex" in Historical Perspective: The InterWar Years. Authors: Paul A. C. Koistinen.
+2012 female . Title: The Global Spread of Neoliberalism and China's Pension Reform since 1978. Authors: Aiqun Hu.
+1988 male   . Title: Nazification of the German Bureaucracy Reconsidered: A Case Study. Authors: Dan P. Silverman.
+1985 male   . Title: Research or Advocacy: Federal Occupational Safety and Health Policies during the New Deal. Authors: David Rosner; Gerald Markowitz.
+1961 male   . Title: Social Security, Incentives, and Controls in the U.S. and U.S.S.R.. Authors: Gaston V. Rimlinger.
+1995 female . Title: 'Employable Mothers' and 'Suitable Work': A Re-Evaluation of Welfare and Wage-Earning for Women in the Twentieth-Century United States. Authors: Joanne L. Goodwin.
+1981 male   . Title: Social Indicators. Authors: Tom W. Smith.
+1981 male   . Title: Nutrition, the Historian, and Public Policy: A Case Study of U.S. Nutrition Policy in the 20th Century. Authors: Vivek Bammi.
+1977 male   . Title: British Government Policy toward Colonial Development, 1919-39. Authors: Neal R. Malmsten.
+2007 unknown. Title: "The Crime of Survival": Fraud Prosecutions, Community Surveillance, and the Original "Welfare Queen". Authors: Julilly Kohler-Hausmann.
+
+Topic ID: 7  . Topic Name: ??
+terms, prob: ['letter', 'public', 'one', 'report', 'inform', 'paper', 'press', 'use', 'read', 'time']
+terms, frex: ['letter', 'speech', 'newspap', 'news', 'journalist', 'denunci', 'opinion', 'censorship', 'copi', 'inform']
+Examples:
+2011 unknown. Title: Communications. Authors: None.
+2011 unknown. Title: Communications. Authors: None.
+2012 unknown. Title: Communications. Authors: None.
+2009 male   . Title: "Those Who Have Had Trouble Can Sympathise With You": Press Writing, Reader Responses And A Murder Trial In Interwar Britain. Authors: John Carter Wood.
+2011 male   . Title: Communications. Authors: Rafael Medoff; Richard Breitman.
+2011 male   . Title: Communications. Authors: Randy Robertson.
+2007 unknown. Title: Communications. Authors: None.
+2009 male   . Title: Letters to the Editor. Authors: Gerald Horne.
+2007 male   . Title: Communications. Authors: Ronald J. Grele.
+2008 male   . Title: Being Editor. Authors: Thomas R. Trautmann.
+
+Topic ID: 8  . Topic Name: U.S. Colonial History
+terms, prob: ['coloni', 'virginia', 'english', 'new', 'see', 'color', 'histori', 'earli', 'carolina', 'jefferson']
+terms, frex: ['heme', 'rumley', 'chichera', 'cooleeme', 'acw', 'hef', 'jujuy', 'cugoano', 'bermuda', 'lefroy']
+Examples:
+2010 male   . Title: "A continuall and dayly Table for Gentlemen of fashion": Humanism, Food, and Authority at Jamestown, 1607—1609. Authors: Michael A. Lacombe.
+1985 female . Title: Bermuda and Virginia in the Seventeenth Century: A Comparative View. Authors: Virginia Bernhard.
+1986 unknown. Title: Cattle Ranching in the Venezuelan Llanos and the Florida Flatwoods: A Problem in Comparative History. Authors: N. E. Anderson; J. S. Otto.
+1979 female . Title: Apathy and Death in Early Jamestown. Authors: Karen Ordahl Kupperman.
+1985 male   . Title: The Sociology of Architecture in Colonial Charleston: Pattern and Process in an Eighteenth-Century Southern City. Authors: Peter A. Coclanis.
+2007 male   . Title: Weaving the Rainbow: Visions of Color in World History. Authors: Robert Finlay.
+1973 unknown. Title: A Changing Labor Force and Race Relations in Virginia 1660-1710. Authors: T. H. Breen.
+2007 male   . Title: To "Doe Some Good upon Their Countrymen": The Paradox of Indian Slavery in Early Anglo-America. Authors: Michael Guasco.
+1993 male   . Title: Manly Gambles: The Politics of Risk on the Comstock Lode, 1860-1880. Authors: Gunther Peck.
+2006 female . Title: "To Fear and to Love Us": Intercultural Violence in the English Atlantic. Authors: Melanie Perreault.
+
+Topic ID: 9  . Topic Name: ??Noise?? (historiography)
+terms, prob: ['histori', 'histor', 'historian', 'social', 'cultur', 'new', 'studi', 'see', 'american', 'work']
+terms, frex: ['scholarship', 'historian', 'historiographi', 'historiograph', '2006', 'paradigm', 'ahr', 'methodolog', '2007', 'sewel']
+Examples:
+2012 male   . Title: The Kids Are All Right: On the "Turning" of Cultural History. Authors: James W. Cook.
+2011 male   . Title: The Scholarship of Teaching and Learning and the History Classroom. Authors: Scott E. Casper.
+2012 female . Title: When Was the Linguistic Turn? A Genealogy. Authors: Judith Surkis.
+2012 male   . Title: Pivotal Moments in the History Curriculum: Surveys and Snapshots of Current Practice. Authors: Scott E. Casper.
+1990 male   . Title: Social History Update: Encountering Postmodernism. Authors: Peter N. Stearns.
+2008 male   . Title: Remembering the Future. Authors: Manu Goswami.
+2012 male   . Title: From Optic to Topic: The Foreclosure Effect of Historiographic Turns. Authors: Gary Wilder.
+2012 male   . Title: Comment: Generational Turns. Authors: Nathan Perl-Rosenthal.
+2003 male   . Title: "The Singularization of History": Social History and Microhistory within the Postmodern State of Knowledge. Authors: Sigurdur Gylfi Magnússon.
+2012 female . Title: Comment: Not Yet Far Enough. Authors: Julia Adeney Thomas.
+
+Topic ID: 10 . Topic Name: ??social groups / anthropology ??
+terms, prob: ['group', 'peopl', 'chief', 'societi', 'one', 'villag', 'communiti', 'polit', 'among', 'tribe']
+terms, frex: ['penan', 'kwilu', 'buganda', 'kabaka', 'ilparakuyo', 'maasai', 'baganda', 'dozoku', 'efik', 'mulel']
+Examples:
+1997 male   . Title: Prior Transcripts, Divergent Paths: Resistance and Acquiescence to Logging in Sarawak, East Malaysia. Authors: J. Peter Brosius.
+2000 male   . Title: Hierarchical Image and Reality: The Construction of a Tribal Chiefship. Authors: Philip Carl Salzman.
+1975 unknown. Title: Two Types of Reciprocity. Authors: C. R. Hallpike.
+1964 unknown. Title: The Advent of Populism in Buganda. Authors: D. A. Low.
+1972 male   . Title: Ecological Variables in the Origin and Evolution of African States: The Buganda Example. Authors: Conrad P. Kottak.
+1964 unknown. Title: Historical and Cultural Conditions of Political Corruption among the Hausa. Authors: M. G. Smith.
+1963 male   . Title: Poor Man, Rich Man, Big-Man, Chief: Political Types in Melanesia and Polynesia. Authors: Marshall D. Sahlins.
+1964 male   . Title: A Model of African Indigenous Economy and Society. Authors: Harold K. Schneider.
+1959 unknown. Title: Despotism, Status Culture and Social Mobility in an African Kingdom. Authors: L. A. Fallers.
+1965 unknown. Title: "The Second Independence": A Case Study of the Kwilu Rebellion in the Congo. Authors: Jean-Marie Ribeaucourt; Willy de Craemer; Renee C. Fox.
+
+Topic ID: 11 . Topic Name: ?? Religious History??
+terms, prob: ['ritual', 'death', 'templ', 'dead', 'ceremoni', 'cult', 'god', 'one', 'king', 'statu']
+terms, frex: ['corrol', 'kintu', 'sakalava', 'betsimisaraka', 'radama', 'merina', 'caulier', 'tamatav', 'wannian', 'kerma']
+Examples:
+2001 male   . Title: The Value of Coins in a Sakalava Polity: Money, Death, and Historicity in Mahajanga, Madagascar. Authors: Michael Lambek.
+2002 unknown. Title: Erratum. Authors: None.
+1965 unknown. Title: The Kingship of Cush in the Sudan. Authors: B. G. Haycock.
+2008 female . Title: Conceptualizing Gods through Statues: A Study of Personification and Localization in Taiwan. Authors: Wei-Ping Lin.
+1994 male   . Title: Flowers and Bones: Approaches to the Dead in Anglo-American and Italian Cemeteries. Authors: Jack Goody; Cesare Poppi.
+2007 male   . Title: History from the Healer's Shrine: Genre, Historical Imagination, and Early Ganda History. Authors: Neil Kodesh.
+1991 female . Title: A Backlands Saint in the Big City: Urban Transformations of the Padre Cicero Tales. Authors: Candace Slater.
+1994 female . Title: "All That Glitters": Contemporary Amazonian Gold Miners' Tales. Authors: Candace Slater.
+1984 male   . Title: The First Colonial Empire: Egypt in Nubia, 3200-1200 B.C.. Authors: William Y. Adams.
+1999 female . Title: Hanover Deathscapes: Mortuary Variability in New Hampshire, 1770-1920. Authors: Lynn Rainville.
+
+Topic ID: 12 . Topic Name: French History
+terms, prob: ['french', 'franc', 'pari', 'des', 'les', 'see', 'nation', 'general', 'polit', 'republ']
+terms, frex: ['blanquist', 'monfalcon', 'syndicat', 'enfantin', 'blanqui', 'subprefect', 'liegeoi', 'guesdist', 'pivert', 'croix-rouss']
+Examples:
+1959 male   . Title: French Socialist Congresses, 1876-1914. Authors: Jack Alden Clarke.
+1953 male   . Title: Migrations to Paris during the Second Empire. Authors: David H. Pinkney.
+1979 male   . Title: L'arme du siecle, c'est la plume: The French Worker Poets of the July Monarchy and the Spirit of Revolution and Reform. Authors: Edgar Leon Newman.
+1974 male   . Title: The Blouse and the Frock Coat: The Alliance of the Common People of Paris with the Liberal Leadership and the Middle Class during the Last Years of the Bourbon Restoration. Authors: Edgar Leon Newman.
+1972 male   . Title: The Revolutionary Crowd in Paris in the 1830s. Authors: David H. Pinkney.
+1999 male   . Title: Assistance and Repression: Rural Exodus, Vagabondage and Social Crisis in France, 1880-1914. Authors: Timothy B. Smith.
+1959 male   . Title: The French Banquet Campaign of 1847-48. Authors: John J. Baughman.
+1974 male   . Title: The Role of the Blanquist Party in Left-Wing Politics in France, 1879-90. Authors: Patrick H. Hutton.
+1962 male   . Title: Writings on the Second French Republic. Authors: Peter H. Amann.
+1974 male   . Title: Social Drinking in the "Belle Epoque". Authors: Michael R. Marrus.
+
+Topic ID: 13 . Topic Name: Art History
+terms, prob: ['art', 'paint', 'imag', 'photograph', 'artist', 'museum', 'new', 'exhibit', 'object', 'cultur']
+terms, frex: ['photographi', 'mofokeng', 'halprin', 'siqueiro', 'diorama', 'artwork', 'caricaturist', 'nadar', 'cartoonist', 'photograph']
+Examples:
+2010 female . Title: Art Out Of Place: International Art Exhibits At The New York World'S Fair Of 1964-1965. Authors: Julie Nicoletta.
+2001 male   . Title: Art Museums, Old Paintings, and Our Knowledge of the Past. Authors: David Carrier.
+2009 male   . Title: Of Fish, Birds, Cats, Mice, Spiders, Flies, Pigs, and Chimpanzees: How Chance Casts the Historic Action Photograph into Doubt. Authors: Robin Kelsey.
+2009 female . Title: The Syntax of Objects and the Representation of History: Speaking of "Slavery in New York". Authors: Bettina M. Carbonell.
+2011 female . Title: The Portal of Touch. Authors: Elizabeth D. Harvey.
+2007 female . Title: Museum Manners: The Sensory Life of the Early Museum. Authors: Constance Classen.
+2010 female . Title: Public Art At The Global Crossroads: The Politics Of Place In 1930S Los Angeles. Authors: Sarah Schrank.
+2009 male   . Title: "Black Skin and Blood": Documentary Photography and Santu Mofokeng's Critique of the Visualization of Apartheid South Africa. Authors: David Campbell.
+1989 female . Title: The Aesthetics and Politics of Colonial Collecting: India at World Fairs. Authors: Carol A. Breckenridge.
+1990 male   . Title: Counterfeiting Nature: Artistic Innovation and Cultural Crisis in Renaissance Venice. Authors: Arthur Steinberg; Jonathan Wylie.
+
+Topic ID: 14 . Topic Name: Economic History
+terms, prob: ['econom', 'market', 'trade', 'economi', 'product', 'industri', 'capit', 'price', 'money', 'busi']
+terms, frex: ['market', 'debt', 'loan', 'export', 'entrepreneur', 'price', 'credit', 'economi', 'jute', 'bank']
+Examples:
+1992 male   . Title: Coping with Global Debt Crises Debt Settlements, 1820 to 1986. Authors: Christian Suter; Hanspeter Stamm.
+1996 female . Title: The Rise of the Jute Manufacturing Industry in Colonial India: A Global Perspective. Authors: Tara Sethia.
+1981 unknown. Title: Cakes and Oil: Technology Transfer and Chinese Soybean Processing, 1860-1895. Authors: Shannon R. Brown.
+1964 unknown. Title: Comment on "Usury in Medieval India". Authors: Josfph J. Spengler.
+1997 male   . Title: Intercontinental Trade and the Development of the Third World since the Industrial Revolution. Authors: Patrick Karl O'Brien.
+1984 female . Title: Brokers as Entrepreneurs in Presocialist China. Authors: Susan Mann.
+1985 female . Title: The Rural Marketing System of Egypt over the Last Three Hundred Years. Authors: Barbara K. Larson.
+1986 female . Title: The Impact of the Cuban Revolution: A Comparative Perspective. Authors: Susan Eckstein.
+1992 male   . Title: Manufacturer or Artisan? The Relationship between Economic and Cultural Change in the Early Stages of the Eighteenth-Century Industrialization. Authors: John Smail.
+1954 unknown. Title: A Secret Memorandum of Sergei Witte on the Industrialization of Imperial Russia. Authors: T. H. Von Laue.
+
+Topic ID: 15 . Topic Name: Ancient History
+terms, prob: ['roman', 'greek', 'ancient', 'centuri', 'see', 'mediev', 'rome', 'histori', 'empir', 'antiqu']
+terms, frex: ['pastorius', 'templum', 'grundtvigian', 'rudbeck', 'plini', 'vespasian', 'grundtvig', 'garnsey', 'herodotus', 'flavian']
+Examples:
+2008 female . Title: "Pygmies" of the Far North. Authors: Kirsten A. Seaver.
+1971 unknown. Title: The Image of the Barbarian in Medieval Europe. Authors: W. R. Jones.
+1976 male   . Title: "Day was of Sudden Turned into Night": On the Use of Eclipses for Dating Oral History. Authors: David Henige.
+2012 male   . Title: Toward a Cultural History of Scholastic Disputation. Authors: Alex J. Novikoff.
+1962 male   . Title: Gothic Patriotism and Olof Rudbeck. Authors: Ernst Ekman.
+1961 male   . Title: The Transfer of Population as a Policy in the Byzantine Empire. Authors: Peter Charanis.
+2004 male   . Title: The Fate of Jewish Historiography after the Bible: A New Interpretation. Authors: Amram Tropper.
+2013 male   . Title: Religious Intercrossing in Late Antique Eurasia: Loss, Corruption, and Canon Formation. Authors: Paul C. Dilley.
+2012 male   . Title: The Republic of Letters in the American Colonies: Francis Daniel Pastorius Makes a Notebook. Authors: Anthony Grafton.
+2009 unknown. Title: Translation as Self-Consciousness: Ancient Sciences, Antediluvian Wisdom, and the 'Abbāsid Translation Movement. Authors: Hayrettin Yücesoy.
+
+Topic ID: 16 . Topic Name: ?? American History ??
+terms, prob: ['new', 'york', 'state', 'calhoun', 'american', 'convent', 'paper', 'john', 'ibid', 'railroad']
+terms, frex: ['moreel', 'amesburi', 'calhoun', 'buren', 'lyceum', 'kossuth', 'suffragist', 'abigail', 'stanton', 'populist']
+Examples:
+1951 male   . Title: Calhoun's Bid for the Presidency, 1841-1844. Authors: Matthew A. Fitzsimons.
+1953 female . Title: The Building of the Sault Canal: 1852-1855. Authors: Irene D. Neu.
+1963 male   . Title: The "Cow-bird" Grounded: The Populist Nomination of Bryan and Tom Watson in 1896. Authors: Robert F. Durden.
+1993 male   . Title: "The Art of Hook & Snivey": Political Culture in Upstate New York during the 1790s. Authors: Alan Taylor.
+1962 male   . Title: The Split of Feminist Movement in 1869. Authors: Robert E. Riegel.
+2003 male   . Title: Information, Markets, and Corruption: Transcontinental Railroads in the Gilded Age. Authors: Richard White.
+1952 male   . Title: Middle Western Copperheadism and the Genesis of the Granger Movement. Authors: Frank L. Klement.
+2010 male   . Title: Smuggling, Globalization, and America's Outward State, 1870-1909. Authors: Andrew Wender Cohen.
+2010 female . Title: The Incorporation of American Feminism: Suffragists and the Postbellum Lyceum. Authors: Lisa Tetrault.
+1975 female . Title: Leadership and Tactics in the American Woman Suffrage Movement: A New Perspective from Massachusetts. Authors: Sharon Hartman Strom.
+
+Topic ID: 17 . Topic Name: ?? Japanese / East Asian History ?? 
+terms, prob: ['japan', 'japanes', 'tokyo', 'meiji', 'korean', 'nation', 'korea', 'new', 'pacif', 'world']
+terms, frex: ['kagawa', 'bakufu', 'maruyama', 'yakuza', 'muragaki', 'yoshino', 'mechnikov', 'ipr', 'ishin', 'nihon']
+Examples:
+2013 unknown. Title: The Hajj by Japanese Muslims in the Interwar Period: Japan's Pan-Asianism and Economic Interests in the Islamic World. Authors: Mikiya Koyagi.
+2006 male   . Title: Diplomats and Poets: "Power and Perceptions" in American Encounters with Japan, 1860. Authors: David Scott.
+1995 male   . Title: The American YMCA in Meiji Japan: God's Work Gone Awry. Authors: Jon Thares Davidann.
+2005 female . Title: Modeling the West, Returning to Asia: Shifting Politics of Representation in Japanese Colonial Expositions in Korea. Authors: Hong Kal.
+2001 male   . Title: "Colossal Illusions": U.S.-Japanese Relations in the Institute of Pacific Relations, 1919-1938. Authors: Jon Thares Davidann.
+2009 unknown. Title: "A Scramble for Freight": The Politics of Collaboration along and across the Railway Tracks of Korea under Japanese Rule. Authors: Jun Uchida.
+2012 female . Title: Befitting Bedfellows: Yakuza and the State in Modern Japan. Authors: Eiko Maruko Siniawer.
+2004 unknown. Title: "Hull-House" in Downtown Tokyo: The Transplantation of a Settlement House from the United States into Japan and the North American Missionary Women, 1919-1945. Authors: Manako Ogawa.
+2004 female . Title: Global Feminism and Postwar Reconstruction: The World YWCA Visitation to Occupied Japan, 1947. Authors: Karen Garner.
+2007 male   . Title: Reopening the "Opening of Japan": A Russian-Japanese Revolutionary Encounter and the Vision of Anarchist Progress. Authors: Sho Konishi.
+
+Topic ID: 18 . Topic Name: Education
+terms, prob: ['school', 'educ', 'student', 'teacher', 'univers', 'profession', 'teach', 'colleg', 'train', 'social']
+terms, frex: ['f17', 'curriculum', 'duruy', 'teacher', 'classroom', 'enrol', 'student', 'school', 'conducteur', 'graduat']
+Examples:
+1975 male   . Title: Secondary Education and the Professions in France during the Second Empire. Authors: Patrick J. Harrigan.
+1981 male   . Title: Schools as Sorters: Testing and Tracking in California, 1910-1925. Authors: Paul Davis Chapman.
+1972 unknown. Title: Technical and Professional Education in France: The Rise and Fall of L'Enseignement, Secondaire Special, 1865-1902. Authors: C. R. Day.
+1985 male   . Title: Curriculum and Tracking in the Transformation of the American High School: Providence, R.I. 1880-1930. Authors: Joel Perlmann.
+1975 unknown. Title: The Social Appeals of Catholic Secondary Education in France in the 1870s. Authors: P. J. Harrigan.
+1981 male   . Title: Educational Policy and the Applied Historian: Testing, Competency and Standards. Authors: Daniel P. Resnick.
+1985 male   . Title: The Catholic Contribution to Universal Schooling in France, 1850-1906. Authors: Patrick J. Harrigan; Raymond Grew.
+1981 female . Title: Educating for Clerical Work: The Nineteenth-Century Private Commercial School. Authors: Janice Weiss.
+1981 male   . Title: Social Access to the Professions: Late Nineteenth-Century Academics at the University of Michigan as a Case Study. Authors: Alan Creutz.
+1971 unknown. Title: Some Recent Work on Higher Education. Authors: R. R. Palmer.
+
+Topic ID: 19 . Topic Name: Home
+terms, prob: ['home', 'new', 'american', 'disabl', 'social', 'york', 'veteran', 'smoke', 'health', 'public']
+terms, frex: ['tenbroek', 'rubinow', 'electrolysi', 'hobbi', 'carvill', 'behrend', 'playroom', 'disabl', 'smoke', 'toy']
+Examples:
+1986 female . Title: Submerged Sensuality: Technology and Perceptions of Bathing. Authors: Jacqueline S. Wilkie.
+1996 male   . Title: Managing Danger in the Home Environment, 1900-1940. Authors: Mark Tebeau; Joel A. Tarr.
+1995 male   . Title: Whatever Happened to Industrial Waste?: Reform, Compromise, and Science in Nineteenth Century Southern New England. Authors: John T. Cumbler.
+2008 female . Title: Subjected to the Current: Batteries, Bodies, and the Early History of Electrification in the United States. Authors: Rebecca Herzig.
+2010 male   . Title: Sociability And "Separate Spheres" On The North Atlantic: The Interior Architecture Of British Atlantic Liners, 1840-1930. Authors: Douglas Hart.
+1981 male   . Title: Changing Fuel Use Behavior and Energy Transitions: The Pittsburgh Smoke Control Movement, 1940-1950: A Case Study in Historical Analogy. Authors: Bill C. Lamperes; Joel A. Tarr.
+2008 female . Title: Be a Patriot, Buy a Home: Re-Imagining Home Owners and Home Ownership in Early 20th Century Atlanta. Authors: LeeAnn Lands.
+1996 male   . Title: Why Did the Infants and Toddlers Die? Shifts in Americans' Ideas of Responsibility for Accidents: From Blaming Mom to Engineering. Authors: John C. Burnham.
+2010 female . Title: "We Mentally Ill Smoke A Lot": Identity, Smoking, And Mental Illness In America. Authors: Laura Hirshbein.
+2003 male   . Title: Disabled Veterans, the State, and the Experience of Disability in Western Societies, 1914-1950. Authors: David A. Gerber.
+
+Topic ID: 20 . Topic Name: Noise (dates)
+terms, prob: ['octob', 'april', 'februari', 'januari', 'march', 'septemb', 'novemb', 'june', 'decemb', 'august']
+terms, frex: ['februari', 'octob', 'novemb', 'januari', 'septemb', 'april', 'mormon', 'august', 'decemb', 'march']
+Examples:
+2010 female . Title: An American Album, 1857. Authors: Laurel Thatcher Ulrich.
+1996 unknown. Title: Errata: Book Review. Authors: None.
+1999 male   . Title: From Racist Stereotype to Ethnic Identity: Instrumental Uses of Mormon Racial Doctrine. Authors: Thomas W. Murphy.
+2004 unknown. Title: Learning to Shop in Zion: The Consumer Revolution in Great Basin Mormon Culture, 1847-1910. Authors: Greg ("Fritz") Umbach.
+1996 unknown. Title: Correction. Authors: None.
+2011 male   . Title: Photography and the Religious Encounter: Ambiguity and Aesthetics in Missionary Representations of the Luba of South East Belgian Congo. Authors: David Maxwell.
+1984 male   . Title: The Best and the Worst of Times: The Jacobin Club Network from October 1791 to June 2, 1793. Authors: Michael L. Kennedy.
+1997 male   . Title: Correspondence. Authors: Edward Countryman; Harvey Klehr; Ronald Radosh.
+1997 male   . Title: Correspondence. Authors: Gar Alperovitz.
+1979 male   . Title: The Foundation of the Jacobin Clubs and the Development of the Jacobin Club Network, 1789-1791. Authors: Michael L. Kennedy.
+
+Topic ID: 21 . Topic Name: Native American History
+terms, prob: ['indian', 'collect', 'iroquoi', 'archaeolog', 'record', 'nativ', 'creek', 'nation', 'histor', 'archiv']
+terms, frex: ['shuar', 'labret', 'kahnawak', 'achuar', 'jivaro', 'malatchi', 'narrain', 'pashto', 'gunflint', 'beaudri']
+Examples:
+1999 female . Title: George Catlin among the Nayas: Understanding the Practice of Labret Wearing on the Northwest Coast. Authors: Madonna L. Moss.
+1967 male   . Title: General Guide to Documents on the Five Civilized Tribes in the University of Oklahoma Library Division of Manuscripts. Authors: William K. Jones.
+1999 male   . Title: The Silenced Miami: Archaeological and Ethnohistorical Evidence for Miami-British Relations, 1795-1812. Authors: Rob Mann.
+1967 male   . Title: Ancient Tribes Revisited: A Summary of Indian Distribution and Movement in the Northeastern United States from 1534 to 1779. Parts I-III. Authors: Bernard G. Hoffman.
+1999 male   . Title:  Trade Goods and Jívaro Warfare: The Shuar 1850-1957, and the Achuar, 1940-1978 . Authors: Daniel Steel.
+1999 male   . Title: An Ethnohistorical Analysis of Iroquois Assault Tactics Used against Fortified Settlements of the Northeast in the Seventeenth Century. Authors: Craig S. Keener.
+1999 female . Title: Schools, Settlement, and Sanitation in Alaska Native Villages. Authors: Gigi Berardi.
+1999 female . Title: An Alliance between Men: Gender Metaphors in Eighteenth-Century American Indian Diplomacy East of the Mississippi. Authors: Nancy Shoemaker.
+2000 male   . Title: Archaeology and Probate Inventories in the Study of Eighteenth-Century Life. Authors: John Bedell.
+1951 male   . Title: The Norton Napoleon Collection. Authors: John Hall Stewart.
+
+Topic ID: 22 . Topic Name: ?? Criminal History
+terms, prob: ['crime', 'prison', 'violenc', 'case', 'polic', 'crimin', 'court', 'convict', 'punish', 'murder']
+terms, frex: ['homicid', 'penitentiari', 'crime', 'prison', 'crimin', 'incarcer', 'penal', 'murder', 'sentenc', 'theft']
+Examples:
+2002 male   . Title: "Justifiable Provocation": Violence against Women in Essex County, New York, 1799-1860. Authors: Sean T. Moore.
+2001 female . Title: Faces of Violence Revisited. A Typology of Violence in Early Modern Rural Germany. Authors: Eva Lacour.
+1976 female . Title: Violent Death in Fourteenth- and Early Fifteenth-Century England. Authors: Barbara A. Hanawalt.
+1981 male   . Title: Justice Unblind: The Juries and the Criminal Classes in France, 1825-1914. Authors: James M. Donovan.
+2006 male   . Title: "It Is His First Offense. We Might as Well Let Him Go": Homicide and Criminal Justice in Chicago, 1875-1920. Authors: Jeffrey S. Adler.
+1987 male   . Title: Justice and Sexuality in Victorian Marseille 1825-1885. Authors: James M. Donovan.
+1999 female . Title: The Agreeable Recreation of Fighting. Authors: Carolyn Conley.
+1978 female . Title: A "Torrent of Abuse": Crimes of Violence between Working-Class Men and Women in London, 1840-1875. Authors: Nancy Tomes.
+1978 male   . Title: "Things Fearful to Name": Sodomy and Buggery in Seventeenth-Century New England. Authors: Robert F. Oaks.
+1993 female . Title: Following the Rules? Women's Responses to Incarceration, New Zealand, 1880-1920. Authors: Bronwyn Dalley.
+
+Topic ID: 23 . Topic Name: History of Slavery
+terms, prob: ['slave', 'slaveri', 'free', 'labor', 'master', 'plantat', 'negro', 'coloni', 'freedom', 'planter']
+terms, frex: ['benezet', 'dessalin', 'slaveri', 'slave', 'manumiss', 'jamaica', 'barbado', 'slaveown', 'bondag', 'antislaveri']
+Examples:
+1988 male   . Title: 'That Disposition to Theft, with Which They Have Been Branded': Moral Economy, Slave Management, and the Law. Authors: Alex Lichtenstein.
+2012 female . Title: Haiti, Free Soil, and Antislavery in the Revolutionary Atlantic. Authors: Ada Ferrer.
+1980 female . Title: Culture, Conflict, and Community: The Meaning of Power on an Ante-Bellum Plantation. Authors: Drew Gilpin Faust.
+2005 female . Title: The King v. Robert James, a Slave, for Rape: Inequality, Gender, and British Slave Amelioration, 1823-1834. Authors: Melanie J. Newton.
+1993 male   . Title: "A Class of People Neither Freemen nor Slaves": From Spanish to American Race Relations in Florida, 1821-1861. Authors: Daniel L. Schafer.
+1981 male   . Title: Systems of Domination after Slavery: The Control of Land and Labor in the British West Indies after 1838. Authors: O. Nigel Bolland.
+2004 female . Title: "To Wed or Not to Wed?": The Struggle to Define Afro-Jamaican Relationships, 1834-1838. Authors: Henrice Altink.
+1984 male   . Title: The Perils of Comparative History: Belize and the British Sugar Colonies after Slavery. Authors: William A. Green.
+2008 male   . Title: Reconfiguring the Old South: "Solving" the Problem of Slavery, 1787-1838. Authors: Lacy Ford.
+1991 male   . Title: Social History Update: Slave Resistance and Social History. Authors: Robert L. Paquette.
+
+Topic ID: 24 . Topic Name: ?? Noise (German Language)
+terms, prob: ['der', 'und', 'german', 'die', 'von', 'berlin', 'des', 'germani', 'see', 'das']
+terms, frex: ['wetzlar', 'gneist', 'miinzenberg', 'philippist', 'mayerl', 'uspd', 'sebottendorff', 'gnesio-lutheran', 'wiesfleck', 'fahn']
+Examples:
+1951 male   . Title: Vlasov and Hitler. Authors: George Fischer.
+1958 male   . Title: Gottfried Feder Calls Hitler to Order: An Unpublished Letter on Nazi Party Affairs. Authors: Oron James Hale.
+1968 male   . Title: Hitler's Secret Pamphlet for Industrialists, 1927. Authors: Henry Ashby Turner.
+1986 male   . Title: The Development of the Eternal Diet in Regensburg. Authors: Anton Schindling.
+1960 male   . Title: A Ranke Letter. Authors: Guy Stanton Ford.
+1985 male   . Title: From Sovereign States to Prussian Provinces: Hanover and Hesse-Nassau, 1866-1871. Authors: Hans A. Schmitt.
+1986 female . Title: Problems of Small Estates of the Empire: The Example of the Swabian Imperial Prelates. Authors: Armgard von Reden-Dohna.
+1952 male   . Title: Some German Socialist Newspapers in European Archives. Authors: John L. Snell.
+1986 male   . Title: The Habsburg Court as Center of the Imperial Government. Authors: Volker Press.
+1961 male   . Title: The Elections to the Frankfurt Parliament. Authors: Theodore S. Hamerow.
+
+Topic ID: 25 . Topic Name: ?? U.S. Colonial / New England ??
+terms, prob: ['new', 'york', 'england', 'boston', 'town', 'american', 'massachusett', 'histori', 'see', 'counti']
+terms, frex: ['hingham', 'ipswich', 'ursulin', 'wilkes-barr', 'hasbrouck', 'salem', 'wayland', 'northampton', 'andov', 'hampshir']
+Examples:
+1997 male   . Title: Social Change, Republican Rhetoric, and the American Revolution: The Case of Salem, Massachusetts. Authors: Richard J. Morris.
+1972 male   . Title: Nineteenth-Century Elites in Boston and New York. Authors: Frederic Cople Jaher.
+1975 male   . Title: Harvard and the Boston Brahmins: A Study in Institutional and Class Development, 1800-1865. Authors: Ronald Story.
+1971 male   . Title: Did Fortunes Rise and Fall Mercurially in Antebellum America? The Tale of Two Cities: Boston and New York. Authors: Edward Pessen.
+1982 male   . Title: Enthusiasm Described and Decried: The Great Awakening as Interpretative Fiction. Authors: Jon Butler.
+1975 male   . Title: Ministerial Careers in Eighteenth-Century New England: The Social Context, 1700-1760. Authors: James W. Schmotter.
+1974 male   . Title: The Great Awakening in New England Reconsidered: The New England Clergy. Authors: Harry S. Stout.
+2010 female . Title: Evangelical Male Friendships In America'S First Age Of Reform. Authors: Jessica Warner.
+1983 male   . Title: James Davenport and the Great Awakening in New London. Authors: Peter Onuf; Harry S. Stout.
+1993 male   . Title: The Seeds of Prosperity and Discord: The Political Economy of Community Polarization in Greenfield, Massachusetts, 1770-1820. Authors: Gerald F. Reid.
+
+Topic ID: 26 . Topic Name: Indian History
+terms, prob: ['india', 'indian', 'british', 'coloni', 'cast', 'hindu', 'muslim', 'delhi', 'south', 'also']
+terms, frex: ['vanniyar', 'tagor', 'dalit', 'brahmo', 'samaj', 'brahman', 'gounder', 'karanam', 'tenz', 'panchayat']
+Examples:
+1999 male   . Title: Who Invented Hinduism?. Authors: David N. Lorenzen.
+2006 female . Title: Genre and Devotion in Punjabi Popular Narratives: Rethinking Cultural and Religious Syncretism. Authors: Farina Mir.
+2005 male   . Title: Translating Science, Translating Empire: The Power of Language in Colonial North India. Authors: Michael S. Dodson.
+1995 female . Title: Inscribing the Other, Inscribing the Self: Hindu-Muslim Identities in Pre-Colonial India. Authors: Cynthia Talbot.
+1971 female . Title: The Image of the Barbarian in Early India. Authors: Romila Thapar.
+1993 male   . Title: Colonial Knowledge and the Fate of Hindustani. Authors: David Lelyveld.
+2003 male   . Title: Shades of Orientalism: Paradoxes and Problems in Indian Historiography. Authors: Peter Heehs.
+2006 male   . Title: Digging Wells while Houses Burn? Writing Histories of Hinduism in a Time of Identity Politics. Authors: David Gordon White.
+2005 male   . Title: The Emergence of Conversion in a Hindu-Buddhist Polytropy: The Kathmandu Valley, Nepal, c. 1600-1995. Authors: David N. Gellner.
+1993 unknown. Title: En / Gendering Language: The Poetics of Tamil Identity. Authors: Sumathi Ramaswamy.
+
+Topic ID: 27 . Topic Name: History of Food and Consumption
+terms, prob: ['consum', 'new', 'food', 'consumpt', 'cultur', 'good', 'cloth', 'social', 'advertis', 'store']
+terms, frex: ['corset', 'cookbook', 'legouv', 'supermarket', 'camper', 'lingeri', 'corsetless', 'sportswear', 'consumer', 'tourism']
+Examples:
+2003 female . Title: A "Real Man's Ring": Gender and the Invention of Tradition. Authors: Vicki Howard.
+2010 male   . Title: "Speaking Of Tomatoes": Supermarkets, The Senses, And Sexual Fantasy In Modern America. Authors: Adam Mack.
+1999 female . Title: 'Fighting the Corsetless Evil': Shaping Corsets and Culture, 1900-1930. Authors: Jill Fields.
+2007 female . Title: Made in Miami: The Development of the Sportswear Industry in South Florida, 1900-1960. Authors: Deirdre Clemente.
+2010 female . Title: Regime Change: Gender, Class, And The Invention Of Dieting In Post-Bellum America. Authors: Katharina Vester.
+2010 female . Title: "No Fertile Soil For Pathogens": Rayon, Advertising, And Biopolitics In Late Weimar Germany. Authors: Yvette Florio Lane.
+1993 female . Title: Selling the American Way in Interwar France: "Prix Uniques" and the Salons Des Arts Menagers. Authors: Ellen Furlough.
+1998 male   . Title: Consuming Brotherhood: Men's Culture, Style and Recreation as Consumer Culture, 1880-1930. Authors: Mark A. Swiencicki.
+2005 female . Title: Incarnations and Practices of Feminine Rectitude: Nineteenth-Century Gymnastics for U.S. Women. Authors: Ann Chisholm.
+2005 male   . Title: 'Make Lisle the Style': The Politics of Fashion in the Japanese Silk Boycott, 1937-1940. Authors: Lawrence B. Glickman.
+
+Topic ID: 28 . Topic Name: British History
+terms, prob: ['london', 'english', 'england', 'lord', 'hous', 'common', 'king', 'parliament', 'john', 'sir']
+terms, frex: ['strafford', 'pepi', 'baronet', 'kishlanski', 'alehous', 'cromwel', 'scotland', 'westminst', 'borough', 'buckingham']
+Examples:
+1977 male   . Title: The Electoral Patronage of Sir Thomas Wentworth, Earl of Strafford, 1614-1640. Authors: John K. Gruenfelder.
+1967 male   . Title: Parliamentary Influence of Charles Howard, Earl of Nottingham, 1536-1624. Authors: Robert W. Kenny.
+1957 male   . Title: The Sale of Peerages in Early Stuart England. Authors: Charles R. Mayes.
+1951 unknown. Title: Oxfordshire Enclosure Commissioners, 1737-1856. Authors: W. E. Tate.
+1977 male   . Title: The Peers, the People, and Parliamentary Management in the First Six Months of the Long Parliament. Authors: Paul Christianson.
+1962 male   . Title: Ministerial Responsibility in the 1620's. Authors: Clifford B. Anderson.
+1961 female . Title: The Jacobean Baronets: An Issue between King and Parliament. Authors: Katherine S. Van Eerde.
+1977 male   . Title: The Earl of Bedford and the Coming of the English Revolution. Authors: Clayton Roberts.
+1956 male   . Title: The Growth of Ministerial Responsibility to Parliament in Later Stuart England. Authors: Clayton Roberts.
+1955 male   . Title: Influence of Irregularities in Contested Elections upon Election Policy during the Reign of William III. Authors: George L. Cherry.
+
+Topic ID: 29 . Topic Name: Race
+terms, prob: ['black', 'white', 'south', 'negro', 'african', 'american', 'southern', 'race', 'counti', 'racial']
+terms, frex: ['edgefield', 'firefight', 'stfu', 'african-american', 'harlem', 'src', 'lynch', 'garvey', 'memphi', 'black']
+Examples:
+2006 male   . Title: "Headed for Louisville:" Rethinking Rural to Urban Migration in the South, 1930-1950. Authors: Luther Adams.
+1991 male   . Title: "Bloody Caddo": White Violence against Blacks in a Louisiana Parish, 1865-1876. Authors: Gilles Vandal.
+1973 male   . Title: Before the Ghetto: The Making of the Black Community in Savannah, Georgia, 1865-1880. Authors: John W. Blassingame.
+1978 male   . Title: Race and Reconstruction: Edgefield County, South Carolina. Authors: Vernon Burton.
+1997 male   . Title: Property Offenses, Social Tension and Racial Antagonism in Post-Civil War Rural Louisiana. Authors: Gilles Vandal.
+1996 male   . Title: The Logic and Limits of "Plant Loyalty": Black Workers, White Labor, and Corporate Racial Paternalism in Chicago's Stockyards, 1916-1940. Authors: Paul Street.
+1984 male   . Title: A Spirit of Lawlessness: White Violence; Texas Blacks, 1865-1868. Authors: Barry A. Crouch.
+1993 male   . Title: "Your Old Father Abe Lincoln Is Dead and Damned": Black Soldiers and the Memphis Race Riot of 1866. Authors: Kevin R. Hardwick.
+1980 male   . Title: A Politics of Limited Options: Northern Black Politics and the Problem of Change and Continuity in Race Relations Historiography. Authors: David A. Gerber.
+2007 male   . Title: "Men of Colour": Race, Riots, and Black Firefighters' Struggle for Equality from the Afa to the Valiants. Authors: John C. McWilliams.
+
+Topic ID: 30 . Topic Name: Jewish History
+terms, prob: ['jewish', 'jew', 'arab', 'israel', 'palestin', 'nation', 'palestinian', 'anti-semit', 'polish', 'communiti']
+terms, frex: ['herzl', 'histadrut', 'kibbutz', 'palestinian', 'hadassah', 'non-jewish', 'aviv', 'non-jew', 'ncjw', 'smolenskii']
+Examples:
+1980 male   . Title: Theodore Herzl: A Reevaluation. Authors: Jacques Kornberg.
+1996 male   . Title: Before the "Final Solution": Toward a Comparative Analysis of Political Anti-Semitism in Interwar Germany and Poland. Authors: William W. Hagen.
+2006 female . Title:  Ethnonationalism, Assimilation, and the Social Worlds of the Jewish Bolsheviks in Fin de Siècle Tsarist Russia . Authors: Liliana Riga.
+1993 male   . Title: Railway Workers and Relational History: Arabs and Jews in British-Ruled Palestine. Authors: Zachary Lockman.
+2009 male   . Title: On Reconciling the Histories of Two Chosen Peoples. Authors: David Engel.
+1981 male   . Title: German Jewry's Search for Renewal in the Hitler Era as Reflected in the Major Jewish Newspapers (1933-1938). Authors: Jacob Boas.
+1982 female . Title: The History of European Jewry: Recent Trends in the Literature. Authors: Paula E. Hyman.
+2008 female . Title: Nationalism and the 'Jewish International': Religious Internationalism in Europe and the Middle East c. 1840-c. 1880. Authors: Abigail Green.
+1980 male   . Title: Jewish Millenarianism: A Comparison of Medieval Communities. Authors: Stephen Sharot.
+2005 male   . Title: Citizens without Sovereignty: Transfer and Ethnic Cleansing in Israel. Authors: Robert Blecher.
+
+Topic ID: 31 . Topic Name: ?? Nation State
+terms, prob: ['nation', 'cultur', 'state', 'polit', 'ident', 'press', 'univers', 'peopl', 'ethnic', 'practic']
+terms, frex: ['nation-st', 'modular', 'mauritian', 'bourdieu', 'discours', 'discurs', 'nationhood', 'ident', 'rwandan', 'arosi']
+Examples:
+2002 male   . Title: Rethinking the Modular Nation Form: Toward a Sociohistorical Conception of Nationalism. Authors: Manu Goswami.
+2007 male   . Title: Creole Publics: Language, Cultural Citizenship, and the Spread of the Nation in Mauritius. Authors: Patrick Eisenlohr.
+2012 female . Title: The Nation, Rescaled: Theorizing the Decentralization of Memory in Contemporary France. Authors: Alexandra Kowalski.
+2003 male   . Title: Cultural Difference as Denied Resemblance: Reconsidering Nationalism and Ethnicity. Authors: Simon Harrison.
+2010 male   . Title: Migration, Membership, and the Modern Nation-State: Internal and External Dimensions of the Politics of Belonging. Authors: Rogers Brubaker.
+2012 unknown. Title: Don't Fence Me In: Barricade Sociality and Political Struggles in Mexico and Latvia. Authors: Dace Dzenovska; Iván Arenas.
+2005 male   . Title: Digital Identity: The Construction of Virtual Selfhood in the Indigenous Peoples' Movement. Authors: Ronald Niezen.
+2012 male   . Title: Boundaries among Kin: Sovereignty, the Modern Treaty Process, and the Rise of Ethno-Territorial Nationalism among Yukon First Nations. Authors: Paul Nadasdy.
+2006 unknown. Title: Seeing a State: National Commemorations and the Public Sphere in India and Turkey. Authors: Srirupa Roy.
+1991 male   . Title: Response to Yelvington. Authors: G. Carter Bentley.
+
+Topic ID: 32 . Topic Name: ?? Noise 
+terms, prob: ['one', 'time', 'peopl', 'like', 'even', 'life', 'way', 'make', 'live', 'man']
+terms, frex: ['get', 'carita', 'talk', 'told', 'say', 'stori', 'tell', 'thing', 'know', 'someth']
+Examples:
+2010 female . Title: The Man Who Could Walk Through Walls. Authors: Dorinda Outram.
+2002 female . Title: Talking Back to Frida: Houses of Emotional Mestizaje. Authors: Marjorie Becker.
+2009 male   . Title: The Man Who Swam Out Of History: Spain. Authors: Robert A. Rosenstone.
+2002 male   . Title: Reflections on Retelling a Renaissance Murder. Authors: Thomas V. Cohen.
+2003 male   . Title: Stupidity for Everyone. In Praise of the Latest Book by Avital Ronell. A Review Essay. Authors: Rudolf Mrázek.
+1990 female . Title: A Closed City and Its Secret Archives: Notes on a Journey to the Urals. Authors: Sheila Fitzpatrick.
+1990 male   . Title: World War II and Memory. Authors: David Brion Davis.
+1993 male   . Title: Tea Talk: Violent Measures in the Discursive Practices of Sri Lanka's Estate Tamils. Authors: E. Valentine Daniel.
+2002 male   . Title: Performing on the Beaches of the Mind: An Essay. Authors: Greg Dening.
+1995 male   . Title: The Sun Gives without Receiving: An Old Story. Authors: Michael Taussig.
+
+Topic ID: 33 . Topic Name: War
+terms, prob: ['war', 'militari', 'armi', 'soldier', 'offic', 'forc', 'men', 'troop', 'command', 'battl']
+terms, frex: ['infantri', 'musket', 'cavalri', 'regiment', 'artilleri', 'civilian', 'hermion', 'armi', 'battalion', 'soldier']
+Examples:
+1979 male   . Title: British Capital Ship Design and Fire Control in the Dreadnought Era: Sir John Fisher, Arthur Hungerford Pollen, and the Battle Cruiser. Authors: Jon Tetsuro Sumida.
+1951 male   . Title: Global Command: The Double Cross Bee Cee. Authors: James Lea Cate.
+1972 male   . Title: Manifestation of Reform: The Rearmament of the Prussian Infantry, 1806-13. Authors: Dennis E. Showalter.
+2011 male   . Title: Military Morality Transformed: Weapons and Soldiers on the Nineteenth-Century Battlefield. Authors: Gervase Phillips.
+1967 male   . Title: The French Fleet, 1807-1814; Britain's Problem; and Madison's Opportunity. Authors: Richard Glover.
+1975 male   . Title: The Road to Ypres: The Beginnings of Gas Warfare in World War I. Authors: Ulrich Trumpener.
+2014 male   . Title: Firearms and Military Adaptation: The Ottomans and the European Military Revolution, 1450-1800. Authors: Gábor Ágoston.
+2014 unknown. Title: A Korean Military Revolution? Parallel Military Innovations in East Asia and Europe. Authors: Tonio Andrade; Hyeok Hweon Kang; Kirsten Cooper.
+1988 male   . Title: The Art of War in Angola, 1575-1680. Authors: John K. Thornton.
+1977 unknown. Title: Western Imperialist Armies in Asia. Authors: Gayl D. Ness; William Stahl.
+
+Topic ID: 34 . Topic Name: ?? Trade (Asia)
+terms, prob: ['trade', 'centuri', 'asia', 'china', 'world', 'histori', 'region', 'chines', 'asian', 'east']
+terms, frex: ['kushan', 'lateen', 'quanzhou', 'ayutthaya', 'zhilong', 'ldez', 'afro-eurasian', 'yuezhi', 'rimland', 'periplus']
+Examples:
+2000 male   . Title: Silk Roads or Steppe Roads? The Silk Roads in World History. Authors: David Christian.
+2013 male   . Title: Revisionist Study of Cross-Cultural Commercial Competition on the Vietnam Coastline in the Fourteenth and Fifteenth Centuries and Its Wider Implications. Authors: Kenneth R. Hall.
+2005 male   . Title: Afro-Eurasian Bronze Age Economic Expansion and Contraction Revisited. Authors: Andre Gunder Frank; William R. Thompson.
+2010 male   . Title: From Three Possible Iron-Age World-Systems to a Single Afro-Eurasian World-System. Authors: Philippe Beaujard.
+2003 unknown. Title: The Persian Gulf Trade in Late Antiquity. Authors: Touraj Daryaee.
+2012 unknown. Title: Global Trade and Swahili Cosmopolitan Material Culture: Chinese-Style Ceramic Shards from Sanje ya Kati and Songo Mnara (Kilwa, Tanzania). Authors: Bing Zhao.
+1995 unknown. Title: The Lateen Sail in World History. Authors: I. C. Campbell.
+1994 female . Title: Southernization. Authors: Lynda Shaffer.
+2011 unknown. Title: The Rise and Fall of Cowrie Shells: The Asian Story. Authors: Bin Yang.
+2011 male   . Title: "Sino-Pacifica": Conceptualizing Greater Southeast Asia as a Sub-Arena of World History. Authors: Andrew J. Abalahin.
+
+Topic ID: 35 . Topic Name: History of Music
+terms, prob: ['music', 'opera', 'perform', 'cultur', 'new', 'danc', 'play', 'theater', 'audienc', 'see']
+terms, frex: ["d'eon", 'libretto', 'gershwin', 'skinhead', 'ballet', 'pipa', 'cakewalk', 'eliogabalo', 'semah', 'musicolog']
+Examples:
+2006 male   . Title: Redefining the Status of Opera: London and Leipzig, 1800-1848. Authors: William Weber.
+2012 female . Title: The Politics of Gender and the Revival of Ballet in Early Twentieth Century France. Authors: Ilyana Karthas.
+2006 female . Title: Commentary: Seventeenth-Century Venetian Opera as Fondamente nuove. Authors: Ellen Rosand.
+2006 male   . Title: Commentary: Opera in the Age of Revolution. Authors: Thomas S. Grey.
+2006 female . Title: French Identity in Flux: The Triumph of Honegger's "Antigone". Authors: Jane F. Fulcher.
+2006 male   . Title: Where Did Porgy and Bess Come From?. Authors: Richard Crawford.
+2006 female . Title: Poppea's Legacy: The Julio-Claudians on the Venetian Stage. Authors: Wendy Heller.
+2006 male   . Title: Commentary: The Operatic Tragedy of Central Europe. Authors: Larry Wolff.
+2006 male   . Title: The Politics and Aesthetics of Operatic Modernism. Authors: Michael P. Steinberg.
+2006 male   . Title:  Cosmopolitanism and the National Opera: Weber's "Der Freischütz" . Authors: Michael C. Tusa.
+
+Topic ID: 36 . Topic Name: Colonial History
+terms, prob: ['coloni', 'european', 'dutch', 'british', 'indian', 'india', 'asia', 'indonesia', 'malay', 'centuri']
+terms, frex: ['javanes', 'kandyan', 'sinhala', 'kandi', 'penang', 'ibu', 'non-malay', 'johor', 'selangor', 'bencoolen']
+Examples:
+2014 unknown. Title: Travel and Survival in the Colonial Malay World: Mobility, Region, and the World in Johor Elite Strategies, 1818-1914. Authors: Keng We Koh.
+2010 male   . Title: Satisfying the "Want for Labouring People": European Slave Trading in the Indian Ocean, 1500-1850. Authors: Richard B. Allen.
+2003 male   . Title: "The World's Oldest Trade": Dutch Slavery and Slave Trade in the Indian Ocean in the Seventeenth Century. Authors: Markus Vink.
+2010 male   . Title: Ethnicity, Indigeneity, and Migration in the Advent of British Rule to Sri Lanka. Authors: Sujit Sivasundaram.
+1982 male   . Title: Dutch Burghers and Portuguese Mechanics: Eurasian Ethnicity in Sri Lanka. Authors: Dennis B. McGilvray.
+1996 male   . Title: From Coffee to Tea: Shifting Patterns of Consumption in Qajar Iran. Authors: Rudi Matthee.
+2002 female . Title: Consuming Kashmir: Shawls and Empires, 1500-2000. Authors: Michelle Maskiell.
+2001 male   . Title: The Essence of Commodification: Caffeine Dependencies in the Early Modern World. Authors: Ross W. Jamieson.
+2012 male   . Title: The Social and Material Life of Colonial Hotels: Comfort Zones as Contact Zones in British Colombo and Singapore, ca. 1870-1930. Authors: Maurizio Peleggi.
+1967 female . Title: Indische Culture, and Its Relationship to Urban Life. Authors: Pauline Dublin Milone.
+
+Topic ID: 37 . Topic Name: History of Organizations
+terms, prob: ['organ', 'associ', 'polit', 'member', 'movement', 'social', 'lodg', 'new', 'citi', 'societi']
+terms, frex: ['fratern', 'parad', 'paterson', 'awak', 'lodg', 'legion', 'pythian', 'suffragett', 'brotherhood', 'knight']
+Examples:
+2001 male   . Title: Rise and Fall of a Nation of Joiners: The Knights of Labor Revisited. Authors: Jason Kaufman.
+2004 male   . Title: Social-Capital Formation and American Fraternal Association: New Empirical Evidence. Authors: Jason Kaufman; David Weintraub.
+1999 female . Title: Civil Society as Democratic Practice: North American Cities during the Nineteenth Century. Authors: Mary P. Ryan.
+1999 male   . Title: Social Movements and the Symbolism of Public Demonstrations: The 1874 Women's Crusade and German Resistance in Richmond, Indiana. Authors: James Clyde Sellman.
+1985 male   . Title: "Not Only the Ruling Classes to Overcome, but Also the So-Called Mob": Class, Skill and Community in the St. Louis General Strike of 1877. Authors: David Roediger.
+1999 female . Title: Securing Political Returns to Social Capital: Women's Associations in the United States, 1880s-1920s. Authors: Elisabeth S. Clemens.
+2009 male   . Title: "Young Men for War": The Wide Awakes and Lincoln's 1860 Presidential Campaign. Authors: Jon Grinspan.
+1999 male   . Title: To Advance the "Practice of Thrift and Economy": Fraternal Societies and Social Capital, 1890-1920. Authors: David T. Beito.
+1999 male   . Title: The Growth of Voluntary Associations in America, 1840-1940. Authors: Robert D. Putnam; Gerald Gamm.
+1983 male   . Title: Vigilante Fascism: The Black Legion as an American Hybrid. Authors: Peter H. Amann.
+
+Topic ID: 38 . Topic Name: ?? Noise (statistics)
+terms, prob: ['percent', 'tabl', 'popul', 'data', 'number', 'occup', 'rate', 'census', 'total', 'social']
+terms, frex: ['pef', 'lfpr', 'percentag', 'ipum', 'data', 'census', 'sampl', 'tabl', '100.0', 'percent']
+Examples:
+1977 male   . Title: Economic Growth and Occupational Mobility in 19th Century Urban America: A Reappraisal. Authors: Michael P. Weber; Anthony E. Broadman.
+2009 male   . Title: Vive la Difference? Intergenerational Mobility in France and the United States during the Nineteenth and Twentieth Centuries. Authors: Jérôme Bourdieu; Joseph P. Ferrie; Lionel Kesztenbaum.
+2004 male   . Title: European Immigration to America's Great Basin, 1850-1870. Authors: Scott Alan Carson.
+1961 unknown. Title: [The Comparative Study of Social Mobility]: Reply. Authors: Ping-Ti Ho.
+1971 male   . Title: The Peopling of a Working-Class Ward: Reading, Pennsylvania, 1850. Authors: John Modell.
+2012 unknown. Title: The Social Class Origins of U.S. Teachers, 1860-1920. Authors: Kitae Sohn.
+2006 male   . Title: Defining the Diaspora: Appalachians in the Great Migration. Authors: J. Trent Alexander.
+1983 female . Title: Labor Statistics in the American and English Census: Making Some Invidious Comparisons. Authors: Margo Conk.
+1979 male   . Title: The Influence of Family and Friends on German Internal Migration, 1880-85. Authors: Allen R. Newman.
+1977 female . Title: Social Status, Acculturation and School Attendance in 1850 Boston. Authors: Jane Riblett Wilkie.
+
+Topic ID: 39 . Topic Name: History of Medicine (disease)
+terms, prob: ['diseas', 'plagu', 'health', 'cholera', 'epidem', 'medic', 'death', 'journal', 'see', 'fever']
+terms, frex: ['bcg', 'hepat', 'rodent', 'qina', 'cuningham', 'cowdri', 'cholera', 'schemann', 'fayrer', '1983-87']
+Examples:
+2001 unknown. Title: The "Globalization" of Disease? India and the Plague. Authors: I. J. Catanach.
+2002 male   . Title: Pestis Redux: The Initial Years of the Third Bubonic Plague Pandemic, 1894-1901. Authors: Myron Echenberg.
+2014 female . Title: "One's Molokai Can Be Anywhere": Global Influence in the Twentieth-Century History of Hansen's Disease. Authors: Kerri A. Inglis.
+2007 male   . Title: Households and Plague in Early Modern Italy. Authors: Guido Alfani; Samuel K. Cohn.
+2001 male   . Title: Yellow Fever Immunities in West Africa and the Americas in the Age of Slavery and beyond: A Reappraisal. Authors: Sheldon Watts.
+2001 male   . Title: From Rapid Change to Stasis: Official Responses to Cholera in British-Ruled India and Egypt: 1860 to c. 1921. Authors: Sheldon Watts.
+2001 male   . Title: Response to Sheldon Watts, "Yellow Fever Immunities in West Africa and the Americas in the Age of Slavery and beyond: A Reappraisal". Authors: Kenneth F. Kiple.
+2003 male   . Title: Rats, Communications, and Plague: Toward an Ecological History. Authors: Michael McCormick.
+2002 male   . Title: Sickness, Starvation, and Death in Early Hispaniola. Authors: Noble David Cook.
+2001 male   . Title: Response to Kenneth Kiple. Authors: Sheldon Watts.
+
+Topic ID: 40 . Topic Name: ?? Noise (french language)
+terms, prob: ['les', 'des', 'pari', 'que', 'franc', 'sur', 'french', 'dan', 'qui', 'pour']
+terms, frex: ['boulainvilli', 'viret', 'blafard', 'tremoill', 'remplac', 'votr', 'tillet', 'thiebault', 'serait', 'donc']
+Examples:
+1953 male   . Title: Ten Letters to Edmund Burke. Authors: Hans A. Schmitt; John C. Weston.
+1962 unknown. Title: La Noblesse au Moyen Age Dans L'ancienne "Francie": Continuite, Rupture ou Evolution?. Authors: L. Genicot.
+1958 unknown. Title:  L'Institut d'Histoire de la Révolution Française à la Sorbonne . Authors: Marcel R. Reinhard.
+1952 male   . Title: Ten Letters to Edmund Burke from the French Translator of the Reflections on the Revolution in France. Authors: Hans A. Schmitt; John C. Weston.
+1954 male   . Title: Everett-Kapodistrais Correspondence. Authors: George C. Soulis.
+1968 male   . Title: The Grub Street Style of Revolution: J.-P. Brissot, Police Spy. Authors: Robert C. Darnton.
+1960 male   . Title: A Letter from Louis Blanc in Exile. Authors: Henry Bertram Hill.
+1965 female . Title: The Seigneur of Renaissance France: Advocate or Oppressor?. Authors: Elizabeth S. Teall.
+1968 female . Title: Some Opinions on Exemption from Military Service in Nineteenth-Century Europe. Authors: Nuria Sales de Bohigas.
+1956 male   . Title: Notes on the Introduction of Ministerial Responsibility into Egypt. Authors: Jacob M. Landau.
+
+Topic ID: 41 . Topic Name: ?? Annales 
+terms, prob: ['histori', 'one', 'book', 'war', 'new', 'studi', 'polit', 'historian', 'centuri', 'braudel']
+terms, frex: ['mornet', 'braudellien', 'namier', 'braudel', 'febvr', 'simiand', 'parthenop', 'louie', 'lucien', 'cairn']
+Examples:
+1958 unknown. Title: Short Reviews. Authors: None.
+1959 unknown. Title: Short Reviews. Authors: None.
+1972 unknown. Title: Fernand Braudel and the Monde Braudellien.... Authors: J. H. Hexter.
+1957 unknown. Title: Short Reviews. Authors: None.
+1959 unknown. Title: Short Reviews. Authors: None.
+1958 unknown. Title: Short Reviews. Authors: None.
+1959 unknown. Title: Short Reviews. Authors: None.
+1957 unknown. Title: Short Reviews. Authors: None.
+1959 unknown. Title: Short Reviews. Authors: None.
+1958 unknown. Title: Short Reviews. Authors: None.
+
+Topic ID: 42 . Topic Name: ?? Spanish Colonial History
+terms, prob: ['philippin', 'spanish', 'coloni', 'write', 'languag', 'manila', 'nativ', 'new', 'univers', 'press']
+terms, frex: ['rizal', 'taqali', 'tagalog', 'imelda', 'gayo', 'loob', 'guaymi', 'khipu', 'tlatohuani', 'nainsi']
+Examples:
+2003 male   . Title: Last Writing: Script Obsolescence in Egypt, Mesopotamia, and Mesoamerica. Authors: Stephen Houston; Jerrold Cooper; John Baines.
+2009 male   . Title: Sin, Confession, and the Arts of Bookand Cord-Keeping: An Intercontinental and Transcultural Exploration of Accounting and Governmentality. Authors: Gary Urton.
+1987 female . Title: Remembering the Future, Anticipating the Past: History, Time, and Cosmology among the Maya of Yucatan. Authors: Nancy M. Farriss.
+1992 male   . Title: On the Colonization of Amerindian Languages and Memories: Renaissance Theories of Writing and the Discontinuity of the Classical Tradition. Authors: Walter D. Mignolo.
+2006 male   . Title: Chronology, Succession, and Sovereignty: The Politics of Inka Historiography and Its Modern Interpretation. Authors: R. Alan Covey.
+2007 female . Title: Rhetorical "Indios": Propagandists and Their Publics in the Spanish Philippines. Authors: Smita Lahiri.
+1993 male   . Title: The Inter-Atlantic Paradigm: The Failure of Spanish Medieval Colonization of the Canary and Caribbean Islands. Authors: Anthony M. Stevens-Arroyo.
+2007 female . Title: K Is for De-Kolonization: Anti-Colonial Nationalism and Orthographic Reform. Authors: Megan C. Thomas.
+1960 male   . Title: The Aztec Aristocracy in Colonial Mexico. Authors: Charles Gibson.
+1998 male   . Title: Disembedded Capitals in Western Asian Perspective. Authors: Alexander H. Joffe.
+
+Topic ID: 43 . Topic Name: Social History
+terms, prob: ['social', 'societi', 'one', 'chang', 'differ', 'can', 'may', 'group', 'relat', 'cultur']
+terms, frex: ['sociolog', 'structur', 'type', 'analysi', 'differenti', 'behavior', 'function', 'pattern', 'chang', 'factor']
+Examples:
+1980 male   . Title: More on Modernization. Authors: Raymond Grew.
+1965 male   . Title: Accounting for Change. Authors: Kenneth Keniston.
+1969 unknown. Title: Some Observations on the Dynamics of Traditions. Authors: S. N. Eisenstadt.
+1967 male   . Title: Some Comments on Social History. Authors: Peter N. Stearns.
+1979 male   . Title: [The Classless Society: Comment on Stearns]: Reply. Authors: Peter N. Stearns.
+1967 unknown. Title: Sociology between Yesterday and Tomorrow. Authors: W. F. Wertheim.
+1975 unknown. Title: Tradition/Modernity: An Ideal Type Gone Astray. Authors: L. E. Shiner.
+1970 male   . Title: Towards a Comparative Science of Society: Review Article. Authors: Conrad Phillip Kottak.
+1980 female . Title: The Uses of Theory, Concepts and Comparison in Historical Sociology. Authors: Victoria E. Bonnell.
+1980 male   . Title: Modernization and Social History Some Suggestions, and a Muted Cheer. Authors: Peter N. Stearns.
+
+Topic ID: 44 . Topic Name: Political History (political parties)
+terms, prob: ['parti', 'polit', 'elect', 'vote', 'elector', 'democrat', 'support', 'voter', 'democraci', 'one']
+terms, frex: ['mrp', 'voter', 'elector', 'schohari', 'vote', 'elect', 'ballot', 'cleavag', 'gueniffey', 'parti']
+Examples:
+1963 male   . Title: Intraparty Divisions and Cabinet Coalitions in the Fourth French Republic. Authors: Duncan Macrae.
+2004 male   . Title: Magnifying Voters' Preferences: Bias in Elections to Birmingham's City Council. Authors: Michael Thrasher; Ron Johnston; Colin Rallings.
+2001 male   . Title: Counting the Votes: South Carolina's Stolen Election of 1876. Authors: Ronald F. King.
+1991 male   . Title: The Great Reform Bill of 1832 and the Rise of Partisanship. Authors: John A. Phillips; Charles Wetherell.
+2007 male   . Title: The French "Petit Oui": The Maastricht Treaty and the French Voting Agenda. Authors: Michael S. Lewis-Beck; Daniel S. Morey.
+1999 male   . Title: Political Competition and Electoral Fraud: A Latin American Case Study. Authors: Ivan Molina; Fabrice Edouard Lehoucq.
+1983 male   . Title: Political Realignment and 'Ethnocultural' Voting in Late Nineteenth Century America. Authors: Allan J. Lichtman.
+1998 male   . Title: Electing Popes: Approval Balloting and Qualified-Majority Rule. Authors: Josep M. Colomer; Iain McLean.
+1998 female . Title: Getting out the Vote with Patronage and Threat: The French and Italian Christian Democratic Parties, 1944-1958. Authors: Carolyn M. Warner.
+1974 female . Title: The Development of the Radical Party in the Third Republic: The New Radical Movement, 1926-32. Authors: Mildred Schlesinger.
+
+Topic ID: 45 . Topic Name: Labor
+terms, prob: ['worker', 'labor', 'work', 'industri', 'union', 'employ', 'strike', 'wage', 'factori', 'trade']
+terms, frex: ['creusot', 'scalis', 'strikebreak', 'spinner', 'pgc', 'graissessac', 'peasant-work', 'shoebind', 'bezon', 'worker']
+Examples:
+1974 male   . Title: Comments on the Montgomery Paper. Authors: James R. Green.
+1985 male   . Title: American Management and British Labor: Lancashire Immigrant Spinners in Industrial New England. Authors: Isaac Cohen.
+1988 male   . Title: The State, Capital, and Workers' Control during the Industrial Revolution: The Rise and Fall of the North-East Pitmen's Union, 1831-2. Authors: James A. Jaffe.
+1985 male   . Title: Factory Politics in Britain and the United States: Engineers and Machinists, 1914-1919. Authors: Jeffrey Haydu.
+1978 male   . Title: The Growth of Trade Unionism in the United Kingdom Chemical Industry. Authors: Jack Eaton; Colin Gill; Richard Morris.
+1975 female . Title: Between Capital and Labor: Supervisory Personnel in Ruhr Heavy Industry before 1914. Authors: Elaine Glovka Spencer.
+1992 male   . Title: "Proletarian Protest"?: Skill and Protest in the German Chemical Industry, 1914-1924. Authors: Craig Patton.
+1972 male   . Title: Patterns of Worker Protest: Upper Silesia, 1865-1914. Authors: Lawrence Schofer.
+1974 male   . Title: The "New Unionism" and the Transformation of Workers' Consciousness in America, 1909-22. Authors: David Montgomery.
+1968 male   . Title: Against the Strike Threat: Employer Policy toward Labor Agitation in France, 1900-1914. Authors: Peter N. Stearns.
+
+Topic ID: 46 . Topic Name: Islam
+terms, prob: ['islam', 'ottoman', 'muslim', 'arab', 'egypt', 'religi', 'empir', 'turkish', 'egyptian', 'see']
+terms, frex: ['shici', 'kijaji', 'fatwa', 'madrasa', 'sistani', 'bba', 'd6nme', 'almohad', 'ulama', 'islamist']
+Examples:
+2008 male   . Title: "Peasant" Janissaries?. Authors: Evgeni Radushev.
+1999 male   . Title: The Law, Agency, and Policy in Medieval Islamic Society: Development of the Institutions of Learning from the Tenth to the Fifteenth Century. Authors: Said Amir Arjomand.
+2009 female . Title: Communities on the Verge: Unraveling the Phanariot Ascendancy in Ottoman Governance. Authors: Christine Philliou.
+2011 male   . Title: Madrasa Reform as a Secularizing Process: A View from the Late Russian Empire. Authors: Mustafa Tuna.
+2009 unknown. Title: Territorializing Piety: Genealogy, Transnationalism, and Shi'ite Politics in Modern Lebanon. Authors: Roschanack Shaery-Eisenlohr.
+2009 female . Title: Illuminated by the Light of Islam and the Glory of the Ottoman Sultanate: Self-Narratives of Conversion to Islam in the Age of Confessionalization. Authors: Tijana Krstić.
+1993 female . Title: Religious and Cultural Conversion to Islam in Ninth-Century Umayyad Córdoba. Authors: Jessica A. Coope.
+1969 female . Title: Pan-Islam as Proto-Nationalism. Authors: Nikki R. Keddie.
+1993 male   . Title: The Invention of Tradition as Public Image in the Late Ottoman Empire, 1808 to 1908. Authors: Selim Deringil.
+2009 male   . Title: "The Armenian Question Is Finally Closed": Mass Conversions of Armenians in Anatolia during the Hamidian Massacres of 1895–1897. Authors: Selim Deringil.
+
+Topic ID: 47 . Topic Name: Family
+terms, prob: ['famili', 'marriag', 'household', 'marri', 'children', 'father', 'son', 'one', 'husband', 'wife']
+terms, frex: ['remarri', 'adabraka', 'spous', 'widow', 'divorc', 'dowri', 'marriag', 'marri', 'remarriag', 'household']
+Examples:
+1987 female . Title: Age at Marriage and the Household: A Study of Neo-Babylonian and Neo-Assyrian Forms. Authors: Martha T. Roth.
+1985 male   . Title: Tacit Rules and Hidden Family Structures: Naming Practices and Godparentage in Schenectady, New York 1680-1800. Authors: Edward H. Tebbenhoff.
+1989 female . Title: Kinship, Authority and Transitions to Adulthood: The Highland Scots at Waipu, New Zealand 1854-1914. Authors: Maureen Molloy.
+1998 female . Title: Marriage Strategy among the German Nobility, 1400-1699. Authors: Judith J. Hurwich.
+2007 male   . Title: Widowhood Strategies in Preindustrial Society. Authors: Martin Dribe; Christer Lundh; Paul Nystedt.
+1994 female . Title: "Choosing" Partible Inheritance: Chilean Merchant Families, 1795-1825. Authors: Marti Lamar.
+1975 male   . Title: Peasant Farmsteads and Households in the Baltic Littoral, 1797. Authors: Andrejs Plakans.
+1992 female . Title: Research Note: Elderly Women within the Household in Amsterdam in the Period 1851-1891. Authors: Monique Stavenuiter.
+1986 female . Title: Matrimonial Strategies among Nobles of Seventeenth-Century Aix-en-Provence. Authors: Donna Bohanan.
+1974 unknown. Title: Comparing Household Structure over Time and between Cultures. Authors: Peter Laslett; E. A. Hammel.
+
+Topic ID: 48 . Topic Name: Science
+terms, prob: ['scienc', 'scientif', 'natur', 'enlighten', 'see', 'london', 'societi', 'social', 'new', 'centuri']
+terms, frex: ['phrenolog', 'froud', 'tayler', 'gedik', 'thelwal', 'borujerdi', 'ornitholog', 'tremenheer', 'lafora', 'phrenologi']
+Examples:
+1974 unknown. Title: Popular Science and Society: The Phrenology Movement in Early Victorian Britain. Authors: T. M. Parssinen.
+1974 male   . Title: Phrenology: Medium and Message. Authors: Angus McLaren.
+1981 male   . Title: A Prehistory of the Social Sciences: Phrenology in France. Authors: Angus McLaren.
+2011 female . Title: The Divine Optician. Authors: Jessica Riskin.
+2008 male   . Title: Diagnosing Froude's Disease: Boundary Work and the Discipline of History in Late-Victorian Britain. Authors: Ian Hesketh.
+2012 female . Title: "The Present Time is Eminently Scientific": The Science of Cookery in Nineteenth-Century Britain. Authors: Caroline Lieffers.
+1996 unknown. Title: Middle Class Rising in Revolutionary America: The Evidence from Manners. Authors: C. Dallett Hemphill.
+2009 male   . Title: "Notorious and Convicted Mutilators": Rammohun Roy, Thomas Jefferson, and the Bible. Authors: Lynn Zastoupil.
+2010 female . Title: Making Darwin: Biography and the Changing Representations of Charles Darwin. Authors: Janet Browne.
+1981 male   . Title: The Reaction to Enthusiasm in the Seventeenth Century: Towards an Integrative Approach. Authors: Michael Heyd.
+
+Topic ID: 49 . Topic Name: ?? Local History
+terms, prob: ['villag', 'peasant', 'local', 'rural', 'communiti', 'town', 'region', 'area', 'social', 'land']
+terms, frex: ['seignior', 'bandit', 'banditri', 'peasant', 'villag', 'peasantri', 'rural', 'countrysid', 'tith', 'tenishev']
+Examples:
+2001 female . Title: A Peasant Rebellion in Stalin's Russia: The Pitelinskii Uprising, Riazan 1930. Authors: Tracy McDonald.
+1993 male   . Title: Household Economies and Communal Conflicts on a Russian Serf Estate, 1800-1817. Authors: Edgar Melton.
+1981 male   . Title: From Avoidance to Confrontation: Peasant Protest in Precolonial and Colonial Southeast Asia. Authors: Michael Adas.
+1980 male   . Title: "Moral Economy" or "Contest State"?: Elite Demands and the Origins of Peasant Protest in Southeast Asia. Authors: Michael Adas.
+1987 female . Title: Horse Thieves and Peasant Justice in Post-Emancipation Imperial Russia. Authors: Christine D. Worobec.
+1985 male   . Title: Rural Proletarians and Peasant Disturbances: The Right Bank Ukraine in the Revolution of 1905. Authors: Robert S. Edelman.
+2006 male   . Title: Insecurity, Outlawry and Social Order: Banditry in China's Heilongjiang Frontier Region, 1900-1931. Authors: Patrick Fuliang Shan.
+2009 female . Title: Authority In A Serf Village: Peasants, Managers, And The Role Of Writing In Early Nineteenth Century Russia. Authors: Alison K. Smith.
+1990 female . Title: The Peasant Nightmare: Visions of Apocalypse in the Soviet Countryside. Authors: Lynne Viola.
+1990 male   . Title: Enlightened Seigniorialism and Its Dilemmas in Serf Russia, 1750-1830. Authors: Edgar Melton.
+
+Topic ID: 50 . Topic Name: Religious History (Christianity)
+terms, prob: ['church', 'religi', 'christian', 'cathol', 'religion', 'god', 'protest', 'secular', 'priest', 'faith']
+terms, frex: ['laiti', 'bucer', 'cpf', 'catholic', 'pentecost', 'church', 'protestant', 'jesus', 'christ', 'cathol']
+Examples:
+2001 female . Title: Generational Conflict in the Late Reformation: The Basel Paroxysm. Authors: Amy Nelson Burnett.
+1973 male   . Title: Holy People in Peasant Europe. Authors: William A. Christian.
+1983 female . Title: Who is the Church? Conflict in a Polish Immigrant Parish in Late Nineteenth-Century Detroit. Authors: Leslie Woodcock Tentler.
+1976 male   . Title: Anabaptism, Martin Bucer, and the Shaping of the Hessian Protestant Church. Authors: John C. Stalnaker.
+1980 female . Title: Early Stuart Catholicism: Revisions and Re-Revisions. Authors: Caroline M. Hibbard.
+1997 male   . Title: Magical Emasculation, Popular Anticlericalism, and the Limits of the Reformation in Western France circa 1590. Authors: Kevin C. Robbins.
+2012 female . Title: The Virgin Made Visible: Intercessory Images of Church Territory in Egypt. Authors: Angie Heo.
+1991 male   . Title: The Center out There, in Here, and Everywhere Else: The Nature of Pilgrimage to the Shrine of Saint Jude, 1929-1965. Authors: Robert Orsi.
+1980 male   . Title: Cults of Saints in the Churches of Central Paris. Authors: Stephen Wilson.
+2003 male   . Title: The Virgin and the Bear: Religion, Society and the Cold War in Italy. Authors: Robert A. Ventresca.
+
+Topic ID: 51 . Topic Name: Italian Renaissance
+terms, prob: ['venic', 'florenc', 'see', 'venetian', 'renaiss', 'centuri', 'citi', 'del', 'florentin', 'italian']
+terms, frex: ['anzola', 'barberini', 'terraferma', 'chittolini', 'cosimo', 'sbirri', 'brescian', 'taddeo', 'berengo', 'signoria']
+Examples:
+1993 unknown. Title: Cardinals' Courts in Sixteenth-Century Rome. Authors: Gigliola Fragnito.
+1989 female . Title: Loans and Favors, Kin and Clients: Cosimo de' Medici and the Monte di Pieta. Authors: Carol Bresnahan Menning.
+1959 male   . Title: The Decretists and the "Deserving Poor". Authors: Brian Tierney.
+1995 male   . Title: The Italian League and the Policy of the Balance of Power at the Accession of Lorenzo de' Medici. Authors: Riccardo Fubini.
+1986 female . Title: Platonism in Fifteenth-Century Florence and Its Contribution to Early Modern Political Thought. Authors: Alison Brown.
+1988 female . Title: Oligarchs, Protesters, and the Republic of Venice: The "Revolution of the Discontents" in Brescia, 1644-1645. Authors: Joanne Ferraro.
+1993 male   . Title: Francesco Guicciardini and the "Pisan Crisis": Logic and Discourses. Authors: Osvaldo Cavallar.
+1983 unknown. Title: Bureaucracy and Social Welfare in the Renaissance: A Florentine Case Study. Authors: Gene Brucker.
+1986 male   . Title: Crisis and Survival in Eighteenth-Century Italy: The Venetian Patriciate Strikes Back. Authors: Brendan Dooley.
+1989 female . Title: Periodization of Sixteenth-Century Italian Religious History: The Post-Cantimori Paradigm Shift. Authors: Anne Jacobson Schutte.
+
+Topic ID: 52 . Topic Name: ?? Witchcraft and Freud
+terms, prob: ['freud', 'witchcraft', 'suicid', 'witch', 'bodi', 'magic', 'also', 'patient', 'see', 'psycholog']
+terms, frex: ['sanniya', 'sanni', 'guna-guna', 'strava', 'breil', 'topsel', 'fabliau', 'huguett', 'fabliaux', 'psychoanalysi']
+Examples:
+2000 male   . Title: Witchcraft Fears and Psychosocial Factors in Disease. Authors: Edward Bever.
+2009 female . Title: Attitudes Towards Menstruation And Menstrual Blood In Elizabethan England. Authors: Bethan Hindson.
+1970 unknown. Title: Ayurveda and Mental Illness. Authors: Gananath Obeyesekere.
+1989 male   . Title: 'Strangely Handled in All Her Lyms': Witchcraft and Healing in Jacobean England. Authors: Ronald C. Sawyer.
+1969 male   . Title: Some Comments upon the Ritual of the Sanni Demons. Authors: Jerrold E. Levy.
+2002 male   . Title: Witchcraft, Female Aggression, and Power in the Early Modern Community. Authors: Edward Bever.
+1986 male   . Title: Paralysis: The Rise and Fall of a "Hysterical" Symptom. Authors: Edward Shorter.
+2000 female . Title: Mystics, Demoniacs, and the Physiology of Spirit Possession in Medieval Europe. Authors: Nancy Caciola.
+1987 male   . Title: The First Great Increase in Anorexia Nervosa. Authors: Edward Shorter.
+1983 male   . Title: The "New Narcissism" in 20th-Century America: The Shadow and Substance of Social Change. Authors: Jesse F. Battan.
+
+Topic ID: 53 . Topic Name: ??
+terms, prob: ['liber', 'govern', 'georg', 'war', 'london', 'parti', 'labour', 'lloyd', 'british', 'time']
+terms, frex: ['asquith', 'repington', 'blimp', 'westarp', 'schnadhorst', 'wsc', 'gort', 'bentinck', 'lasker', 'weygand']
+Examples:
+1967 male   . Title: Asquith's Predicament, 1914-1918. Authors: Barry McGill.
+1963 male   . Title: The Unionist Debacle of 1911 and Balfour's Retirement. Authors: Peter Fraser.
+1964 male   . Title: The Coupon and the British General Election of 1918. Authors: Trevor Wilson.
+1968 male   . Title: The Destruction of Britain's Last Liberal Government. Authors: Stephen E. Koss.
+1977 male   . Title: Politicians, Historians, and the War: A Reassessment of the Political Crisis of December 1916. Authors: John D. Fair.
+1956 male   . Title: The Electoral Arrangement between the Labour Representation Committee and the Liberal Party. Authors: Frank Bealey.
+1982 male   . Title: British War Policy and the Crisis of Liberalism in May 1915. Authors: Peter Fraser.
+1962 male   . Title: Francis Schnadhorst and Liberal Party Organization. Authors: Barry McGill.
+1967 male   . Title: George Joachim Goschen: The Man Lord Randolph Churchill "Forgot". Authors: Thomas J. Spinner.
+1955 unknown. Title: Baldwin Restored?. Authors: C. L. Mowat.
+
+Topic ID: 54 . Topic Name: Indian History (2)
+terms, prob: ['india', 'mughal', 'portugues', 'see', 'centuri', 'trade', 'also', 'pirat', 'compani', 'european']
+terms, frex: ['jahangir', 'julfa', 'rampur', 'temur', 'piozzi', 'picton', 'mihran', 'wira', 'siddiq', 'vallabha']
+Examples:
+2014 unknown. Title: The Perception of Reception: The Importance of Sir Thomas Roe at the Mughal Court of Jahangir. Authors: Mehreen M-Chida-Razvi.
+2007 female . Title: Lords of the Auspicious Conjunction: Turco-Mongol Imperial Identity on the Subcontinent. Authors: Lisa Balabanlilar.
+2012 unknown. Title: Visions of Juliana: A Portuguese Woman at the Court of the Mughals. Authors: Taymiya R. Zaman.
+2007 male   . Title: Global Politics in the 1580s: One Canal, Twenty Thousand Cannibals, and an Ottoman Plot to Rule the World. Authors: Giancarlo Casale.
+2011 male   . Title: A Trade of No Dishonor: Piracy, Commerce, and Community in the Western Indian Ocean, Twelfth to Sixteenth Century. Authors: Sebastian R. Prange.
+2001 female . Title: Cross-Cultural Perceptions of Piracy: Maritime Violence in the Western Indian Ocean and Persian Gulf Region during a Long Eighteenth Century. Authors: Patricia Risso.
+1992 female . Title: Cross-Cultural Trade and Diplomacy: Portuguese Relations with West Africa, 1441-1521. Authors: Ivana Elbl.
+2002 female . Title: Tamerlane's Career and Its Uses. Authors: Beatrice Forbes Manz.
+2007 unknown. Title: Conceit of the Globe in Mughal Visual Practice. Authors: Sumathi Ramaswamy.
+2008 male   . Title: "The Salt in a Merchant's Letter": The Culture of Julfan Correspondence in the Indian Ocean and the Mediterranean. Authors: Sebouh Aslanian.
+
+Topic ID: 55 . Topic Name: ?? Marxism
+terms, prob: ['revolut', 'social', 'class', 'polit', 'movement', 'revolutionari', 'liber', 'socialist', 'radic', 'new']
+terms, frex: ['lukac', 'marx', 'marxist', 'marxism', 'proletariat', 'weber', 'bourgeoisi', 'engel', 'revolutionari', 'bourgeoi']
+Examples:
+1976 male   . Title: Marxism and the Lower Middle Class: A Response to Arno Mayer. Authors: Jonathan M. Wiener.
+1989 male   . Title: Marxism's "Truth": Recent Interpretations of Marxist Theory. Authors: Harold Mah.
+1984 male   . Title: Marx and Political Theory. Authors: Richard Ashcraft.
+1954 male   . Title: Lenin's Assumption of International Proletarian Leadership. Authors: Stanley W. Page.
+1992 male   . Title: "Why Great Revolutions Will Become Rare": Tocqueville's Most Neglected Prognosis. Authors: Seymour Drescher.
+1979 male   . Title:  Young Lukács, Old Lukács, New Lukács . Authors: Paul Breines.
+1979 male   . Title: The Father of Revisionism Revisited: Eduard Bernstein. Authors: David W. Morgan.
+1981 male   . Title: The Communist League and the `Dissolution Question'. Authors: John Cunliffe.
+1979 male   . Title: Feudalism, Revolution and Neo-Feudalism: A Review Article. Authors: Stephen J. Tonsor.
+1972 male   . Title: Marx and Weber on Liberalism as Bourgeois Ideology. Authors: Richard Ashcraft.
+
+Topic ID: 56 . Topic Name: Urban
+terms, prob: ['citi', 'urban', 'hous', 'space', 'build', 'street', 'neighborhood', 'new', 'town', 'place']
+terms, frex: ['okiek', 'bobigni', 'sepych', 'blat', 'lindt', 'kipsigi', 'ndaraweta', 'bodiam', 'architectur', 'plain-deal']
+Examples:
+1986 male   . Title: Continuity and Change in the Urban House: Developments in Domestic Space Organisation in Seventeenth-Century London. Authors: Frank E. Brown.
+1982 male   . Title: Domestic Space and Society: A Cross-Cultural Study. Authors: Roderick J. Lawrence.
+2010 female . Title: Inside-Out Houses: Urban Belonging and Imagined Futures in Dakar, Senegal. Authors: Caroline Melly.
+1989 female . Title: The Cities of Avignon and Worms as Expressions of the European Community. Authors: Beverly Heckart.
+2012 female . Title: Social and Spatial Politics in the Construction of Regent Street. Authors: Laurel Flinn.
+2013 male   . Title: What Do Medieval Buildings Mean?. Authors: Matthew H. Johnson.
+2011 male   . Title: Communities of Place, Not Kind: American Technologies of Neighborhood in Postcolonial Delhi. Authors: Matthew S. Hull.
+2010 male   . Title: Sculpted Landscapes: Art & Place In Cleveland'S Cultural Gardens, 1916-2006. Authors: Mark Tebeau.
+2011 male   . Title: Rat Cities and Beehive Worlds: Density and Design in the Modern City. Authors: Edmund Ramsden; Jon Adams.
+2010 female . Title: Streets And Stages: Urban Renewal And The Arts After World War Ii. Authors: Julia L. Foulkes.
+
+Topic ID: 57 . Topic Name: Holocaust
+terms, prob: ['memori', 'war', 'holocaust', 'past', 'victim', 'histor', 'histori', 'event', 'narrat', 'experi']
+terms, frex: ['holocaust', 'cypriot', 'mkwawa', 'friedland', 'auschwitz', 'genocid', 'cremat', 'goldhagen', 'memori', 'commemor']
+Examples:
+2010 male   . Title: Holocaust Memorials: The Emergence of a Genre. Authors: Harold Marcuse.
+2012 female . Title: Partitions of Memory: Wounds and Witnessing in Cyprus. Authors: Rebecca Bryant.
+2008 female . Title: Choosing Not to Look: Representation, Repatriation, and Holocaust Atrocity Photography. Authors: Susan A. Crane.
+2010 female . Title: Minimalism And Victim Testimony. Authors: Carolyn J. Dean.
+2011 unknown. Title: Special Issue: Social Memory And Historical Justice: Introduction. Authors: Maria M. Tumarkin; Chris Healy.
+2002 female . Title: Memory and History: Liturgical Time and Historical Time. Authors: Gabrielle M. Spiegel.
+2000 female . Title: "I Saw a Nightmare...": Violence and the Construction of Memory (Soweto, June 16, 1976). Authors: Helena Pohlandt-McCormick.
+2011 female . Title: The Long Life Of Stalinism: Reflections On The Aftermath Of Totalitarianism And Social Memory. Authors: Maria M. Tumarkin.
+2010 unknown. Title: Holocaust Mahnmal (Memorial): Monumental Memory amidst Contemporary Race. Authors: Damani J. Partridge.
+2002 male   . Title: Finding Meaning in Memory: A Methodological Critique of Collective Memory Studies. Authors: Wulf Kansteiner.
+
+Topic ID: 58 . Topic Name: Environment
+terms, prob: ['forest', 'environment', 'fish', 'water', 'natur', 'land', 'ecolog', 'tree', 'island', 'hunt']
+terms, frex: ['faroes', 'lobster', 'ecosystem', 'maohi', 'worster', 'durian', 'cofrad', 'rejang', 'frier', 'fisheri']
+Examples:
+2003 male   . Title: Atlantic Salmon, Endangered Species, and the Failure of Environmental Policies. Authors: David Jenkins.
+1996 male   . Title: The Abundant Sea and Her Fates: Texelian Oystermen and the Marine Commons, 1700 to 1932. Authors: Rob van Ginkel.
+1994 unknown. Title: Of Rats and Men: A Synoptic Environmental History of the Island Pacific. Authors: J. R. McNeill.
+2008 male   . Title: Putting the Ocean in Atlantic History: Maritime Communities and Marine Ecology in the Northwest Atlantic, 1500-1800. Authors: W. Jeffrey Bolster.
+1999 female . Title: Gardens of Eden? An Ethnohistoric Reconstruction of Maohi (Tahitian) Cultivation. Authors: Dana Lepofsky.
+1996 female . Title: Fruit Trees and Family Trees in an Anthropogenic Forest: Ethics of Access, Property Zones, and Environmental Change in Indonesia. Authors: Nancy Lee Peluso.
+2000 male   . Title: Distribution Fights, Coordination Games, and Lobster Management. Authors: Jack Knight; James M. Acheson.
+1993 male   . Title: Too Much of a Good Thing: Crises of Glut in the Faroe Islands and Dominica. Authors: Jonathan Wylie.
+2011 unknown. Title: Deer Hunting and Preserving the Commons in Dutch Colonial Taiwan. Authors: Hui-Wen Koo.
+1994 male   . Title: The Maritime Household in Northern Europe. Authors: Reginald Byron.
+
+Topic ID: 59 . Topic Name: Africa
+terms, prob: ['african', 'coloni', 'africa', 'south', 'nativ', 'polit', 'white', 'cape', 'see', 'kenya']
+terms, frex: ['kamba', 'kikuyu', 'luthuli', 'nyerer', 'kna', 'afrikan', 'hintsa', 'johannesburg', 'transvaal', 'nkosi']
+Examples:
+2000 female . Title: "A Separate Path": Scouting and Guiding in Interwar South Africa. Authors: Tammy M. Proctor.
+2000 unknown. Title: Truth or Lies? Selective Memories, Imagings, and Representations of Chief Albert John Luthuli in Recent Political Discourses. Authors: Jabulani Sithole; Sibongiseni Mkhize.
+2012 male   . Title: Chiefs or Modern Bureaucrats? Managing Black Police in Early Twentieth-Century South Africa. Authors: Keith Shear.
+2006 male   . Title: The Consequences of Uniformity: The Struggle for the Boy Scout Uniform in Colonial Kenya. Authors: Timothy Parsons.
+1995 male   . Title: Social Neurosis and Hysterical Pre-Cognition in South Africa: A Case-Study and Reflections. Authors: Jeremy Krikler.
+1999 male   . Title: "Wakamba Warriors Are Soldiers of the Queen": The Evolution of the Kamba as a Martial Race, 1890-1970. Authors: Timothy H. Parsons.
+2000 unknown. Title: Johannes Nkosi and the Communist Party of South Africa: Images of "Blood River" and King Dingane in the Late 1920s-1930. Authors: Sifiso Mxolisi Ndlovu.
+1992 male   . Title: Liberating the Captives: Independent Watchtower as an Avatar of Colonial Revolt in Southern Africa and Katanga, 1908-1941. Authors: John Higginson.
+2001 male   . Title: Hell in Small Places: Agrarian Elites and Collective Violence in the Western Transvaal, 1900-1907. Authors: John Higginson.
+2008 male   . Title: Lowering the Sultan's Flag: Sovereignty and Decolonization in Coastal Kenya. Authors: James R. Brennan.
+
+Topic ID: 60 . Topic Name: Soviet
+terms, prob: ['soviet', 'communist', 'parti', 'war', 'stalin', 'state', 'union', 'peopl', 'moscow', 'vietnames']
+terms, frex: ['komsomol', 'samphan', 'kke', 'quisl', 'nkvd', 'uzic', 'foco', 'djurdjev', 'usfet', 'rgae']
+Examples:
+1997 male   . Title: Incompatible Allies: Greek Communism and Macedonian Nationalism in the Civil War in Greece, 1943-1949. Authors: Andrew Rossos.
+1951 male   . Title: Postwar Yugoslav Historiography. Authors: Wayne S. Vucinich.
+1999 male   . Title: Indigenous Peoples and the Vietnamese Revolution, 1930-1975. Authors: Mark W. McLeod.
+2012 male   . Title: Wiring Decolonization: Turning Technology against the Colonizer during the Indochina War, 1945–1954. Authors: Christopher Goscha.
+2011 male   . Title: The Soviet State as Imperial Scavenger: "Catch Up and Surpass" in the Transnational Socialist Bloc, 1950—1960. Authors: Austin Jersild.
+2008 female . Title: Stalin and the Politics of Kinship: Practices of Collective Punishment, 1920s-1940s. Authors: Golfo Alexopoulos.
+2008 female . Title: The Soviets at Nuremberg: International Law, Propaganda, and the Making of the Postwar Order. Authors: Francine Hirsch.
+1996 female . Title: Signals from Below: Soviet Letters of Denunciation of the 1930s. Authors: Sheila Fitzpatrick.
+2004 male   . Title: Beyond Moscow-Centric Interpretation: An Examination of the China Connection in Eastern Europe and North Vietnam during the Era of De-Stalinization. Authors: Yinghong Cheng.
+1995 male   . Title: The Socialist Construction of Philately in the Early Soviet Era. Authors: Jonathan Grant.
+
+Topic ID: 61 . Topic Name: Medicine (phyisician)
+terms, prob: ['medic', 'health', 'physician', 'hospit', 'doctor', 'patient', 'medicin', 'birth', 'asylum', 'diseas']
+terms, frex: ['lamaz', 'crech', 'homeopath', 'rainhil', 'ppm', 'immunis', 'exminst', 'midwiv', "l'accouch", 'midwiferi']
+Examples:
+1982 female . Title: Gynecological Operations on Insane Women: London, Ontario, 1895-1901. Authors: Wendy Mitchinson.
+1999 female . Title: "Mercenary Hirelings" or "A Great Blessing"?: Doctors' and Mothers' Conflicted Perceptions of Wet Nurses and the Ramifications for Infant Feeding in Chicago, 1871-1961. Authors: Jacqueline H. Wolf.
+1986 female . Title: The Myths of Social Control and Custodial Oppression: Patterns of Psychiatric Medicine in Late Nineteenth-Century Institutions. Authors: Constance M. McGovern.
+1987 female . Title: Modern Obstetrics and Working-Class Women: The New York Midwifery Dispensary, 1890-1920. Authors: Nancy Schrom Dye.
+1994 male   . Title: From Ritual to Science: The Medical Transformation of Circumcision in America. Authors: David L. Gollaher.
+1986 unknown. Title: The Right to Be Sick: American Physicians and Nervous Patients, 1885-1910. Authors: Joyce M. Ray; F. G. Gosling.
+1994 female . Title: Family Strategies and Medical Power: 'Voluntary' Committal in a Parisian Asylum, 1876-1914. Authors: Patricia E. Prestwich.
+1991 female . Title: Medicalization and Moralization: The Creches of Nineteenth-Century Paris. Authors: Ann F. La Berge.
+1988 female . Title: 'Grannies' and 'Spinsters': Midwife Education under the Sheppard-Towner Act. Authors: Molly Ladd-Taylor.
+2012 female . Title: Emaciated, Exhausted, and Excited: The Bodies and Minds of the Irish in Late Nineteenth-Century Lancashire Asylums. Authors: Catherine Cox; Sarah York; Hilary Marland.
+
+Topic ID: 62 . Topic Name: ?? Class / sport
+terms, prob: ['london', 'class', 'social', 'sport', 'britain', 'work', 'british', 'victorian', 'club', 'histori']
+terms, frex: ['cricket', 'salford', 'blackpool', 'footbal', 'middlesbrough', 'scuttler', 'costermong', 'basebal', 'chartism', 'sport']
+Examples:
+2001 male   . Title: Both Praying and Playing: "Muscular Christianity" and the YMCA in North-East County Durham. Authors: Neal Garnham.
+1979 male   . Title: The Making of a Working-Class Football Culture in Victorian England. Authors: William J. Baker.
+1981 male   . Title: The Victorians at Play: Problems in Historiographical Methodology. Authors: Keith A. P. Sandiford.
+2000 male   . Title: More Sinful Pleasures? Leisure, Respectability and the Male Middle Classes in Victorian England. Authors: Mike J. Huggins.
+1983 male   . Title: Cricket and the Victorian Society. Authors: Keith A. P. Sandiford.
+2007 male   . Title: Betting, Sport and the British, 1918-1939. Authors: Mike Huggins.
+1989 male   . Title: The 'Pigmies of Commerce' and the Working-Class Community: Small Shopkeepers in England, 1870-1914. Authors: Christopher P. Hosgood.
+1983 male   . Title: Working at Playing: The Culture of the Workplace and the Rise of Baseball. Authors: Steven M. Gelber.
+1979 male   . Title: Mad Dogs and Englishmen: The Conflict over Rabies in Late Victorian England. Authors: John K. Walton.
+1981 male   . Title: Amateur Gardening and Popular Recreation in the 19th and 20th Centuries. Authors: Stephen Constantine.
+
+Topic ID: 63 . Topic Name: German History
+terms, prob: ['german', 'germani', 'war', 'austria', 'polici', 'austrian', 'foreign', 'franc', 'russia', 'govern']
+terms, frex: ['buol', 'rechberg', 'tisza', 'metternich', 'lichnowski', 'neurath', 'arnim', 'visconti-venosta', 'rantzau', 'weizsack']
+Examples:
+1968 male   . Title: Bruck versus Buol: The Dispute over Austrian Eastern Policy, 1853-1855. Authors: Paul W. Schroeder.
+1964 female . Title: Austria, France, and the Venetian Question, 1861-66. Authors: Nancy Nichols Barker.
+1958 male   . Title: The Russian Overture to Germany of December 1924. Authors: Zygmunt J. Gasiorowski.
+1970 male   . Title: The High Command and Diplomacy in Austria-Hungary, 1914-1916. Authors: Gerard E. Silberstein.
+1951 male   . Title: Tsar Alexander III and the Boulanger Crisis in France. Authors: Andreas Dorpalen.
+1960 male   . Title: Prelude to "Barbarossa": Germany and the Balkans, 1940-1941. Authors: Ernst L. Presseisen.
+1959 male   . Title: Visconti-Venosta and the Diplomatic Crisis of July 1870. Authors: S. William Halperin.
+1962 male   . Title: Turkey's Entry into World War I: An Assessment of Responsibilities. Authors: Ulrich Trumpener.
+1954 male   . Title: Russian Policy and the Franco-Austrian War of 1859. Authors: Arnold Blumberg.
+1955 male   . Title: Did Pilsudski Attempt to Initiate a Preventive War in 1933?. Authors: Zygmunt J. Gasiorowski.
+
+Topic ID: 64 . Topic Name: Slave Trade
+terms, prob: ['african', 'africa', 'slave', 'trade', 'west', 'coast', 'ghana', 'european', 'rice', 'yoruba']
+terms, frex: ['igbo', 'geeche', 'gullah', 'maraka', 'benin', 'ghanaian', 'akan', 'igboland', 'aladura', 'accompong']
+Examples:
+2010 male   . Title: From "Black Rice" to "Brown": Rethinking the History of Risiculture in the Seventeenth- and Eighteenth-Century Atlantic. Authors: Walter Hawthorne.
+2007 male   . Title: Agency and Diaspora in Atlantic History: Reassessing the African Contribution to Rice Cultivation in the Americas. Authors: David Eltis; David Richardson; Philip Morgan.
+2010 male   . Title: Black, Brown, or White? Color-Coding American Commercial Rice Cultivation with Slave Labor. Authors: Philip Morgan; David Eltis; David Richardson.
+2010 female . Title: Africa and Africans in the African Diaspora: The Uses of Relational Databases. Authors: Gwendolyn Midlo Hall.
+2008 male   . Title: The Illusion of Isolation: The Gullah/Geechees and the Political Economy of African Culture in the Americas. Authors: J. Lorand Matory.
+1999 male   . Title: The English Professors of Brazil: On the Diasporic Roots of the Yoruba Nation. Authors: J. Lorand Matory.
+2008 male   . Title: Horrid Journeying: Narratives of Enslavement and the Global African Diaspora. Authors: Pier M. Larson.
+2009 male   . Title: Mistaken Identities? Olaudah Equiano, Domingos Álvares, and the Methodological Challenges of Studying the African Diaspora. Authors: James H. Sweet.
+2008 male   . Title: Putting the History Back into Ethnicity: Enslavement, Religion, and Cultural Brokerage in the Construction of Mandinka/Jola and Ewe/Agotime Identities in West Africa, c. 1650-1930. Authors: Paul Nugent.
+1993 male   . Title: "I Am the Subject of the King of Congo": African Political Ideology and the Haitian Revolution. Authors: John K. Thornton.
+
+Topic ID: 65 . Topic Name: Latin America
+terms, prob: ['latin', 'argentina', 'chile', 'drug', 'america', 'air', 'bueno', 'miner', 'mine', 'american']
+terms, frex: ['yerba', 'gaucho', 'marihuana', 'chilean', 'amphetamin', 'popular-front', 'payador', 'radon', 'cayamb', 'berisso']
+Examples:
+2007 male   . Title: A Forgotten Case of "Scientific Excellence on the Periphery": The Nationalist Cocaine Science of Alfredo Bignon, 1884-1887. Authors: Paul Gootenberg.
+2009 female . Title: Conquering the Past: Post-War Archaeology and Nationalism in the Borderlands of Chile and Peru, c. 1880-1920. Authors: Stefanie Gänger.
+2006 female . Title: A Working Knowledge of the Insensible? Radiation Protection in Nuclear Generating Stations, 1962-1992. Authors: Joy Parr.
+2009 female . Title: Africa and the Nuclear World: Labor, Occupational Health, and the Transnational Production of Uranium. Authors: Gabrielle Hecht.
+1999 male   . Title: Consolidating States, Restructuring Economies, and Confronting Workers and Peasants: The Antinomies of Bolivian Neoliberalism. Authors: Harry Sanabria.
+2010 female . Title: Stimulating Consumption: Yerba Mate Myths, Markets, and Meanings from Conquest to Present. Authors: Christine Folch.
+2005 female . Title: Gender and Generation: The University Reform Movement in Argentina, 1918. Authors: Natalia Milanesio.
+2011 male   . Title: Between the Gaucho and the Tango: Popular Songs and the Shifting Landscape of Modern Argentine Identity, 1895-1915. Authors: Brian Bockelman.
+2012 male   . Title: The First Green Revolution: Debt Peonage and the Making of the Nitrogen Fertilizer Trade, 1840—1930. Authors: Edward D. Melillo.
+2011 female . Title: Waste and Potency: Making Men with Minerals in Guanajuato and Tucson. Authors: Elizabeth Emma Ferry.
+
+Topic ID: 66 . Topic Name: Population Statistics
+terms, prob: ['popul', 'age', 'fertil', 'birth', 'year', 'mortal', 'rate', 'death', 'demograph', 'declin']
+terms, frex: ['bmis', 'bmi', 'tree-r', 'tambora', 'enso', 'aerosol', 'ice-cor', 'shepsh', 'briffa', 'demeni']
+Examples:
+1999 unknown. Title: Malnutrition, Pregnancy, and Infant Mortality: A Biometric Model. Authors: Susan Scott; C. J. Duncan.
+2001 male   . Title: Economic Change and Infant Mortality in England, 1580-1837. Authors: Jona Schellekens.
+2012 female . Title: Is Sibling Rivalry Fatal? Siblings and Mortality Clustering. Authors: Rebecca Kippen; Sarah Walters.
+1979 male   . Title: The Effects of Health on the Completed Fertility of Nonwhite and White U.S. Women Born between 1867 and 1935. Authors: Edward Shorter; Phillips Cutright.
+2001 male   . Title: Urban Demographic Stagnation in Early Modern Germany: A Simulation. Authors: Terence McIntosh.
+2012 female . Title: Offspring Sex Preference in Frontier America. Authors: Nora Bohnert; Hilde Leikny Jåstad; Evelien Walhout; Jessica Vechbanyongratana.
+2012 unknown. Title: Climate Change during and after the Roman Empire: Reconstructing the Past from Scientific and Historical Evidence. Authors: Alexander F. M. More; Paul Andrew Mayewski; Michael McCormick; Thomas Litt; Mark A. Cane; Sturt W. Manning; Willy Tegel; Edward R. Cook; Peter Huybers; Ulf Büntgen; Kyle Harper; Kurt Nicolussi.
+2000 unknown. Title: The Interdependence of Vital Events: Twentieth-Century Indian Kerala. Authors: K. S. James; S. I. Rajan.
+2005 male   . Title: Markets and Famines in Pre-Industrial Europe. Authors: Cormac Ó Gráda.
+2001 male   . Title: Volcanism and Short-Term Climatic Change in East Asian and World History, c. 1200-1699. Authors: William S. Atwell.
+
+Topic ID: 67 . Topic Name: Native American History
+terms, prob: ['indian', 'nativ', 'cultur', 'american', 'peopl', 'mission', 'new', 'white', 'indigen', 'missionari']
+terms, frex: ['berdach', 'neolin', 'cahuilla', 'pequot', 'carib', "kwakwaka'wakw", 'inuit', 'potlatch', 'cree', 'dixon']
+Examples:
+1999 male   . Title: The Delaware Prophet Neolin: A Reappraisal. Authors: Alfred A. Cave.
+1996 male   . Title: "Not from the Land Side, but from the Flag Side": Native American Responses to the Wanamaker Expedition of 1913. Authors: Richard Lindstrom.
+1970 male   . Title: Alberta Stoney (Assiniboin) Origins and Adaptations: A Case for Reappraisal. Authors: Raoul R. Andersen.
+1992 male   . Title: Frontier Tales: The Narrative Construction of Cultural Borders in Twentieth-Century California. Authors: Kerwin L. Klein.
+1970 unknown. Title: Montagnais-Naskapi or Montagnais and Nascaupi? An Examination of Some Tribal Differences. Authors: A. P. Dyke.
+1995 male   . Title: "It is a Strict Law That Bids Us Dance": Cosmologies, Colonialism, Death, and Ritual Authority in the Kwakwaka'wakw Potlatch, 1849 to 1922. Authors: Joseph Masco.
+1984 male   . Title: Culture of Terror--Space of Death. Roger Casement's Putumayo Report and the Explanation of Torture. Authors: Michael Taussig.
+1998 male   . Title: The "Civilizing" of Indigenous People in Nineteenth-Century Canada. Authors: Mark Francis.
+1987 male   . Title: When Parrots Learn to Talk, and Why They Can't: Domination, Deception, and Self-Deception in Indian-White Relations. Authors: Gerald Sider.
+2001 male   . Title: "Thinking like an Indian": Exploring American Indian Views of American History. Authors: Frederick E. Hoxie.
+
+Topic ID: 68 . Topic Name: Cultural History
+terms, prob: ['human', 'cultur', 'histori', 'natur', 'theori', 'concept', 'histor', 'anthropolog', 'one', 'scienc']
+terms, frex: ['blumenberg', 'fasolt', 'heidegg', 'koselleck', 'urapmin', 'selectionist', 'evolutionari', 'foucault', 'cassir', 'hegel']
+Examples:
+2004 male   . Title: The "Return of the Subject" as a Historico-Intellectual Problem. Authors: Elías Palti.
+1999 male   . Title: The "Metaphor of Life": Herder's Philosophy of History and Uneven Developments in Late Eighteenth-Century Natural Sciences. Authors: Elías Palti.
+2010 male   . Title: From Ideas To Concepts To Metaphors: The German Tradition Of Intellectual History And The Complex Fabric Of Language. Authors: Elías José Palti.
+1999 male   . Title: Dialectical Itineraries. Authors: Joseph Fracchia.
+2013 male   . Title: Reoccupying Secularization: Schmitt And Koselleck On Blumenberg'S Challenge. Authors: Timo Pankakoski.
+1999 unknown. Title: Does Culture Evolve?. Authors: R. C. Lewontin; Joseph Fracchia.
+1998 male   . Title:  The Sense of History: On the Political Implications of Karl Löwith's Concept of Secularization . Authors: Jeffrey Andrew Barash.
+2003 male   . Title: Nature and Technology in History. Authors: Theodore R. Schatzki.
+1992 male   . Title: Martin Heidegger in the Perspective of the Twentieth Century: Reflections on the Heidegger Gesamtausgabe. Authors: Jeffrey Andrew Barash.
+2005 unknown. Title: The Price of Metaphor. Authors: R. C. Lewontin; Joseph Fracchia.
+
+Topic ID: 69 . Topic Name: Childern / Childhood
+terms, prob: ['children', 'child', 'mother', 'famili', 'parent', 'poor', 'girl', 'age', 'social', 'home']
+terms, frex: ['childrear', 'boisard', 'nurseri', 'orphanag', 'froebel', 'childhood', 'foundl', 'chariti', 'child', 'orphan']
+Examples:
+2008 female . Title: Longing to "Belong": Foster Children in Mid-Century Philadelphia (1946-1963). Authors: Laura Curran.
+1999 male   . Title: Rescuing the 'Waifs and Strays' of the City: The Western Emigration Program of the Children's Aid Society. Authors: Clay Gish.
+2002 female . Title: The Childhood We Have Lost: When Siblings Were Caregivers, 1900-1970. Authors: Eunice G. Pollack.
+2005 female . Title: "Of Women, by Women, and for Women": The Day Nursery Movement in the Progressive-Era United States. Authors: Anne Durst.
+2000 female . Title: Institutionalizing Inequalities: Black Children and Child Welfare in Cleveland, 1859-1998. Authors: Marian J. Morton.
+2003 female . Title: "The Black Lamb of the Black Sheep": Illegitimacy in the English Working Class, 1850-1939. Authors: Ginger Frost.
+2012 male   . Title: A Social History of Ideas Pertaining to Childcare in France and in the United States. Authors: Kaspar Burger.
+2004 female . Title: The "Casa de Huerfanos" and Child Circulation in Late-Nineteenth-Century Chile. Authors: Nara Milanich.
+2012 female . Title: The Baby Trains: Catholic Foster Care and Western Migration, 1873-1929. Authors: Dianne Creagh.
+1991 female . Title: Single Mothers, Delinquent Daughters, and the Juvenile Court in Early 20th Century Los Angeles. Authors: Mary Odem.
+
+Topic ID: 70 . Topic Name: Political Theory
+terms, prob: ['polit', 'moral', 'idea', 'natur', 'thought', 'human', 'one', 'man', 'tradit', 'intellectu']
+terms, frex: ['ethic', 'hobb', 'virtu', 'moral', 'thinker', 'renan', 'rosicrucian', 'bentham', 'machiavelli', 'humanist']
+Examples:
+1977 male   . Title: Burke's Historicism. Authors: Rodney W. Kilcup.
+1986 unknown. Title: Historicizing the "Adam Smith Problem": Conceptual, Historiographical, and Textual Issues. Authors: Laurence Dickey.
+1978 male   . Title: The Genesis of Burke's Reflections. Authors: Frederick Dreyer.
+1995 unknown. Title: The Tawney-Strauss Connection: On Historicism and Values in the History of Political Ideas. Authors: S. J. D. Green.
+1961 male   . Title: An Age of Crisis: A Critical View. Authors: Peter Gay.
+1982 male   . Title: Constant Commotion: Avatars of a Pure Liberal. Authors: George Armstrong Kelly.
+1973 male   . Title: The Myth of the Renaissance (Review Article). Authors: Robert Nisbet.
+1985 unknown. Title: Clarendon and Hobbes. Authors: Perez Zagorin.
+1988 male   . Title: Tocqueville's Mirage or Reality? Political Freedom from Old Regime to Revolution. Authors: Harvey Mitchell.
+1988 male   . Title: Lucien Febvre and the Problem of Unbelief in the Early Modern Period. Authors: David Wootton.
+
+Topic ID: 71 . Topic Name: French Revolution
+terms, prob: ['pari', 'revolut', 'des', 'french', 'franc', 'assembl', '1789', 'estat', 'royal', 'one']
+terms, frex: ['necker', 'calonn', 'girondin', 'bailliag', 'siey', 'servan', 'babeuf', 'tackett', 'varlet', 'saint-florentin']
+Examples:
+1970 male   . Title: Necker's Compte Rendu of 1781: A Reconsideration. Authors: Robert D. Harris.
+1955 male   . Title: The Payment of the Deputies to the French National Assemblies, 1484-1627. Authors: J. Russell Major.
+1986 unknown. Title: From Corps to Citizenship: The Bureaux des Finances before the French Revolution. Authors: Gail Bossenga.
+1972 unknown. Title: The Paris Sixteen, 1584-94: The Social Analysis of a Revolutionary Movement. Authors: J. H. M. Salmon.
+1978 male   . Title: Bourg, Bourgeois, Bourgeois de Paris from the Eleventh to the Eighteenth Century. Authors: Joseph di Corcia.
+1974 female . Title:  The Curés in the Estates General of 1789 . Authors: Ruth F. Necheles.
+1989 male   . Title: Manufacturing Nobles: The Chancelleries in France to 1789. Authors: David D. Bien.
+1977 male   . Title: Conservatism and Radicalism in the Paris Parlement, 1774-1789. Authors: Bailey Stone.
+2003 male   . Title: Absolutism and Class at the End of the Old Regime: The Case of Languedoc. Authors: Stephen Miller.
+1984 female . Title: A Mutation in Elite Political Culture: The French Notables and the Defense of Property and Participation, 1787. Authors: Vivian R. Gruder.
+
+Topic ID: 72 . Topic Name: ?? Italy / Fascism
+terms, prob: ['italian', 'itali', 'mussolini', 'fascist', 'fascism', 'see', 'rome', 'croce', 'polit', 'del']
+terms, frex: ['ragionieri', 'paradisi', 'psf', 'fascista', 'sutera', 'cln', 'delzel', 'morandi', 'sacco-vanzetti', 'bottai']
+Examples:
+1967 male   . Title: The Roots of Italian Fascism: Sorel and Sorelismo. Authors: Jack J. Roth.
+1971 female . Title: Italian Intellectuals under Fascism. Authors: Emiliana P. Noether.
+1956 male   . Title: Italian Historical Scholarship: A Decade of Recovery and Development, 1945-1955. Authors: Charles F. Delzell.
+1963 male   . Title: Benito Mussolini: A Guide to the Biographical Literature. Authors: Charles F. Delzell.
+1996 male   . Title: Mussolini, Sacco-Vanzetti, and the Anarchists: The Transatlantic Context. Authors: Philip V. Cannistraro.
+1975 male   . Title: The Italian Anti-Fascist Resistance in Retrospect: Three Decades of Historiography. Authors: Charles F. Delzell.
+1973 male   . Title: Fascism, the Mafia, and the Emergence of Sicilian Separatism (1919-43). Authors: Jack E. Reece.
+1965 female . Title: Piero Gobetti and the Crisis of the "Prima Dopoguerra". Authors: Wilda M. Vanek.
+1995 female . Title: Fascism, Writing, and Memory: The Realist Aesthetic in Italy, 1930-1950. Authors: Ruth Ben-Ghiat.
+1952 male   . Title: Benedetto Croce and Italian Fascism: A Note on Historical Reliability. Authors: Chester McArthur Destler.
+
+Topic ID: 73 . Topic Name: ?? Oil and Cars
+terms, prob: ['oil', 'american', 'new', 'state', 'compani', 'industri', 'technolog', 'road', 'car', 'see']
+terms, frex: ['exxon', 'opa', 'volkswagen', 'oilmen', 'deepwat', 'petroleum', 'opec', 'telephoni', "ittila'at", 'degoly']
+Examples:
+2012 female . Title: The Seventeen-Year Overnight Wonder: George Mitchell and Unlocking the Barnett Shale. Authors: Diana Davids Hinton.
+2012 male   . Title: The Dilemmas of Oil Empire. Authors: Tyler Priest.
+2012 male   . Title: Exxon and the Control of Oil. Authors: Joseph A. Pratt.
+2012 male   . Title: Crisis and Continuity in U.S. Oil Politics, 1965-1980. Authors: Paul Sabin.
+2012 male   . Title: Fueling the Boom: Gasoline Taxes, Invisibility, and the Growth of the American Highway Infrastructure, 1919-1956. Authors: Christopher W. Wells.
+2012 male   . Title: Oil and the American Century. Authors: David S. Painter.
+2012 female . Title: Oil in the City: The Fall and Rise of Oil Drilling in Los Angeles. Authors: Sarah S. Elkind.
+2012 male   . Title: Petropolis and Environmental Protest in Cross-National Perspective: Beaumont—Port Arthur, Texas, versus Minatitlan-Coatzacoalcos, Veracruz. Authors: Christopher Sellers.
+2012 male   . Title: Building America's First Offshore Oil Port: LOOP. Authors: Jason Theriot.
+2012 male   . Title: Anonymity and Ambivalence: The Canadian and American Oil Industries and the Emergence of Continental Oil. Authors: Paul Chastko.
+
+Topic ID: 74 . Topic Name: ?? Feudalism
+terms, prob: ['kinship', 'feudal', 'fosterag', 'also', 'adopt', 'blood', 'press', 'son', 'foster', 'nobl']
+terms, frex: ['fosterag', 'funj', 'cliental', 'obizzo', 'chitral', 'atalyk', 'proto-indo-european', 'fosterl', 'chulainn', 'kavad']
+Examples:
+2004 male   . Title: Fosterage, Kinship, and Legend: When Milk Was Thicker than Blood?. Authors: Peter Parkes.
+2003 male   . Title: Fostering Fealty: A Comparative Analysis of Tributary Allegiances of Adoptive Kinship. Authors: Peter Parkes.
+2006 male   . Title: Celtic Fosterage: Adoptive Kinship and Clientage in Northwest Europe. Authors: Peter Parkes.
+2001 male   . Title: Alternative Social Structures and Foster Relations in the Hindu Kush: Milk Kinship Allegiance in Former Mountain Kingdoms of Northern Pakistan. Authors: Peter Parkes.
+1992 male   . Title: Manhood, Femaleness, and Power: A Cultural Analysis of Prehistoric Images of Reproduction. Authors: Uli Linke.
+2002 male   . Title: Berserks: A History of Indo-European "Mad Warriors". Authors: Michael P. Speidel.
+2004 male   . Title: The Madonna and the Cuckoo: An Exploration in European Symbolic Conceptions. Authors: Francisco Vaz da Silva.
+1993 male   . Title: Ethnogenesis and Religious Revitalization beyond the Roman Frontier: The Case of Frankish Origins. Authors: David Harry Miller.
+1973 female . Title: In the Beginning, God Was a Woman. Authors: Mary Kilbourne Matossian.
+1997 female . Title: Sin, Citizenship, and the Salvation of Souls: The Impact of Christian Priorities on Late-Roman and Post-Roman Society. Authors: Sabine MacCormack.
+
+Topic ID: 75 . Topic Name: Race (2) //unclear how it differs from topic 29
+terms, prob: ['race', 'white', 'racial', 'coloni', 'black', 'color', 'new', 'african', 'european', 'nation']
+terms, frex: ['quadroon', "d'auberteuil", 'freemasonri', 'reconocimiento', 'miscegen', 'common-law', 'expatri', 'racial', 'afro-cuban', 'stateless']
+Examples:
+2000 female . Title: Black Men, Racial Stereotyping, and Violence in the U.S. South and Cuba at the Turn of the Century. Authors: Aline Helg.
+2004 unknown. Title: Legislating Women's Sexuality: Cherokee Marriage Laws in the Nineteenth Century. Authors: Fay Yarbrough.
+1992 female . Title: Sexual Affronts and Racial Frontiers: European Identities and the Cultural Politics of Exclusion in Colonial Southeast Asia. Authors: Ann Stoler.
+2010 male   . Title: Making Men: Enlightenment Ideas of Racial Engineering. Authors: William Max Nelson.
+2012 male   . Title: The "Quadroon-Plaçage" Myth of Antebellum New Orleans: Anglo-American (Mis)interpretations of a French-Caribbean Phenomenon. Authors: Kenneth Aslakson.
+2009 male   . Title: Raising Eurasia: Race, Class, and Age in French and British Colonies. Authors: David M. Pomfret.
+2009 female . Title: Expatriation, Expatriates, and Expats: The American Transformation of a Concept. Authors: Nancy L. Green.
+2005 male   . Title: Toward a History of Brazil's "Cordial Racism": Race beyond Liberalism. Authors: Brian Owensby.
+2010 female . Title: Crises Of Whiteness And Empire In Colonial Indochina: The Removal Of Abandoned Eurasian Children From The Vietnamese Milieu, 1890-1956. Authors: Christina Firpo.
+2007 female . Title: Creating an Alternative Kinship: Slavery, Freedom, and Nineteenth-Century Afro-Cuban "Hijos Naturales". Authors: Karen Y. Morrison.
+
+Topic ID: 76 . Topic Name: Spain
+terms, prob: ['spanish', 'spain', 'madrid', 'del', 'citi', 'centuri', 'see', 'vol', 'new', 'also']
+terms, frex: ['aqiili', 'escribano', 'madera', 'ivrea', 'hekdesh', 'vicen', 'morisco', 'baldio', 'juicio', 'aldret']
+Examples:
+1978 female . Title: The Moriscos of La Mancha, 1570-1614. Authors: Carla Rahn Phillips.
+1975 male   . Title:  The Sale of Tierras Baldías in Sixteenth-Century Castile . Authors: David E. Vassberg.
+2007 male   . Title: "Iglesia Me Llamo": Church Asylum and the Law in Spain and Colonial Spanish America. Authors: Victor M. Uribe-Uran.
+1960 unknown. Title: Some Observations on Castilian Commerce and Finance in the Sixteenth Century. Authors: Ladislas Reitzer.
+1984 male   . Title: The New Social History and the Spanish Inquisition. Authors: E. William Monter.
+1976 male   . Title: Political Opposition and Collective Violence in Segovia, 1475-1520. Authors: Stephen Haliczer.
+2002 female . Title: Bernardo de Aldrete and the Morisco Problem: A Study in Early Modern Spanish Language Ideology. Authors: Kathryn A. Woolard.
+1988 female . Title: Emigrants and Society: An Approach to the Background of Colonial Spanish America. Authors: Ida Altman.
+1994 male   . Title: Notability and Revolution: Social Origins of the Political Elite in Liberal Spain, 1800 to 1853. Authors: Jesus Cruz.
+1970 male   . Title: Conflict in San Carlos: Indian Immigrants in Eighteenth-Century New Spain. Authors: Robert L. Gold.
+
+Topic ID: 77 . Topic Name: North America
+terms, prob: ['american', 'state', 'unit', 'nation', 'america', 'empir', 'coloni', 'british', 'new', 'world']
+terms, frex: ['canadian', 'quebec', 'twiss', 'canada', 'cohn-bendit', 'trans-appalachian', 'atlant', 'novak', 'canizares-esguerra', 'transnat']
+Examples:
+2008 male   . Title: The Significance of the Trans-Appalachian Frontier in Atlantic History. Authors: François Furstenberg.
+2007 male   . Title: Entangled Atlantic Histories: A Response from the Anglo-American Periphery. Authors: Eliga H. Gould.
+2011 male   . Title: Power and Connection: Imperial Histories of the United States in the World. Authors: Paul A. Kramer.
+2007 male   . Title: Entangled Histories, Entangled Worlds: The English-Speaking Atlantic as a Spanish Periphery. Authors: Eliga H. Gould.
+2010 male   . Title: Law and War in American History. Authors: John Fabian Witt.
+2008 male   . Title: An Age of Imperial Revolutions. Authors: Jeremy Adelman.
+2012 male   . Title: Comment: Empire and Its Anxieties. Authors: Anthony Pagden.
+2012 male   . Title: Liberalism and Empire in Nineteenth-Century International Law. Authors: Andrew Fitzmaurice.
+2012 male   . Title: The Liberal Traditions in the Americas: Rights, Sovereignty, and the Origins of Liberal Multilateralism. Authors: Greg Grandin.
+2007 male   . Title: The Provinciality of American Empire: 'Liberal Exceptionalism' and U.S. Colonial Rule, 1898-1912. Authors: Julian Go.
+
+Topic ID: 78 . Topic Name: World War I
+terms, prob: ['1918', '1917', 'war', '1919', 'wilson', '1921', 'british', 'govern', 'german', '1922']
+terms, frex: ['weizmann', 'trotski', 'petrograd', 'repar', '1917', 'brandei', 'bolshevik', 'sisson', '1918', 'lans']
+Examples:
+1959 male   . Title: The Influence of the Creel Committee and the American Red Cross on Russian-American Relations, 1917-1919. Authors: Claude E. Fike.
+1976 male   . Title: Woodrow Wilson and the Decision to Intervene in Russia: A Reconsideration. Authors: Eugene P. Trani.
+1968 male   . Title: Woodrow Wilson and the Balfour Declaration. Authors: Richard Ned Lebow.
+1976 male   . Title: The Origins of the French Intervention in the Russian Civil War, January-May 1918: A Reappraisal. Authors: Michael Jabara Carley.
+1992 male   . Title: The Balfour Declaration and Its Maker: A Reassessment. Authors: Jehuda Reinharz.
+1974 male   . Title: The British Government and Japanese Intervention in Russia during World War I. Authors: David R. Woodward.
+1971 male   . Title: Lockhart Plot or Dzerhinskii Plot?. Authors: Richard K. Debo.
+1979 male   . Title: Reparation at the Paris Peace Conference. Authors: Marc Trachtenberg.
+1954 male   . Title: Wilson on Germany and the Fourteen Points. Authors: John L. Snell.
+1956 male   . Title: The Sisson Documents. Authors: George F. Kennan.
+
+Topic ID: 79 . Topic Name: Brazil
+terms, prob: ['brazil', 'rio', 'brazilian', 'slave', 'paulo', 'sao', 'janeiro', 'coloni', 'see', 'popul']
+terms, frex: ['cabanagem', 'jeronymo', 'parana', 'rondon', 'orfao', 'janeiro', 'relatorio', 'contestado', 'juiz', 'ordem']
+Examples:
+1996 male   . Title: Demographic Change in a Post-Export Boom Society: The Population of Minas Gerais, Brazil, 1776-1821. Authors: Laird W. Bergad.
+2008 male   . Title: The Population and Vital Rates of the Jesuit Missions of Paraguay, 1700-1767. Authors: Robert H. Jackson.
+1974 unknown. Title: Local Government in Portuguese America: A Study in Cultural Divergence. Authors: A. J. R. Russell-Wood.
+1999 male   . Title: Myths of Pacification: Brazilian Frontier Settlement and the Subjugation of the Bororo Indians. Authors: Hal Langfur.
+1970 male   . Title: The "Mocambo": Slave Resistance in Colonial Bahia. Authors: Stuart B. Schwartz.
+1990 male   . Title: Peasants, Prophets, and the Power of a Millenarian Vision in Twentieth-Century Brazil. Authors: Todd A. Diacon.
+1991 female . Title: Slavery's Impasse: Slave Prostitutes, Small-Time Mistresses, and the Brazilian Law of 1871. Authors: Sandra Lauderdale Graham.
+1996 male   . Title: "The Shelter of the Uniform": The Brazilian Army and Runaway Slaves, 1800-1888. Authors: Hendrik Kraay.
+2007 female . Title: Writing from the Margins: Brazilian Slaves and Written Culture. Authors: Sandra Lauderdale Graham.
+1994 female . Title: Orphans and the Transition from Slave to Free Labor in Northeast Brazil: The Case of Campina Grande, 1850-1888. Authors: Joan Meznar.
+
+Topic ID: 80 . Topic Name: Russia
+terms, prob: ['russian', 'russia', 'moscow', 'see', 'petersburg', 'peasant', 'centuri', 'also', 'tsar', 'even']
+terms, frex: ['molokan', 'tsgia', 'loris-melikov', 'kliuchevskii', 'service-class', 'aksakov', 'zemstvo', 'germogen', "il'minskii", 'reutern']
+Examples:
+1996 male   . Title: Subversive Piety: Religion and the Political Crisis in Late Imperial Russia. Authors: Gregory L. Freeze.
+1996 male   . Title: "Not by Word Alone": Missionary Policies and Religious Conversion in Early Modern Russia. Authors: Michael Khodarkovsky.
+1997 male   . Title: Does Jack Goldstone's Model of Early Modern State Crises Apply to Russia?. Authors: Chester Dunning.
+2011 male   . Title: Icons and Private Devotion Among Eighteenth-Century Moscow Townsfolk. Authors: Daniel H. Kaiser.
+1994 male   . Title: The Survey Course that Became a Classic Set: Kliuchevskii's Course of Russian History. Authors: Robert F. Byrnes.
+1965 male   . Title: Peter Arkad'evich Stolypin: A Political Appraisal. Authors: Alfred Levin.
+1996 male   . Title: The Consequences of the Military Revolution in Muscovy: A Comparative Perspective. Authors: Marshall Poe.
+1968 male   . Title: Russia and the West: The Views of Pobedonostsev. Authors: Robert F. Byrnes.
+1961 male   . Title: Alexander III and the Reform Plan of Loris-Melikov. Authors: Hans Heilbronner.
+2000 male   . Title: From "Pagan" Muslims to "Baptized" Communists: Religious Conversion and Ethnic Particularity in Russia's Eastern Provinces. Authors: Paul W. Werth.
+
+Topic ID: 81 . Topic Name: Governance
+terms, prob: ['polit', 'state', 'power', 'govern', 'elit', 'new', 'system', 'social', 'institut', 'societi']
+terms, frex: ['bureaucrat', 'bureaucraci', 'legitimaci', 'elit', 'patron-cli', 'clientelist', 'politi', 'autonomi', 'oligarchi', 'apparatus']
+Examples:
+1986 male   . Title: On the Rise of Postwar Military Dictatorships: Argentina, Chile, Greece. Authors: Nicos Mouzelis.
+1983 male   . Title: Class, Ethnicity, and the Democratic State: Nigeria, 1950-1966. Authors: Larry Diamond.
+1985 male   . Title: Bureaucrats versus the State in Capitalist and Socialist Regimes. Authors: Reeve D. Vanneman; Richard Kraus.
+1985 male   . Title: The State and Public Bureaucracies: A Comparative and Historical Perspective. Authors: Metin Heper.
+1960 male   . Title: Political Development in the New States: II. Authors: Edward Shils.
+1975 male   . Title: The Closing Triangle: Critical Notes on a Model for Peasant Mobilization in Latin America. Authors: Peter Singelmann.
+1980 unknown. Title: Patron--Client Relations as a Model of Structuring Social Exchange. Authors: Louis Roniger; S. N. Eisenstadt.
+1996 male   . Title: Power, Peasants and Political Development: Reconsidering State Construction in Africa. Authors: William A. Munro.
+1967 male   . Title: Egypt and the Myth of the New Middle Class: A Comparative Analysis. Authors: Amos Perlmutter.
+1994 male   . Title: A Community Model of African Politics: Illustrations from Nigeria and Tanzania. Authors: Donald C. Williams; Goran Hyden.
+
+Topic ID: 82 . Topic Name: ??
+terms, prob: ['american', 'new', 'histori', 'york', 'univers', 'press', 'america', 'cultur', 'histor', 'historian']
+terms, frex: ['paperback', 'jameson', 'dewey', 'hofstadt', 'higham', 'bibliograph', 'bancroft', 'bibliographi', 'beard', 'schlesing']
+Examples:
+1975 unknown. Title: Book Notes. Authors: None.
+1969 unknown. Title: Book Notes. Authors: None.
+1983 male   . Title: Material Culture Studies and Social History Research. Authors: Thomas J. Schlereth.
+1951 male   . Title: The War-Guilt Question and American Disillusionment, 1918-1928. Authors: Selig Adler.
+2008 female . Title: Exceptional History? The Origins of Historiography in the United States. Authors: Eileen Ka-May Cheng.
+1971 male   . Title: American Labor Historiography, Old and New. Authors: Thomas A. Krueger.
+1998 male   . Title: The Strange History of the Decade: Modernity, Nostalgia, and the Perils of Periodization. Authors: Jason Scott Smith.
+2011 unknown. Title: ERRATUM: Union, Nation, or Empire: The American Debate over International Relations, 1789-1941. Authors: None.
+1967 male   . Title: Trends in American Social History and the Possibilities of Behavioral Approaches. Authors: Mario S. De Pillis.
+2001 male   . Title: The Concept of Political Culture. Authors: Ronald P. Formisano.
+
+Topic ID: 83 . Topic Name: ?? U.S. Politicall History
+terms, prob: ['american', 'right', 'new', 'polit', 'york', 'movement', 'nation', 'war', 'state', 'black']
+terms, frex: ['trice', 'sds', 'sncc', 'reagan', 'phillips-fein', 'eeoc', 'panther', 'campus', 'countercultur', 'benson']
+Examples:
+2009 unknown. Title: The Black Power Movement, Democracy, and America in the King Years. Authors: Peniel E. Joseph.
+2012 female . Title: Closing Doors: Hollywood, Affirmative Action, and the Revitalization of Conservative Racial Politics. Authors: Eithne Quinn.
+2011 male   . Title: The Trouble with Gay Rights: Race and the Politics of Sexual Orientation in Philadelphia, 1969-1982. Authors: Kevin J. Mumford.
+2009 unknown. Title: The Black Power Movement: A State of the Field. Authors: Peniel E. Joseph.
+2011 male   . Title: Conservatism as a Growing Field of Scholarship. Authors: Alan Brinkley.
+2010 male   . Title: "Red Cross, Double Cross": Race and America s World War II-Era Blood Donor Service. Authors: Thomas A. Guglielmo.
+2012 unknown. Title: Points of Access: Rehabilitation Centers, Summer Camps, and Student Life in the Making of Disability Activism, 1960-1973. Authors: Lindsey Patterson.
+2011 male   . Title: On American Conservatism and Kim Phillips-Fein's Survey of the Field. Authors: Martin Durham.
+2011 female . Title: Conservatism: A State of the Field. Authors: Kim Phillips-Fein.
+2004 male   . Title: The Many Facets of Brown: Integration in a Multiracial Society. Authors: Scott Kurashige.
+
+Topic ID: 84 . Topic Name: ?? Latin America (Colonial)
+terms, prob: ['indian', 'spanish', 'mexico', 'inca', 'coloni', 'del', 'see', 'new', 'guatemala', 'los']
+terms, frex: ["k'ich", 'agustina', 'atahualpa', 'ladino', 'duviol', 'chiriguano', 'ocelotl', 'arbenz', 'agey', 'betanzo']
+Examples:
+2001 female . Title: History, Historical Record, and Ceremonial Action: Incas and Spaniards in Cuzco. Authors: Sabine MacCormack.
+2010 female . Title: "If You Eat Their Food...": Diets and Bodies in Early Colonial Spanish America. Authors: Rebecca Earle.
+1984 male   . Title: Human Sacrifice at Tenochtitlan. Authors: John M. Ingham.
+1988 female . Title: Imperial Dilemmas, the Politics of Kinship, and Inca Reconstructions of History. Authors: Irene Silverblatt.
+1993 male   . Title: Segmentary State Formation and the Ritual Control of Water under the Incas. Authors: Peter Gose.
+1998 male   . Title: A Central American Genocide: Rubber, Slavery, Nationalism, and the Destruction of the Guatusos-Malekus. Authors: Marc Edelman.
+2005 male   . Title: Beyond Exotization and Likeness: Alterity and the Production of Sense in a Colonial Encounter. Authors: Gonzalo Lamana.
+1999 male   . Title: The Religious Context of an "Unholy Marriage": Elite Alienation and Popular Unrest in the Indigenous Communities of Chiapa, 1570-1680. Authors: Amos Megged.
+2006 female . Title: Franciscans, Indian Sorcerers, and the Inquisition in New Spain, 1536-1543. Authors: Patricia Lopes Don.
+1997 male   . Title: Cultural Interbreedings: Constituting the Majority as a Minority. Authors: Serge Gruzinski; Nathan Wachtel.
+
+Topic ID: 85 . Topic Name: ??
+terms, prob: ['histori', 'new', 'one', 'state', 'american', 'see', 'polit', 'histor', 'also', 'social']
+terms, frex: ['edn', 'navajo', 'pinchot', 'follett', 'dobyn', 'chippewa', 'stimson', 'ahr', 'miskito', 'eisenhow']
+Examples:
+2000 unknown. Title: Erratum: Jews in the Criminal-Justice System of Early Modern Germany. Authors: None.
+1967 unknown. Title: Countries Far Away - Cognition at a Distance. Authors: A. N. J. den Hollander.
+1996 unknown. Title: Errata: Book Review. Authors: None.
+1975 male   . Title: Trial Balloons. Authors: Herbert S. Levine; Richard W. Unger.
+1971 unknown. Title: Erratum: Ethnic Slave Rebellions in the Caribbean and the Guianas. Authors: None.
+1997 male   . Title: Correspondence. Authors: Gar Alperovitz.
+1997 male   . Title: Correspondence. Authors: Edward Countryman; Harvey Klehr; Ronald Radosh.
+2011 male   . Title: Common Misperceptions: The Press and Victorian Views of Crime. Authors: Christopher A. Casey.
+1994 male   . Title: Introduction. Authors: Alberto Herrera.
+1977 male   . Title: [Problems in the History of Higher Education: A Review Article]: Counter-Comment. Authors: Fritz K. Ringer.
+
+Topic ID: 86 . Topic Name: Agriculture
+terms, prob: ['land', 'agricultur', 'farm', 'farmer', 'labor', 'product', 'rural', 'crop', 'peasant', 'cultiv']
+terms, frex: ['cheesemak', 'debt-sal', 'farm', 'tenanc', 'farmer', 'mezquit', 'hectar', 'tenant', 'smallhold', 'acr']
+Examples:
+2004 male   . Title: Manure Matters on the Great Plains Frontier. Authors: Geoff Cunfer.
+1980 male   . Title: [Development as History: A Note on Folke Dovring's Review Article]: Rejoinder. Authors: Folke Dovring.
+1988 male   . Title: Rethinking Tenancy: Explaining Spatial and Temporal Variation in Late Imperial and Republican China. Authors: John R. Shepherd.
+1980 male   . Title: Development as History: A Note on Folke Dovring's Review Article. Authors: Norman Mutton; Lewis W. Jones.
+1979 male   . Title: The Political Economy of Gutswirtschaft: A Comparative Analysis of East Elbian Germany, Egypt, and Chile. Authors: Alan Richards.
+1989 male   . Title: Emergence of Capitalized Family Farms in Latin America. Authors: Luis Llambi.
+1979 male   . Title: Agricultural Change and Landlord-Tenant Relations in Nineteenth Century France: The Canton of Apt (Vaucluse). Authors: Peter Simoni.
+1974 male   . Title: Demographic and Economic Aspects of Poverty in the Rural Philippines. Authors: Aram A. Yengoyan.
+1988 male   . Title: Nineteenth Century Tenancy Rates in Ontario's Counties, 1881 and 1891. Authors: William L. Marr.
+1993 male   . Title: Classes as Clients of the State: Landlords and Labourers in Andalusia. Authors: Goran Djurfeldt.
+
+Topic ID: 87 . Topic Name: ?? War and Economy
+terms, prob: ['war', 'american', 'year', 'new', 'industri', 'one', 'econom', 'histori', 'data', 'product']
+terms, frex: ['comput', 'index', 'coeffici', 'steel', 'i969', 'output', 'nixon', 'ratio', 'median', 'data']
+Examples:
+1964 male   . Title: The Cochran Thesis: A Critique in Statistical Analysis. Authors: Pershing Vartanian.
+1961 male   . Title: Progress in Iron and Steel: 1870-1913. Authors: Thomas J. Orsagh.
+1986 male   . Title: Economic Bases of Revolution and Repression in the Late Ottoman Empire. Authors: Carter Vaughn Findley.
+1998 male   . Title: Differing Evaluations of Vietnamization. Authors: Scott Sigmund Gartner.
+1961 male   . Title: Comparative Economic Progress: A Review Article. Authors: Rondo E. Cameron.
+1979 male   . Title: The Economic Climate of the `Young Turk Revolution' in 1908. Authors: Donald Quataert.
+2011 male   . Title: Common Misperceptions: The Press and Victorian Views of Crime. Authors: Christopher A. Casey.
+2010 male   . Title: Challenging Certainty: The Utility and History of Counterfactualism. Authors: Simon T. Kaye.
+1980 male   . Title: Europe, the Middle East and the Shift in Power: Reflections on a Theme by Marshall Hodgson. Authors: Charles Issawi.
+2012 male   . Title: Bringing "Honest Capital" to Poor Borrowers: The Passage of the U.S. Uniform Small Loan Law. Authors: Bruce G. Carruthers; Timothy W. Guinnane; Yoonseok Lee.
+
+Topic ID: 88 . Topic Name: ?? France (Early Modern)
+terms, prob: ['king', 'french', 'franc', 'loui', 'princ', 'fol', 'royal', 'diplomat', 'xiv', 'see']
+terms, frex: ['pontchartrain', 'torci', 's6r', 'louvoi', 'colbert', 'xiv', 'luce', 'harley', 'pitt', 'savoy']
+Examples:
+1973 male   . Title: Continuity in the France of Henry IV and Louis XIII: French Foreign Policy, 1598-1615. Authors: J. Michael Hayden.
+1977 male   . Title: Bavaria and the Collapse of Louis XIV's German Policy, 1687-1688. Authors: Richard Place.
+1954 male   . Title: John de Witt and the Triple Alliance. Authors: Herbert H. Rowen.
+1980 male   . Title: Early Modern Diplomatic Ceremonial: A Systems Approach. Authors: William Roosen.
+1964 female . Title: Pym and Parliament: The Methods of Moderation. Authors: Lotte Glow.
+1967 male   . Title: The Imperial Circles, Princely Diplomacy and Imperial Reform 1681-1714. Authors: Roger Wines.
+1971 male   . Title: Witchcraft in Geneva, 1537-1662. Authors: E. William Monter.
+1971 male   . Title: Men of Letters and Political Reform in France at the End of the Reign of Louis XIV: The Founding of the Academie Politique. Authors: Joseph Klaits.
+1956 male   . Title:  The Görtz-Gyllenborg Arrests-A Problem in Diplomatic Immunity . Authors: John J. Murray.
+1973 male   . Title: The Struggle for Control of George I's Northern Policy, 1718-19. Authors: Derek McKay.
+
+Topic ID: 89 . Topic Name: Women's History
+terms, prob: ['women', 'men', 'femal', 'woman', 'gender', 'work', 'male', 'famili', 'husband', 'domest']
+terms, frex: ['women', 'feminist', 'femin', 'femal', 'gender', 'woman', 'wive', 'male', 'husband', 'feminin']
+Examples:
+1996 male   . Title: The Sexual Division of Foraging Labor: Biology, Taboo, and Gender Politics. Authors: Robert Brightman.
+1994 female . Title: Gender and the Family Labor System: Defining Work in the Rural Midwest. Authors: Mary Neth.
+1978 female . Title: Woman's Place: A Critical Review of Anthropological Theory. Authors: Susan Carol Rogers.
+2013 female . Title: Space, Place, And Gender: The Sexual And Spatial Division Of Labor In The Early Modern Household. Authors: Amanda J. Flather.
+1990 female . Title: Liberal Ideology, Sexual Difference, and the Lives of Women: Recent Works in British History. Authors: Dina M. Copelman.
+1994 female . Title: Status and Context: Sri Lankan Potter Women Reconsidered after Field Work in India. Authors: Deborah Winslow.
+2003 female . Title: Vine and Oak: Wives and Husbands Cope with the Finanacial Panic of 1857. Authors: Andrea R. Foroughi.
+1989 female . Title: Gender Systems in Conflict: The Marriages of Mission-Educated Chinese American Women, 1874-1939. Authors: Peggy Pascoe.
+2001 unknown. Title: Formation of Gender Identities in Republican Turkey and Women's Narratives as Transmitters of 'Herstory' of Modernization. Authors: Aynur Ilyasoglu; Ayse Durakbasa.
+1984 female . Title: The Charitable and the Poor: The Emergence of Domestic Politics in Augusta, Georgia, 1860-1880. Authors: LeeAnn Whites.
+
+Topic ID: 90 . Topic Name: Mexico
+terms, prob: ['mexico', 'mexican', 'state', 'border', 'borderland', 'american', 'indian', 'new', 'see', 'texa']
+terms, frex: ["o'odham", 'nogal', 'htas', 'lulac', 'saltillo', 'chihuahua', 'cardenista', 'ordaz', 'casanar', 'lerdo']
+Examples:
+2011 male   . Title: Borderlands of Modernity and Abandonment: The Lines within Ambos Nogales and the Tohono O'odham Nation. Authors: Geraldo L. Cadava.
+2007 male   . Title: Independent Indians and the U.S.-Mexican War. Authors: Brian Delay.
+2005 female . Title: From Captives to Slaves: Commodifying Indian Women in the Borderlands. Authors: Juliana Barr.
+1999 male   . Title: Politics and the Technology of Honor: Dueling in Turn-of-the-Century Mexico. Authors: Pablo Piccato.
+1975 male   . Title: Non-Revolutionary Peasants: Oaxaca Compared to Morelos in the Mexican Revolution. Authors: Ronald Waterbury.
+1994 female . Title: Haitians, Magic, and Money: Raza and Society in the Haitian-Dominican Borderlands, 1900 to 1937. Authors: Lauren Derby.
+2008 male   . Title: Colonies of the Little Motherland: Membership, Space, and Time in Mexican Migrant Hometown Associations. Authors: David Fitzgerald.
+2011 male   . Title: The Many Worlds of ʿAbud Yasin; or, What Narcotics Trafficking in the Interwar Middle East Can Tell Us about Territorialization. Authors: Cyrus Schayegh.
+2011 male   . Title: The Cosmic Race in Texas: Racial Fusion, White Supremacy, and Civil Rights Politics. Authors: Benjamin H. Johnson.
+1987 female . Title: Black and White and Color: Cardenismo and the Search for a Campesino Ideology. Authors: Marjorie Becker.
+
+Topic ID: 91 . Topic Name: Law
+terms, prob: ['law', 'legal', 'court', 'right', 'case', 'state', 'properti', 'rule', 'author', 'constitut']
+terms, frex: ['law', 'legal', 'litig', 'judici', 'jurisdict', 'court', 'lawyer', 'judg', 'justic', 'legisl']
+Examples:
+1989 male   . Title: The Nature of Customary Law in the Manor Courts of Medieval England. Authors: Lloyd Bonfield.
+2007 male   . Title: In Retrospect: Landmark Law Cases in American Society. Authors: Eric Rauchway.
+1965 male   . Title: The Politics of Judicial Development in Indonesia. Authors: Daniel S. Lev.
+1961 unknown. Title: The Imposition of Western Law Forms upon Primitive Societies. Authors: A. St. J. Hannigan.
+1961 male   . Title: The Administration of Hindu Law by the British. Authors: J. Duncan M. Derrett.
+1966 male   . Title: Parallels between Talmudic and New York Usury Laws. Authors: Bernard J. Meislin.
+1965 unknown. Title: In Quest of New Law: The Perplexity of Legal Syncretism in Indonesia. Authors: M. A. Jaspan.
+2010 male   . Title: Secularism, Sovereignty, Indeterminacy: Is Egypt a Secular or a Religious State?. Authors: Hussein Ali Agrama.
+1963 male   . Title: Muhammadan Law in India. Authors: Asaf A. A. Fyzee.
+1960 male   . Title: Epistemology and Social Order: Observations on F. S. C. Northrop, The Complexity of Legal and Ethical Experience. Authors: Max Rheinstein.
+
+Topic ID: 92 . Topic Name: ??
+terms, prob: ['histor', 'histori', 'past', 'can', 'historian', 'one', 'mean', 'narrat', 'event', 'philosophi']
+terms, frex: ['ankersmit', 'gadam', 'brandom', 'hadot', 'f0rland', 'bernheim', 'collingwood', 'narrativist', 'stueber', 'railton']
+Examples:
+1998 unknown. Title: Can Histories be True? Narrativism, Positivism, and the "Metaphorical Turn". Authors: Chris Lorenz.
+2005 male   . Title: Ankersmit and Historical Representation. Authors: John Zammito.
+2004 female . Title: Re-Enactment and Radical Interpretation. Authors: Giuseppina D'Oro.
+2002 male   . Title: How to Be an Intentionalist. Authors: Mark Bevir.
+1998 male   . Title: Mixed Messages: The Heterogeneity of Historical Discourse. Authors: Steven G. Crowell.
+2011 male   . Title: Indirect Reference And The Creation Of Distance In History. Authors: Eugen Zeleňák.
+2002 female . Title: On Some Problems with Weak Intentionalism for Intellectual History. Authors: Vivienne Brown.
+2011 male   . Title: The Transfiguration Of Distance Into Function. Authors: Frank Ankersmit.
+2008 male   . Title: Three Dogmas (More or Less) of Explanation. Authors: Paul A. Roth.
+1998 male   . Title: Ankersmit's Postmodernist Historiography: The Hyperbole of "Opacity". Authors: John H. Zammito.
+
+Topic ID: 93 . Topic Name: ?? Colonies
+terms, prob: ['british', 'foreign', 'britain', 'govern', 'french', 'state', 'offic', 'treati', 'london', 'polici']
+terms, frex: ['harding', 'pmc', 'holmwood', 'palmerston', 'grey', 'meighen', 'mosul', 'consular', 'georges-picot', 'raynev']
+Examples:
+1960 unknown. Title: The Egyptian Question and British Foreign Policy, 1892-1894. Authors: T. B. Miller.
+1953 female . Title: Anglo-Belgian Military Relations and the Congo Question, 1911-1913. Authors: Mary Elizabeth Thomas.
+1959 female . Title: Great Britain and the Creation of the Anglo-Japanese Alliance. Authors: Zara S. Steiner.
+1954 unknown. Title: The Far Eastern Agreements of 1907. Authors: E. W. Edwards.
+1970 male   . Title: Italy, the British East Africa Company, and the Benadir Coast, 1888-1893. Authors: John S. Galbraith.
+1976 male   . Title: Italy and the Anglo-French Repudiation of the 1917 St. Jean de Maurienne Agreement. Authors: Paul C. Helmreich.
+1968 male   . Title: Salisbury and the Italians in 1896. Authors: Arthur Marsden.
+1953 unknown. Title: The Drafting of the Four-Power Treaty of the Washington Conference. Authors: J. Chal Vinson.
+1979 male   . Title: Sir Charles Hardinge and the Question of Intervention in the Boer War: An Episode in the Rise of Anti-German Feeling in the British Foreign Office. Authors: Edward T. Corp.
+1952 unknown. Title: Palmerston and the Levant Crisis, 1832. Authors: M. Vereté.
+
+Topic ID: 94 . Topic Name: China
+terms, prob: ['chines', 'china', 'shanghai', 'see', 'confucian', 'offici', 'qing', 'imperi', 'han', 'also']
+terms, frex: ['labrang', 'tingyun', 'aleni', 'panchen', 'nianhua', 'zhongguo', 'subei', 'renmin', 'zhizao', 'meishu']
+Examples:
+2001 unknown. Title: In Search of Longevity and Good Karma: Chinese Diplomatic Missions to Middle India in the Seventh Century. Authors: Tansen Sen.
+2013 female . Title: Changing Cosmology, Changing Perspectives on History and Politics: Christianity and Yang Tingyun's 楊庭簿 (1562-1627) Reflections on China. Authors: Yu-Yin Cheng.
+2009 male   . Title: The Planetary Portent of 1524 in China and Europe. Authors: David W. Pankenier.
+1999 male   . Title: History, Space, and Ethnicity: The Chinese Worldview. Authors: Q. Edward Wang.
+2013 female . Title: The Complexities of a Stoic Breakthrough: Matteo Ricc's "Ershiwu Yan" (Twenty-five Paragraphs). Authors: Yu Liu.
+2000 male   . Title: Banditry and the Subversion of State Authority in China: The Capital Region during the Middle Ming Period (1450-1525). Authors: David M. Robinson.
+1999 male   . Title: Manchu Widows and Ethnicity in Qing China. Authors: Mark C. Elliott.
+2011 female . Title: The Spiritual Journey of an Independent Thinker: The Conversion of Li Zhizao to Catholicism. Authors: Yu Liu.
+1993 female . Title: The Origins of Prejudice: The Malintegration of Subei in Late Imperial China. Authors: Antonia Finnane.
+1962 male   . Title: Confucian and Taiping "Heaven": The Political Implications of Clashing Religious Concepts. Authors: Joseph R. Levenson.
+
+Topic ID: 95 . Topic Name: ?? Law Enforcement
+terms, prob: ['polic', 'new', 'citi', 'york', 'chicago', 'see', 'american', 'report', 'street', 'histori']
+terms, frex: ['newsboy', 'patrolman', 'aspca', 'anti-vic', 'patrolmen', 'poorfarm', 'hobo', 'laguardia', 'saloon', 'cop']
+Examples:
+2004 male   . Title: Assigned to Patrol: Neighborhoods, Police, and Changing Deployment Practices in New York City before 1930. Authors: Christopher Thale.
+2001 female . Title: The Vice Trust: A Reinterpretation of the White Slavery Scare in the United States, 1907-1917. Authors: Mara L. Keire.
+2002 male   . Title: "Nocturnal Habits and Dark Wisdom": The American Response to Children in the Streets at Night, 1880-1930. Authors: Peter C. Baldwin.
+2004 male   . Title: Street-Rats and Gutter-Snipes: Child Pickpockets and Street Culture in New York City, 1850-1900. Authors: Timothy J. Gilfoyle.
+1987 male   . Title: Vigilantes and the Police: The Creation of a Professional Police Bureaucracy in San Francisco, 1847-1900. Authors: Philip J. Ethington.
+1992 male   . Title: Streetwalkers, Degraded Outcasts, and Good-for-Nothing Huzzies: Women and the Dangerous Class in Antebellum St. Louis. Authors: Jeffrey S. Adler.
+1971 male   . Title: Organized Crime in Urban Society: Chicago in the Twentieth Century. Authors: Mark H. Haller.
+1991 male   . Title: Policy Gambling, Entertainment, and the Emergence of Black Politics: Chicago from 1900 to 1940. Authors: Mark H. Haller.
+1986 male   . Title: Tacit Acceptance: Respectable Americans and Segregated Prostitution, 1870-1910. Authors: Neil Larry Shumsky.
+1992 male   . Title: An Officer of the Neighborhood: A Boston Patrolman on the Beat in 1895. Authors: Alexander von Hoffman.
+
+Topic ID: 96 . Topic Name: U.S. Civil War
+terms, prob: ['lincoln', 'war', 'american', 'civil', 'new', 'york', 'state', 'south', 'southern', 'see']
+terms, frex: ['taney', 'lincoln', 'gridley', 'sumner', 'howe', '1863', 'abraham', 'proslaveri', 'confederaci', 'confeder']
+Examples:
+2009 male   . Title: "Crete the Opening Wedge": Nationalism and International Affairs in Postbellum America. Authors: David Prior.
+2011 male   . Title: America's Conservatory: Race, Reconstruction, and the Santo Domingo Debate. Authors: Nicholas Guyatt.
+2012 male   . Title: What Twenty-First-Century Historians Have Said about the Causes of Disunion: A Civil War Sesquicentennial Review of the Recent Literature. Authors: Michael E. Woods.
+2009 male   . Title: The Not-so-Grand Review: Abraham Lincoln in the "Journal of American History". Authors: Allen C. Guelzo.
+2009 male   . Title: Lincoln Theme 20. Authors: Matthew Pinsker.
+2011 male   . Title: "The Indignation Of Freedom-Loving People": The Caning Of Charles Sumner And Emotion In Antebellum Politics. Authors: Michael E. Woods.
+2009 male   . Title: Lincoln Reconsidered. Authors: Michael F. Holt.
+2009 female . Title: Lincoln and the Ethics of Emancipation: Universalism, Nationalism, Exceptionalism. Authors: Dorothy Ross.
+2010 male   . Title: Samuel Gridley Howe, the Black Population of Canada West, and the Racial Ideology of the "Blueprint for Radical Reconstruction". Authors: Matthew Furrow.
+1973 male   . Title: Salmon P. Chase, Radicalism, and the Politics of Emancipation, 1861-1864. Authors: Louis S. Gerteis.
+
+Topic ID: 97 . Topic Name: Germany (20th Century)
+terms, prob: ['german', 'germani', 'nazi', 'der', 'und', 'polit', 'hitler', 'see', 'die', 'social']
+terms, frex: ['cdu', 'nsdap', 'kdf', 'waffen-ss', 'hiag', 'gestapo', 'dhv', 'gdr', 'gauleit', 'schleicher']
+Examples:
+1995 female . Title: Materialism and Secularism: CDU Politicians and National Socialism, 1945- 1949. Authors: Maria Mitchell.
+1992 male   . Title: The German Resistance against Hitler and the Restoration of Politics. Authors: Hans Mommsen.
+1992 male   . Title: "A Beacon in the German Darkness": The Anti-Nazi Resistance Legacy in West German Politics. Authors: David Clay Large.
+1988 male   . Title: History from Below Comes to Germany: The New History Movement in the Federal Republic of Germany. Authors: Roger Fletcher.
+1980 male   . Title: "A Question Mark with Epaulettes"? Kurt von Schleicher and Weimar Politic. Authors: Peter Hayes.
+1987 male   . Title: Hitler's Early Doctors: Nazi Physicians in Predepression Germany. Authors: Michael H. Kater.
+1992 male   . Title: Between Normality and Resistance: Catastrophic Gradualism in Nazi Germany. Authors: Frank Trommler.
+1987 female . Title: Consent and Dissent: The Confessing Church and Conservative Opposition to National Socialism. Authors: Shelley Baranowski.
+1987 male   . Title: From Stammtisch to Party: Nazi Joiners and the Contradictions of Grass Roots Fascism in Weimar Germany. Authors: Rudy Koshar.
+1996 female . Title: Rock 'n' Roll, Female Sexuality, and the Cold War Battle over German Identities. Authors: Uta G. Poiger.
+
+Topic ID: 98 . Topic Name: Oceania
+terms, prob: ['anim', 'new', 'australia', 'australian', 'coloni', 'pacif', 'zealand', 'island', 'aborigin', 'univers']
+terms, frex: ['fijian', 'threlkeld', 'larrikin', 'vanuatu', 'tahu', 'kanak', 'parihaka', 'maori', 'malakula', 'suva']
+Examples:
+2010 unknown. Title: Cannibalism and Colonialism: Charting Colonies and Frontiers in Nineteenth-Century Fiji. Authors: Tracey Banivanua-Mar.
+2010 female . Title: Lancelot Threlkeld, Biraban, and the Colonial Bible in Australia. Authors: Hilary M. Carey.
+2001 female . Title: Encounters with the Enemy? Academic Readings of Missionary Narratives on Melanesians. Authors: Bronwen Douglas.
+1991 male   . Title: On Being Woken Up: The Dreamtime in Anthropology and in Australian Settler Culture. Authors: Patrick Wolfe.
+2011 male   . Title: Paper, Pen, and Print: The Transformation of the Kai Tahu Knowledge Order. Authors: Tony Ballantyne.
+2009 female . Title: The White Elephant In London: An Episode Of Trickery, Racism And Advertising. Authors: Sarah Amato.
+2010 male   . Title: The Troubled Histories of a Stranger God: Religious Crossing, Sacred Power, and Anglican Colonialism in Vanuatu. Authors: John Taylor.
+1993 male   . Title: Frontier Ethnogenesis: The Case of New Caledonia. Authors: David A. Chappell.
+2013 unknown. Title: Dogs, History, And Agency. Authors: Chris Pearson.
+2013 male   . Title: Animals And The Intimacy Of History. Authors: Brett L. Walker.
+
+Topic ID: 99 . Topic Name: Sexuality
+terms, prob: ['sexual', 'love', 'sex', 'emot', 'men', 'new', 'marriag', 'social', 'york', 'homosexu']
+terms, frex: ['homophil', 'ics', 'homosexu', 'swish', 'same-sex', 'lesbian', 'heterosexu', 'crossdress', 'courtship', 'beauvoir']
+Examples:
+1996 male   . Title: "Kiss without Shame, for She Desires It": Sexual Foreplay in American Marital Advice Literature, 1900-1925. Authors: Peter Laipson.
+1990 male   . Title: The Power of Desire and the Danger of Pleasure: Victorian Sexuality Reconsidered. Authors: Steven Seidman.
+2004 male   . Title: "The Forgetfulness of Sex": Devotion and Desire in the Courtship Letters of Angelina Grimke and Theodore Dwight Weld. Authors: Robert K. Nelson.
+1989 male   . Title: Romantic Friendship: Male Intimacy and Middle-Class Youth in the Northern United States, 1800-1900. Authors: E. Anthony Rotundo.
+1993 male   . Title: Men and Romantic Love: Pinpointing a 20th-Century Change. Authors: Mark Knapp; Peter N. Stearns.
+2001 female . Title: Shrinking Violets and Caspar Milquetoasts: Shyness and Heterosexuality from the Roles of the Fifties to "The Rules" of the Nineties. Authors: Patricia McDaniel.
+2011 female . Title: "The Highest Pleasure of Which Woman's Nature Is Capable": Breast-Feeding and the Sentimental Maternal Ideal in America, 1750-1860. Authors: Nora Doyle.
+1987 female . Title: "Uncontrolled Desires": The Response to the Sexual Psychopath, 1920-1960. Authors: Estelle B. Freedman.
+1982 female . Title: The Pursuit of Married Love: Women's Attitudes toward Sexuality and Marriage in Great Britain, 1918-1939. Authors: Ellen M. Holtzman.
+2005 female . Title: "Acting out the Oedipal Wish": Father-Daughter Incest and the Sexuality of Adolescent Girls in the United States, 1941-1965. Authors: Rachel Devlin.
+
+Topic ID: 100. Topic Name: Italy
+terms, prob: ['giolitti', 'italian', 'corradini', 'nationalist', 'war', 'itali', 'polit', 'nation', 'regno', 'libya']
+terms, frex: ['frassati', 'corradini', 'giolitti', 'regno', 'libya', 'stampa', 'giolittian', 'nazional', 'papini', 'nazionalismo']
+Examples:
+1965 male   . Title: Libya, Italian Nationalism, and the Revolt against Giolitti. Authors: Ronald S. Cunsolo.
+1971 male   . Title: The Italian Nationalist Association in the Period of Italian Neutrality, August 1914-May 1915. Authors: Alexander J. De Grand.
+1983 male   . Title: Alfredo Frassati in the History and Historiography of Modern Italy. Authors: John Thayer.
+1970 male   . Title: Economic and Ethical Liberalism in Conflict: The Extraordinary Liberalism of Giovanni Giolitti. Authors: Frank J. Coppa.
+1981 male   . Title: The Theory and Practice of Italian Nationalism, 1900-1906. Authors: Richard Drake.
+1952 male   . Title: Trans-Balkan Railway Schemes. Authors: Arthur J. May.
+1993 male   . Title: "I Am the Subject of the King of Congo": African Political Ideology and the Haitian Revolution. Authors: John K. Thornton.
+2006 male   . Title: Holy Wars, Empires, and the Portability of the Past: The Modern Uses of Medieval Crusades. Authors: Adam Knobler.
+2000 unknown. Title: Erratum: Jews in the Criminal-Justice System of Early Modern Germany. Authors: None.
+1979 male   . Title: Background for Conflict: Greece, Turkey, and the Aegean Islands, 1912-1914. Authors: William Peter Kaldis.
