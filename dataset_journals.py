@@ -300,6 +300,7 @@ if __name__ == '__main__':
 
 
     d = JournalsDataset()
+    embed()
 
     selected_topic_ids = [
         89, 27, 99, 75,

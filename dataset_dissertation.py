@@ -107,6 +107,8 @@ class DissertationDataset(Dataset):
         sorted_topic_ids = [t[0] for t in sorted(difs.items(), key=lambda x: x[1], reverse=True)]
         #        self.grid_plot_topics(sorted_topic_ids, hue='is_history', store_as_filename='history_filter.png')
 
+        embed()
+
         print("storing non-history dataset at non_history_dissertations_in_dataset")
         non_history_df = self.df[self.df['is_history'] == False]
         non_history_df.reset_index(inplace=True)
