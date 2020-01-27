@@ -123,6 +123,24 @@ class DissertationDataset(Dataset):
                                     'cleaned_history_dissertations_dataset.csv'), encoding='utf8')
 
 
+    def gender(self):
+
+        from nameparser import HumanName
+        from name_to_gender import GenderGuesser
+        gg = GenderGuesser()
+        count = 0
+        for _, row in self.df.iterrows():
+            name = row['AdviseeID'][:-2].replace('_', ' ')
+            name = " ".join([n.capitalize() for n in name.split()])
+
+            guessed_gender = gg.guess_gender_including_international_names(HumanName(name))
+            if guessed_gender != row['AdviseeGender']:
+                print(name, guessed_gender, row['AdviseeGender'])
+                count += 1
+        embed()
+
 if __name__ == '__main__':
     d = DissertationDataset()
+
+    d.gender()
     embed()

@@ -1,4 +1,4 @@
-from dataset import Dataset
+from dataset_dissertation import DissertationDataset
 from nameparser import HumanName
 from IPython import embed
 from pathlib import Path
@@ -63,7 +63,6 @@ GENDERED_NAMES = {
     'Jerry':        'male',
     'Kyle':         'male',
     'Christian':    'male',
-
 }
 
 GENDER_SCORE = {
@@ -77,7 +76,7 @@ GENDER_SCORE = {
 
 def compare_name_guessers():
 
-    d = Dataset()
+    d = DissertationDataset()
 
     stanford_name_to_gender_dict = {}
 
@@ -86,8 +85,6 @@ def compare_name_guessers():
         name = row.AdviseeID.split(':')[0].replace('_', ' ').replace('-', ' ')
         name = " ".join([x.capitalize() for x in name.split()])
         human_name = HumanName(name)
-
-
 
         guess_proquest = row['AdviseeGender.1']
         score_proquest = GENDER_SCORE[guess_proquest]
@@ -119,15 +116,12 @@ def compare_name_guessers():
         })
 
     # store dict of stanford names to gender
-    with open(Path('data', 'stanford_name_to_gender.json'), 'w') as out:
-        json.dump(stanford_name_to_gender_dict, out)
-
-    embed()
+    with open(Path('data', 'gender_inference', 'stanford_name_to_gender.json'), 'w') as out:
+        json.dump(stanford_name_to_gender_dict, out, sort_keys=True, indent=4)
 
 
-with open(Path('data', 'stanford_name_to_gender.json'), 'r') as infile:
-    STANFORD_NAME_TO_GENDER = json.load(infile)
-
+# with open(Path('data', 'stanford_name_to_gender.json'), 'r') as infile:
+#     STANFORD_NAME_TO_GENDER = json.load(infile)
 
 
 def guess_gender_stanford(human_name: HumanName):
@@ -139,8 +133,6 @@ def guess_gender_stanford(human_name: HumanName):
     >>> h = HumanName('Perez, Ali Abraham')
     >>> guess_gender_stanford(h)
     'female'
-
-
 
     :param human_name:
     :return:
@@ -159,18 +151,18 @@ def guess_gender_stanford(human_name: HumanName):
         return 'unknown'
 
 
-CENSUS_DF = pd.read_csv(Path('data', 'census_gender.csv'), sep=';')
-CENSUS_NAME_TO_MALE_PROBABILITY = {}
-for _, row in CENSUS_DF.iterrows():
-    CENSUS_NAME_TO_MALE_PROBABILITY[row['firstname']] = row['percm']
-
-HAND_CODED_DF = pd.read_csv(Path('data', 'journal_author_genders.csv'))
-HAND_CODED_DF.fillna('',inplace=True)
-NAME_TO_HAND_CODED_GENDER = {}
-for _, row in HAND_CODED_DF.iterrows():
-    full_name = row['first_name']
-    if row['last_name']: full_name += f' {row["last_name"]}'
-    NAME_TO_HAND_CODED_GENDER[full_name] = row['final_gender']
+# CENSUS_DF = pd.read_csv(Path('data', 'census_gender.csv'), sep=';')
+# CENSUS_NAME_TO_MALE_PROBABILITY = {}
+# for _, row in CENSUS_DF.iterrows():
+#     CENSUS_NAME_TO_MALE_PROBABILITY[row['firstname']] = row['percm']
+#
+# HAND_CODED_DF = pd.read_csv(Path('data', 'journal_author_genders.csv'))
+# HAND_CODED_DF.fillna('',inplace=True)
+# NAME_TO_HAND_CODED_GENDER = {}
+# for _, row in HAND_CODED_DF.iterrows():
+#     full_name = row['first_name']
+#     if row['last_name']: full_name += f' {row["last_name"]}'
+#     NAME_TO_HAND_CODED_GENDER[full_name] = row['final_gender']
 
 
 def get_hand_coded_gender(human_name: HumanName):
@@ -199,12 +191,6 @@ def get_hand_coded_gender(human_name: HumanName):
         full_name += f' {human_name.middle}'
     if human_name.last:
         full_name += f' {human_name.last}'
-
-
-
-#    print("fn hand coded", full_name, full_name in NAME_TO_HAND_CODED_GENDER)
-#    print(f'last: {human_name.last}. middle: {human_name.middle}. first: {human_name.first}.')
-
 
     if full_name in NAME_TO_HAND_CODED_GENDER:
         gender = NAME_TO_HAND_CODED_GENDER[full_name]
