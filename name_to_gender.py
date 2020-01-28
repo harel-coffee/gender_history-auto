@@ -91,7 +91,7 @@ class GenderGuesser:
 
     def guess_gender_census(self, name: str, return_type='gender'):
         """
-        Use census data to infer gender.
+        Use census data to infer gender from a name string
 
 
         >>> gg = GenderGuesser()
@@ -103,7 +103,7 @@ class GenderGuesser:
         '72% male'
 
 
-        :param human_name:
+        :param name: str
         :param return_type:
         :return:
         """
@@ -132,7 +132,7 @@ class GenderGuesser:
 
     def guess_gender_gender_guesser_library(self, name: str):
         """
-        Guesses gender of a name
+        Guesses gender of a name using the gender_guesser library
 
 
         >>> gg = GenderGuesser()
@@ -266,8 +266,6 @@ class GenderGuesser:
             'Kyle': 'male',
             'Christian': 'male',
         }
-
-
 
 
     @staticmethod
