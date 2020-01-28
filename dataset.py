@@ -116,14 +116,14 @@ class Dataset:
         :return:
         """
         topics = {}
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, encoding='cp1252')
 
         for _, row in df.iterrows():
-            topic_id = int(row['Topic'])
+            topic_id = int(row['name'])
             terms_prob = row['prob'].split(", ")
             terms_frex = row['frex'].split(", ")
             topics[topic_id] = {
-                'name': row['Topic Labels'],
+                # 'name': row['Topic Labels'],
                 'terms_prob': terms_prob,
                 'terms_frex': terms_frex,
                 'terms_both': terms_prob + terms_frex

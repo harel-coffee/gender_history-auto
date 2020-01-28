@@ -289,7 +289,6 @@ def get_names_and_genders_from_journals():
     :return:
     """
 
-
     authors_counter = Counter()
     journalc = Counter()
 

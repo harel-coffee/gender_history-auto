@@ -20,6 +20,9 @@ from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
 import seaborn as sns
 
 import matplotlib.ticker as mtick
+import re
+import csv
+from collections import Counter, defaultdict
 
 class JournalsDataset(Dataset):
 
@@ -96,6 +99,118 @@ class JournalsDataset(Dataset):
         gen_df.to_csv(Path('data', 'journal_csv', 'general_journals.csv'))
 
 
+    def summarize_topic(self, topic_id):
+        """
+        Creates a summary of a topic including:
+        - docs with topic score > 0.2
+        - correlated topics
+        - terms prob/frex
+        - most frequently mentioned centuries
+
+        :param topic_id:
+        :return:
+        """
+
+
+
+        # find the 4 most correlated topics
+        topic_selector = [f'X{i}' for i in range(1, 101)]
+        topic_df = self.df[topic_selector]
+        correlated_topics = []
+        for topic, correlation in topic_df.corr()[f'X{topic_id}'].sort_values(
+                ascending=False).iteritems():
+            if correlation == 1:
+                continue
+            if len(correlated_topics) > 3:
+                break
+            tid = int(topic[1:])
+            correlated_topics.append({
+                'topic_id': tid,
+                'correlation': round(correlation, 3)
+            })
+
+        # find all docs with topic score > 0.2
+
+        # create a sorted and filtered dataframe
+        sorted_df = self.df.sort_values(by=f'X{topic_id}', ascending=False)
+        # filter to only keep articles with weight 20% or more
+        sorted_df = sorted_df[sorted_df[f'X{topic_id}'] > 0.2]
+
+        docs = []
+        # find number of mentions of all centuries
+        centuries = {f'{i}xx': 0 for i in range(20, 9, -1)}
+        for _, row in sorted_df.iterrows():
+            docs.append({
+                'topic_weight': round(row[f'X{topic_id}'], 3),
+                'year': row.year,
+                'author_gender': row.author_genders,
+                'title': row.title
+            })
+            for hit in re.findall('[1-2][0-9][a-zA-Z0-9]{2}', row.text):
+                hit = hit[:2] + 'xx'
+                if hit in centuries:
+                    centuries[hit] += 1
+
+        # Store the results first as a list of lists
+        out = [[""] * 10 for _ in range(500)]
+        out[0][0] = 'Terms Prob'
+        out[0][1] = ", ".join(self.topics[topic_id]['terms_prob'])
+        out[1][0] = 'Terms Frex'
+        out[1][1] = ", ".join(self.topics[topic_id]['terms_frex'])
+
+        out[3][0] = f'{len(docs)} articles have a topic score > 0.2 for topic {topic_id}.'
+
+        try:
+            mean_publication_year = int(np.mean([d["year"] for d in docs]))
+        except ValueError:
+            mean_publication_year = 'n/a'
+            print("no docs for ", topic_id)
+        out[4][0] = f'{mean_publication_year}: Mean publication year'
+
+        out[6][0] = 'Correlated Topics'
+        out[7][0] = 'Topic ID'
+        out[7][1] = 'Name'
+        out[7][2] = 'Correlation'
+        for idx, cor in enumerate(correlated_topics):
+            out[8 + idx][0] = cor['topic_id']
+            out[8 + idx][2] = cor['correlation']
+
+        out[13][0] = 'Articles with topic score > 0.2'
+        out[14][0] = 'Topic Weight'
+        out[14][1] = 'Year'
+        out[14][2] = 'Gender'
+        out[14][3] = 'Title'
+        for idx, doc in enumerate(docs):
+            try:
+                out[15 + idx][0] = doc['topic_weight']
+                out[15 + idx][1] = doc['year']
+                out[15 + idx][2] = doc['author_gender']
+                out[15 + idx][3] = doc['title']
+            except IndexError:
+                break
+
+        out[3][5] = 'Centuries Mentioned'
+        out[4][5] = 'Century'
+        out[4][6] = 'Count'
+        out[5][5] = '20xx'
+        out[5][6] = centuries['20xx']
+        out[6][5] = '19xx'
+        out[6][6] = centuries['19xx']
+        out[7][5] = '18xx'
+        out[7][6] = centuries['18xx']
+        out[8][5] = '17xx'
+        out[8][6] = centuries['17xx']
+        out[9][5] = '16xx'
+        out[9][6] = centuries['16xx']
+        out[10][5] = '15xx'
+        out[10][6] = centuries['15xx']
+        out[11][5] = '10xx-14xx'
+        out[11][6] = sum([centuries[f'{i}xx'] for i in range(10, 15)])
+
+        # then store as a csv
+        with open(Path('data', 'topic_summaries', f'topic_test_{topic_id}.csv'), 'w') as f:
+            writer = csv.writer(f)
+            writer.writerows(out)
 
 
     def plot_topics_to_weight_and_gender_graph(self):
@@ -300,7 +415,8 @@ if __name__ == '__main__':
 
 
     d = JournalsDataset()
-    embed()
+    for i in range(1, 101):
+        d.summarize_topic(i)
 
     selected_topic_ids = [
         89, 27, 99, 75,
