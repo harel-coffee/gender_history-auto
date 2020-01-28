@@ -131,15 +131,48 @@ class DissertationDataset(Dataset):
         from name_to_gender import GenderGuesser
         gg = GenderGuesser()
         count = 0
+
+        ambiguous_names = []
         for _, row in self.df.iterrows():
+
+
             name = row['AdviseeID'][:-2].replace('_', ' ')
             name = " ".join([n.capitalize() for n in name.split()])
+            hn = HumanName(name)
+            if row.AdviseeID == 'afroz,_sultana:0':
+                embed()
 
-            guessed_gender = gg.guess_gender_including_international_names(HumanName(name))
-            if guessed_gender != row['AdviseeGender']:
-                print(name, guessed_gender, row['AdviseeGender'])
+            guessed_gender_gg = gg.guess_gender_of_human_name(hn, mode='gender_guesser')
+            guessed_gender_census = gg.guess_gender_of_human_name(hn, mode='census')
+
+            if (guessed_gender_census != guessed_gender_gg or
+                guessed_gender_census != row.AdviseeGender):
+
+                if (row.AdviseeGender == 'male' and guessed_gender_census in {'male', 'mostly_male'}
+                        and guessed_gender_gg in {'male', 'mostly_male'}):
+                    continue
+                if (row.AdviseeGender == 'female' and
+                        guessed_gender_census in {'female', 'mostly_female'} and
+                        guessed_gender_gg in {'female', 'mostly_female'}):
+                    continue
+
+                name_str = hn.first
+                if hn.middle:
+                    name_str += f' {hn.middle}'
+                name_str += f' {hn.last}'
+
+                ambiguous_names.append({
+                    'name': name_str,
+                    'original': row.AdviseeGender,
+                    'gender_guesser': guessed_gender_gg,
+                    'census': guessed_gender_census
+                })
+
+                print(name, guessed_gender_gg, guessed_gender_census, row.AdviseeGender)
                 count += 1
-        embed()
+        df = pd.DataFrame(ambiguous_names)
+        df.to_csv(Path('data', 'gender_inference', 'ambiguous_dissertation_names.csv'))
+        print(count)
 
 if __name__ == '__main__':
     d = DissertationDataset()

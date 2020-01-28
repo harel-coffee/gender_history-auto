@@ -9,6 +9,7 @@ from nameparser import HumanName
 from dataset_dissertation import DissertationDataset
 
 import gender_guesser.detector
+import pandas as pd
 
 class GenderGuesser:
 
@@ -18,17 +19,128 @@ class GenderGuesser:
         self._gender_guesser_instance = gender_guesser.detector.Detector()
         self._gender_of_name_assigned_by_hand_dict = self.get_hand_assigned_names()
 
-    def guess_gender_of_first_name(self, name: str):
+        census_df = pd.read_csv(Path('data', 'gender_inference', 'census_gender.csv'), sep=';')
+        self._census_name_to_male_probability = {}
+        for _, row in census_df.iterrows():
+            self._census_name_to_male_probability[row.firstname] = row.percm
+
+    def guess_gender_of_human_name(self, human_name: HumanName, mode='gender_guesser'):
+        """
+        Guesses the gender of a complete HumanName object
+        Uses first and middle name and both u.s. and international dictionaries.
+
+        # by default, this function uses the python gender_guesser library
+        >>> gg = GenderGuesser()
+        >>> h = HumanName('Perez, Haven Abraham')
+        >>> gg.guess_gender_of_human_name(h, mode='gender_guesser')
+        'male'
+
+        # however, by setting mode to "census", it can also draw on census data to guess the gender
+        >>> h = HumanName('Perez, Haven Abraham')
+        >>> gg.guess_gender_of_human_name(h, mode='census')
+        'male'
+
+        # this function uses the middle name to get additional information compared to just using
+        # the first name.
+        >>> h = HumanName('Perez, Haven')
+        >>> gg.guess_gender_gender_guesser_library(h.first)
+        'andy'
+
+        :param human_name: HumanName
+        :return: str
+        """
+        if mode == 'gender_guesser':
+            guess_function = self.guess_gender_gender_guesser_library
+        elif mode == 'census':
+            guess_function = self.guess_gender_census
+        else:
+            raise ValueError(f'mode has to be "gender_guesser" (for gender guesser python library) '
+                             f'or "census" (for inference with census data) but not {mode}.')
+
+        # Turn "Marten L." into "Marten
+        if human_name.middle:
+            middle = human_name.middle.split()[0]
+        else:
+            middle = None
+
+
+        gender_first = guess_function(human_name.first)
+
+        if gender_first in {'male', 'female'}:
+            return gender_first
+
+        # if middle name exists and is not initial ("A."), examine it
+        elif middle and (len(middle) > 2 or middle[-1] != '.'):
+
+            gender_middle = guess_function(middle)
+
+            # if middle name doesn't give us any new info -> return first name info
+            if gender_middle in ['unknown', 'andy']:
+                return gender_first
+
+            elif gender_middle == 'male' and gender_first in ['mostly_male', 'andy', 'unknown']:
+                return 'male'
+            elif gender_middle == 'female' and gender_first in ['mostly_female', 'andy', 'unknown']:
+                return 'female'
+
+            else:
+                return gender_first
+
+        else:
+            return gender_first
+
+    def guess_gender_census(self, name: str, return_type='gender'):
+        """
+        Use census data to infer gender.
+
+
+        >>> gg = GenderGuesser()
+        >>> gg.guess_gender_census('Ali', return_type='gender')
+        'andy'
+
+        # the function can also be used to get the probabily that a name is male in the census
+        >>> gg.guess_gender_census('Ali', return_type='probability_male')
+        '72% male'
+
+
+        :param human_name:
+        :param return_type:
+        :return:
+        """
+        name = name.lower()
+
+        if name in self._census_name_to_male_probability:
+            male_prob = self._census_name_to_male_probability[name]
+            if male_prob < 5:
+                inferred_gender = 'female'
+            elif male_prob < 15:
+                inferred_gender = 'mostly_female'
+            elif male_prob < 85:
+                inferred_gender = 'andy'
+            elif male_prob < 95:
+                inferred_gender = 'mostly_male'
+            else:
+                inferred_gender = 'male'
+
+            if return_type == 'gender':
+                return inferred_gender
+            elif return_type == 'probability_male':
+                return '{:2.0f}% male'.format(male_prob)
+
+        else:
+            return 'unknown'
+
+    def guess_gender_gender_guesser_library(self, name: str):
         """
         Guesses gender of a name
 
 
         >>> gg = GenderGuesser()
-        >>> gg.guess_gender_of_first_name('Mary')
+        >>> gg.guess_gender_gender_guesser_library('Mary')
         'female'
-        >>> gg.guess_gender_of_first_name('Shirley')
+        >>> gg.guess_gender_gender_guesser_library('Shirley')
         'female'
-        >>> gg.guess_gender_of_first_name('L.')
+        >>> gg.guess_gender_gender_guesser_library('L.')
         'unknown'
 
         :return:
@@ -66,59 +178,7 @@ class GenderGuesser:
 
             return gender
 
-    def guess_gender_including_international_names(self, human_name: HumanName):
-        """
-        Guesses the gender of a complete HumanName object
-        Uses first and middle name and both u.s. and international dictionaries.
 
-        >>> gg = GenderGuesser()
-        >>> h = HumanName('Perez, Haven Abraham')
-        >>> gg.guess_gender_including_international_names(h)
-        'male'
-
-        # this function uses the middle name to get additional information compared to just using
-        # the first name.
-        >>> h = HumanName('Perez, Haven')
-        >>> gg.guess_gender_of_first_name(h.first)
-        'andy'
-
-        :param human_name: HumanName
-        :return: str
-        """
-
-        # Turn "Marten L." into "Marten
-        if human_name.middle:
-            middle = human_name.middle.split()[0]
-        else:
-            middle = None
-
-        gender_first = self.guess_gender_of_first_name(human_name.first)
-
-        if gender_first in {'male', 'female'}:
-            return gender_first
-
-        # if middle name exists and is not initial ("A."), examine it
-        elif middle and (len(middle) > 2 or middle[-1] != '.'):
-
-            gender_middle = self.guess_gender_of_first_name(middle)
-
-            # if middle name doesn't give us any new info -> return first name info
-            if gender_middle in ['unknown', 'andy']:
-                return gender_first
-
-            elif gender_middle == 'male' and gender_first in ['mostly_male', 'andy', 'unknown']:
-                return 'male'
-            elif gender_middle == 'female' and gender_first in ['mostly_female', 'andy', 'unknown']:
-                return 'female'
-
-            else:
-                if gender_middle in ['male', 'female']:
-                    print(f'{human_name.first} {human_name.middle} {human_name.last}', gender_first,
-                          gender_middle)
-                return gender_first
-
-        else:
-            return gender_first
 
     def guess_gender_stanford(self, human_name: HumanName):
         """
@@ -145,61 +205,6 @@ class GenderGuesser:
             return self._stanford_name_to_gender_dict[name_to_guess]
         else:
             return 'unknown'
-
-    def guess_gender_census(self, human_name: HumanName, return_type='gender'):
-        """
-        Use census data to infer gender.
-
-        >>> gg = GenderGuesser()
-        >>> h = HumanName('Perez, Ali Abraham')
-        >>> gg.guess_gender_census(h, return_type='gender')
-        'andy'
-
-        # the function can also be used to get the probabily that a name is male in the census
-        >>> gg.guess_gender_census(h, return_type='probability_male')
-        '72% male'
-
-        >>> h = HumanName('Perez, A. Abraham')
-        >>> gg.guess_gender_census(h)
-        'male'
-
-        >>> h = HumanName('Perez, A Abraham')
-        >>> gg.guess_gender_census(h)
-        'male'
-
-        :param human_name:
-        :param return_type:
-        :return:
-        """
-
-        if len(human_name.first) == 1:
-            name_to_guess = human_name.middle.lower()
-        elif len(human_name.first) == 2 and human_name.first[1] == '.':
-            name_to_guess = human_name.middle.lower()
-        else:
-            name_to_guess = human_name.first.lower()
-
-        if name_to_guess in CENSUS_NAME_TO_MALE_PROBABILITY:
-            male_prob = CENSUS_NAME_TO_MALE_PROBABILITY[name_to_guess]
-            if male_prob < 5:
-                inferred_gender = 'female'
-            elif male_prob < 15:
-                inferred_gender = 'mostly_female'
-            elif male_prob < 85:
-                inferred_gender = 'andy'
-            elif male_prob < 95:
-                inferred_gender = 'mostly_male'
-            else:
-                inferred_gender = 'male'
-
-            if return_type == 'gender':
-                return inferred_gender
-            elif return_type == 'probability_male':
-                return '{:2.0f}% male'.format(male_prob)
-
-        else:
-            return 'unknown'
-
 
     @staticmethod
     def get_hand_assigned_names():

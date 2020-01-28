@@ -65,14 +65,14 @@ GENDER_GUESSER = gender_guesser.detector.Detector()
 #     'Christian':    'male',
 # }
 
-GENDER_SCORE = {
-    'female':           5,
-    'mostly_female':    4,
-    'unknown':          3,
-    'andy':             3,
-    'mostly_male':      2,
-    'male':             1
-}
+# GENDER_SCORE = {
+#     'female':           5,
+#     'mostly_female':    4,
+#     'unknown':          3,
+#     'andy':             3,
+#     'mostly_male':      2,
+#     'male':             1
+# }
 
 def compare_name_guessers():
 

@@ -15,7 +15,7 @@ from scipy.sparse import vstack
 def divergence_analysis(master_dataset:Dataset,
                         c1:Dataset,                 # sub corpus 1
                         c2:Dataset,                 # sub corpus 2
-                        topics_or_terms='terms',
+                        analysis_type='terms',
                         number_of_terms_to_print=30,
                         c1_name=None, c2_name=None,
                         print_results=True, sort_by=None,
@@ -26,25 +26,29 @@ def divergence_analysis(master_dataset:Dataset,
         c2_name = c2.name
 
     if not sort_by:
-        if topics_or_terms == 'topics':
-            sort_by = 'frequency_score'
-        else:
+        if analysis_type == 'terms':
             sort_by = 'dunning'
+        else:
+            sort_by = 'frequency_score'
 
 
-    if topics_or_terms == 'terms':
+    if analysis_type == 'terms':
         vocabulary = master_dataset.get_vocabulary(max_terms=10000,
                                                    min_appearances=min_appearances_per_term,
                                                    include_2grams=True)
         c1_dtm = c1.get_document_term_matrix(vocabulary=vocabulary)
         c2_dtm = c2.get_document_term_matrix(vocabulary=vocabulary)
     else:
-        vocabulary = [f'X{i}' for i in range(1, 101)]
-        c1_dtm = c1.get_document_topic_matrix() * 4000
-        c2_dtm = c2.get_document_topic_matrix() * 4000
+        if analysis_type == 'topics':
+            vocabulary = [f'X{i}' for i in range(1, 101)]
+        elif analysis_type == 'gen_approach':
+            vocabulary = [x for x in master_dataset.df.columns if x.startswith('gen_approach_')]
+        else:
+            raise NotImplemented(f"analysis for {analysis_type} not yet implemented.")
+        c1_dtm = c1.get_document_topic_matrix(vocabulary=vocabulary) * 4000
+        c2_dtm = c2.get_document_topic_matrix(vocabulary=vocabulary) * 4000
 
     master_dtm = vstack([c1_dtm, c2_dtm])
-
 
     s = StatisticalAnalysis(master_dtm, c1_dtm, c2_dtm, vocabulary)
     dunning, _ = s.dunning_log_likelihood()
@@ -62,17 +66,22 @@ def divergence_analysis(master_dataset:Dataset,
 
     data = []
     for term_idx in range(len(vocabulary)):
+
         count_all = column_sums_all[term_idx]
         count_c1 = column_sums_c1[term_idx]
         count_c2 = column_sums_c2[term_idx]
 
-        if topics_or_terms == 'terms':
+
+        if analysis_type == 'terms':
             term = vocabulary[term_idx]
             if count_all < min_appearances_per_term:
                 continue
         else:
             topic_idx = term_idx + 1
-            term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
+            if analysis_type == 'topics':
+                term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
+            elif analysis_type == 'gen_approach':
+                term = vocabulary[term_idx]
 
         data.append({
             'term': term,
@@ -84,10 +93,9 @@ def divergence_analysis(master_dataset:Dataset,
             'frequency_total': count_all / total_terms_all,
             f'frequency {c1_name}': count_c1 / total_terms_c1,
             f'frequency {c2_name}': count_c2 / total_terms_c2,
-
-#            'mwr': mwr[term_idx],
-#            'correlated_terms': correlated_terms[vocabulary[term_idx]]
         })
+
+
     df = pd.DataFrame(data)
 
 
@@ -96,12 +104,12 @@ def divergence_analysis(master_dataset:Dataset,
 
     if print_results:
 
-        if topics_or_terms == 'topics':
-            headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
-                       f'frequency {c1_name}', f'frequency {c2_name}']
-        else:
+        if analysis_type == 'terms':
             headers = ['term', 'dunning', 'frequency_score', 'count_total',
                        f'count {c1_name}', f'count {c2_name}']
+        else:
+            headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
+                       f'frequency {c1_name}', f'frequency {c2_name}']
 
         year_df = {}
 
@@ -119,6 +127,8 @@ def divergence_analysis(master_dataset:Dataset,
                 }
         year_df = pd.DataFrame(year_df).transpose()
         print(tabulate(year_df, headers='keys'))
+
+        # embed()
 
 
         print(f'\n\nTerms distinctive for Corpus 1: {c1_name}. {len(c1)} Theses\n')

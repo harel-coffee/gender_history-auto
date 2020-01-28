@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import matplotlib.cm as cm
 import matplotlib
+from collections import defaultdict
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
                                AutoMinorLocator)
 
@@ -37,7 +38,8 @@ class JournalsDataset(Dataset):
         super(JournalsDataset, self).__init__()
 
         self.topics = self.load_topic_data(Path('data', 'journal_csv',
-                                                'topic_words_stm_GENJ_100.csv'))
+                                                'topic_names_jan_2020.csv'))
+        self.store_aggregate_approach_and_geographical_info_in_df()
 
 
     def generate_general_journal_dataset(self):
@@ -317,45 +319,51 @@ class JournalsDataset(Dataset):
             99,  # Sexuality
         ]
 
-        topic_names_sorted = [f'X{tid}' for tid in topic_ids]
+        # topic_names_sorted = [f'X{tid}' for tid in topic_ids]
+        topic_names_sorted = [x for x in self.df.columns if x.startswith('gen_approach_')]
 
         from divergence_analysis import divergence_analysis
         c1 = self.copy().filter(author_gender='male')
         c2 = self.copy().filter(author_gender='female')
-        topic_df = divergence_analysis(self, c1, c2, topics_or_terms='topics',
+        topic_df = divergence_analysis(self, c1, c2, analysis_type='gen_approach',
                             c1_name='male', c2_name='female', sort_by='dunning',
                             number_of_terms_to_print=50)
 
         data = self.get_data('topics', topic_names_sorted, smoothing=1)
 
-        median_years = {}
-        for topic_id, topic_name in zip(topic_ids, topic_names_sorted):
-            try:
-                tdata = data[topic_name]
-                topic_sum_so_far = 0
-                topic_sum_to_reach = sum(tdata['freq_both']) / 2
-                for i in range(len(tdata['year'])):
-                    topic_sum_so_far += tdata['freq_both'][i]
-                    if topic_sum_so_far >= topic_sum_to_reach:
-
-
-                        median_year = tdata['year'][i]
-                        median_years[topic_id] = median_year
-
-                        # median_years[int(topic_name[1:])] = median_year
-                        break
-            except KeyError:
-                continue
+        # median_years = {}
+        # for topic_id, topic_name in zip(topic_ids, topic_names_sorted):
+        #     try:
+        #         tdata = data[topic_name]
+        #         topic_sum_so_far = 0
+        #         topic_sum_to_reach = sum(tdata['freq_both']) / 2
+        #         for i in range(len(tdata['year'])):
+        #             topic_sum_so_far += tdata['freq_both'][i]
+        #             if topic_sum_so_far >= topic_sum_to_reach:
+        #
+        #
+        #                 median_year = tdata['year'][i]
+        #                 median_years[topic_id] = median_year
+        #
+        #                 # median_years[int(topic_name[1:])] = median_year
+        #                 break
+        #     except KeyError:
+        #         continue
 
 
         x_coords = []
         y_coords = []
         color_codes = []
-        for topic_id in topic_ids:
-            row = topic_df[topic_df['index'] == topic_id - 1]
+
+        # for topic_id in topic_ids:
+        for topic in topic_names_sorted:
+            # row = topic_df[topic_df['index'] == topic_id - 1]
+            row = topic_df[topic_df.term == topic]
             y_coords.append(row.frequency_total.values[0])
             x_coords.append(row.frequency_score.values[0])
-            color_codes.append(median_years[topic_id])
+            # color_codes.append(median_years[topic_id])
+            color_codes.append(row.frequency_score.values[0])
+
 
         fig = plt.figure(figsize=(12, 12))
         gs = gridspec.GridSpec(nrows=1,
@@ -386,7 +394,7 @@ class JournalsDataset(Dataset):
         # y axis
         # ax.set_ylabel('Topic Weight')
         # ax.label_params(labelsize=20)
-        ax.set_ylim(0.002, 0.1)
+        ax.set_ylim(0.002, 0.2)
         ax.set_yscale('log')
         ax.yaxis.set_major_formatter(mtick.PercentFormatter(1.0))
         ax.grid(b=True, which='minor', color='lightgray', linestyle='--')
@@ -398,49 +406,89 @@ class JournalsDataset(Dataset):
                    norm=normalized_cmap)
 
 
-        for coords_id, topic_id in enumerate(topic_ids):
+        # for coords_id, topic_id in enumerate(topic_ids):
+        for coords_id, topic in enumerate(topic_names_sorted):
             x = x_coords[coords_id]
             y = y_coords[coords_id]
-            topic_name = f'{topic_id}: {self.topics[topic_id]["name"]}'
-            # ax.annotate(topic_name, (x_coords[coords_id], y_coords[coords_id]+0.0003))
+            topic_name = topic
+            # topic_name = f'{topic_id}: {self.topics[topic_id]["name"]}'
+            ax.annotate(topic_name, (x_coords[coords_id], y_coords[coords_id]+0.0003))
 
 
-        plt.savefig(Path('data', 'plots', f'gender_topicweight_scatterplot_nolabels.png'), dpi=300,
-                    transparent=True)
+        plt.savefig(Path('data', 'plots', f'general_approaches_scatterplot.png'), dpi=300,
+                    transparent=False)
         plt.show()
-        embed()
 
 if __name__ == '__main__':
 
+    d = JournalsDataset()
+    from divergence_analysis import divergence_analysis
 
+    d.plot_topics_to_weight_and_gender_graph()
 
     d = JournalsDataset()
     for i in range(1, 101):
         d.summarize_topic(i)
 
-    selected_topic_ids = [
-        89, 27, 99, 75,
-        41, 33, 68, 55
-    ]
+
+    #
+    # selected_topic_ids = [
+    #     89, 27, 99, 75,
+    #     41, 33, 68, 55
+    # ]
 
 #    d.plot_topic_grid(smoothing=5)
 
     # d.plot_topic_grid_of_selected_topics(smoothing=5, selected_topic_ids=selected_topic_ids)
 
-#     d.plot_londa(
-# #        data_type='terms'
-#         data_type='topics',
-#         term_or_topic_list=['X89', 'X99', 'X31', 'X68'],
-#         # terms=['women'],
-#         smoothing=5
-#     )
+    d.plot_londa(
+#        data_type='terms'
+        data_type='topics',
+        term_or_topic_list=[
+            'gen_approach_Political History',
+            'gen_approach_Social History',
+            # 'gen_approach_Cultural History',
+            # 'gen_approach_Economic History',
+            'gen_approach_Women’s and Gender History'
+        ],
+        # terms=['women'],
+        smoothing=5
+    )
 
     # d.plot_topics_to_weight_and_gender_graph()
 
-    d.plot_topic_grid_of_selected_topics([i for i in range(1, 101)])
+    # d.plot_topic_grid_of_selected_topics(smoothing=0)
 
 
     # d.plot_gender_development_over_time(data='terms',
     #     selected_terms_or_topics=['women', 'gender', 'female', 'woman', 'men', 'work', 'feminist'],
     #                                     smoothing=5)
     pass
+
+
+    # Noise {1, 3, 7, 82, 20, 85} 0.0103611520267198
+    # Social History {2, 38, 43, 80, 49, 86, 56, 95} 0.016772475645168
+    # Transnational History {77, 90, 4, 5} 0.00856549463992458
+    # Economic History {34, 66, 6, 73, 45, 14, 87} 0.010486083097742295
+    # Colonial History {36, 8, 42, 79, 17, 84, 25, 26, 59} 0.005613694283982997
+    # Historiography {9, 92} 0.026732332490231644
+    # Anthropology {10} 0.008234345022682455
+    # Religious History {50, 11} 0.009378461220731436
+    # Political History {97, 100, 37, 72, 12, 44, 60, 16, 81, 83, 93, 53, 24, 88, 28, 63, 31} 0.010027721118264991
+    # Art History {35, 13} 0.00815322530141253
+    # Classics {15} 0.007291566952386093
+    # History of Education {18} 0.013391852738295653
+    # History of Medicine {19, 61, 39} 0.005619493700787617
+    # Indigenous History {67, 21} 0.0039057695644533824
+    # Legal History {91, 22} 0.015077521181803138
+    # History of Slavery {64, 23} 0.006241993858226526
+    # Women’s and Gender History {89, 27, 47} 0.011440566774731934
+    # History of Race {75, 29} 0.005814663743250853
+    # Jewish History {30} 0.005389798226235582
+    # Cultural History {32, 99, 69, 51, 52, 62} 0.012771918224215462
+    # Military History {33, 78} 0.00807132538908617
+    # Intellectual History {41, 68, 70, 55} 0.015824024941590912
+    # Islamic History {46} 0.010842411734888804
+    # History of Science {48} 0.0058515749713535705
+    # Environmental History {65, 58} 0.004386051434203244
+    # Medieval History {74} 0.0034007031067451766

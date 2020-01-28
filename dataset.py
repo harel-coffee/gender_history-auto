@@ -98,16 +98,6 @@ class Dataset:
     def copy(self):
 
         return deepcopy(self)
-        # embed()
-        #
-        # c = Dataset()
-        # attrs = self.__dict__.copy()
-        # del attrs['df']
-        # for attr in attrs:
-        #     setattr(c, attr, deepcopy(getattr(self, attr)))
-        #
-        # c.df = self.df.copy(deep=True)
-        # return c
 
     def load_topic_data(self, file_path):
         """
@@ -119,18 +109,56 @@ class Dataset:
         df = pd.read_csv(file_path, encoding='cp1252')
 
         for _, row in df.iterrows():
+
+            gen_approach = row['General Approach Standardized']
+            spec_approach = row['Specialized Approach Standardized']
+            gen_area = row['Gen Geogr']
+            spec_area = row['Spec Geogr']
+
+            name = f'{gen_approach} ({spec_approach}). {gen_area}({spec_area})'
+
             topic_id = int(row['name'])
             terms_prob = row['prob'].split(", ")
             terms_frex = row['frex'].split(", ")
             topics[topic_id] = {
-                # 'name': row['Topic Labels'],
+                'name': name,
+                'gen_approach': gen_approach,
+                'spec_approach': spec_approach,
+                'gen_area': gen_area,
+                'spec_area': spec_area,
                 'terms_prob': terms_prob,
                 'terms_frex': terms_frex,
                 'terms_both': terms_prob + terms_frex
             }
         return topics
 
+    def store_aggregate_approach_and_geographical_info_in_df(self):
+        """
+        To aggregate, e.g. the multiple political history general approach topics,
+        we calculate the average for each article.
+        e.g. if topics 30 and 55 are the political history topics, we set
+        df['gen_approach_Political History'] to the average of the columns X30 and X55.
 
+        TODO: expand for specific approaches and geographical areas
+
+        :return:
+        """
+
+        gen_approaches_to_id = defaultdict(set)
+        for topic_id, topic in self.topics.items():
+            if topic['gen_approach'] == '' or not isinstance(topic['gen_approach'], str):
+                continue
+            gen_approaches_to_id[topic['gen_approach']].add(topic_id)
+
+        sum_of_means = 0
+        for gen_approach in gen_approaches_to_id:
+            #e.g. ['X10', 'X30]
+            selectors = [f'X{i}' for i in gen_approaches_to_id[gen_approach]]
+            self.df[f'gen_approach_{gen_approach}'] = self.df[selectors].sum(axis=1)
+            m = self.df[f'gen_approach_{gen_approach}'].mean()
+            sum_of_means += m
+            print(gen_approach, gen_approaches_to_id[gen_approach], m)
+        print("means", sum_of_means)
 
 
 
@@ -354,14 +382,17 @@ class Dataset:
         return sorted(vocab_list)
 
 
-    def get_document_topic_matrix(self):
+    def get_document_topic_matrix(self, vocabulary):
         """
         Returns a document-topic sparse matrix. each row represents a document and each column a
         topic
         Note: all topics are one-off because there is no topic.0, i.e. topic.1 is stored in the
         0th column.
 
+        Vocabulary are the columns to select
+
         >>> d = Dataset()
+        >>> vocabulary = [f'X{i}' for i in range(1, 101)]
         >>> dtm = d.get_document_topic_matrix()
         >>> dtm.shape
         (23246, 70)
@@ -369,8 +400,7 @@ class Dataset:
         :return: csr_matrix
         """
 
-        topics_str_list = [f'X{i}' for i in range(1, 101)]
-        dtm = csr_matrix(self.df[topics_str_list].to_numpy())
+        dtm = csr_matrix(self.df[vocabulary].to_numpy())
         return dtm
 
 
@@ -713,27 +743,27 @@ class Dataset:
 
 
 
-    def plot_topic_grid_of_selected_topics(self, selected_topic_ids, smoothing=5):
+    def plot_topic_grid_of_selected_topics(self, smoothing=5):
 
         # topic_ids_sorted = [r['index'] + 1 for _, r in topic_df.iterrows()]
 
-        topic_names_sorted = [f'X{tid}' for tid in selected_topic_ids]
+        topic_names_sorted = [x for x in self.df.columns if x.startswith('gen_approach_')]
 
         data = self.get_data(data_type='topics', token_list=topic_names_sorted,
                              smoothing=smoothing)
 
-        n_rows = 10
-        n_cols = 10
+        n_rows = 6
+        n_cols = 6
         fig = plt.figure(figsize=(50, 50))
         gs = gridspec.GridSpec(nrows=n_rows, ncols=n_cols, figure=fig)
 
-        for ax_id, topic_id in enumerate(selected_topic_ids):
-            print(ax_id, topic_id)
+        for ax_id, name in enumerate(topic_names_sorted):
+            print(ax_id, name)
             row = ax_id // n_cols
             col = ax_id % n_cols
             ax = fig.add_subplot(gs[row, col])
 
-            t = f'X{topic_id}'
+            t = name
             x = data[t]['year']
             y = data[t]['freq_both']
             freq_scores = data[t]['freq_score']
@@ -755,9 +785,10 @@ class Dataset:
             ax.set_xlim(x_lin.min(), x_lin.max())
             ax.set_ylim(0, max(y_lin) * 1.1)
 
-            ax.set_title(f'({topic_id}) {self.topics[topic_id]["name"]}')
+            ax.set_title(name)
+            # ax.set_title(f'({topic_id}) {self.topics[topic_id]["name"]}')
 
-        plt.savefig(Path('data', 'plots', f'selected_topics.png'))
+        plt.savefig(Path('data', 'plots', f'general_approaches.png'))
         plt.show()
 
 
@@ -813,7 +844,8 @@ class Dataset:
         fig.colorbar(line, ax=ax)
 
         ax.set_xlim(x_lin.min(), x_lin.max())
-        ax.set_ylim(0, y_lin.max() * 1.1)
+        # ax.set_ylim(0, y_lin.max() * 1.1)
+        ax.set_ylim(0, 0.4)
 
         plt.savefig(Path('data', 'plots', f'plot_londa.png'))
         plt.show()
