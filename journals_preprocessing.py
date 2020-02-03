@@ -5,8 +5,10 @@ import pandas as pd
 from nameparser import HumanName
 import re
 
-from gender_inference import guess_gender_census, guess_gender_first_name_only_usa, \
-    guess_gender_with_middle_name_and_international_names, get_hand_coded_gender
+from name_to_gender import GenderGuesser
+
+# from gender_inference import guess_gender_census, guess_gender_first_name_only_usa, \
+#     guess_gender_with_middle_name_and_international_names, get_hand_coded_gender
 
 from collections import defaultdict, Counter
 
@@ -82,11 +84,10 @@ def generate_journal_dataset(dataset_type='general_journals', dataset_items='ful
     else:
         raise ValueError("dataset_type needs to be AHR or general_journals")
 
+    gender_guesser = GenderGuesser()
 
     db = sqlite3.connect(str(Path('data', 'JSTOR_full_cleaned.db')))
     cur = db.cursor()
-
-
 
     articles_sql = []
     for journal in journals:
@@ -106,7 +107,7 @@ def generate_journal_dataset(dataset_type='general_journals', dataset_items='ful
             print(count)
 
 
-        author_names, author_genders = get_author_info(ID_doi, ID_jstor)
+        author_names, author_genders = get_author_info(ID_doi, ID_jstor, gender_guesser)
         try:
             text = get_article_text(ID_doi, ID_jstor)
         except FileNotFoundError:
@@ -168,8 +169,8 @@ def get_article_text(ID_doi, ID_jstor):
             # strip xml tags
             text = re.sub(r'<.{1,50}>', '', text)
 
-        if not ID_doi:
-            print(text[:300], "\n\n")
+        # if not ID_doi:
+        #     print(text[:300], "\n\n")
 
         with open(ocr_path_repo, 'w') as out:
             out.write(text)
@@ -191,7 +192,6 @@ def split_text_into_chunks(text, chunk_length=300):
     :return:
     """
     tokenized_text = text.split()
-    print("len text", len(tokenized_text))
     number_of_chunks = round(len(tokenized_text) / chunk_length)
 
     # if text less than 150 words:
@@ -201,7 +201,6 @@ def split_text_into_chunks(text, chunk_length=300):
 
     chunk_length = round(len(tokenized_text) / number_of_chunks)
     chunks = [" ".join(tokenized_text[i:i+chunk_length]) for i in range(0, number_of_chunks * chunk_length, chunk_length)]
-    print(len(tokenized_text) - number_of_chunks * chunk_length, len(chunks[-1].split()))
     if len(chunks[-1].split()) < 150:
         embed()
 
@@ -209,7 +208,7 @@ def split_text_into_chunks(text, chunk_length=300):
 
 
 NAS = []
-def get_author_info(ID_doi, ID_jstor):
+def get_author_info(ID_doi, ID_jstor, gender_guesser):
     """
     Gets authors by doi or jstor id.
     Returns the names of all authors as a joined string as well as the overall author genders
@@ -220,7 +219,8 @@ def get_author_info(ID_doi, ID_jstor):
     :param ID_jstor:
     :return:
 
-    >>> get_author_info('10.2307_1857439', None)
+    >>> gg = GenderGuesser()
+    >>> get_author_info('10.2307_1857439', None, gg)
     ('Walter Goffart', 'male')
 
     """
@@ -242,9 +242,13 @@ def get_author_info(ID_doi, ID_jstor):
         last_name = last_name.strip(',')
 
         human_name = HumanName(f'{last_name}, {first_name}')
-#        print(f"From SQL: last: {last_name}. first: {first_name}")
 
-        gen = get_hand_coded_gender(human_name)
+        try:
+            gen = gender_guesser.get_handcoded_gender_from_human_name(human_name)
+        except:
+            print("missing human name", human_name)
+            gen = 'unknown'
+        # gen = get_hand_coded_gender(human_name)
         genders.add(gen)
         if gen == 'n/a':
             NAS.append(f'{first_name} {last_name}')
@@ -349,4 +353,4 @@ def get_names_and_genders_from_journals():
 
 if __name__ == '__main__':
 
-    generate_journal_dataset(dataset_type='AHR', dataset_items='sections')
+    generate_journal_dataset(dataset_type='general_journals', dataset_items='sections')

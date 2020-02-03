@@ -10,6 +10,7 @@ from dataset_dissertation import DissertationDataset
 
 import gender_guesser.detector
 import pandas as pd
+from IPython import embed
 
 class GenderGuesser:
 
@@ -23,6 +24,27 @@ class GenderGuesser:
         self._census_name_to_male_probability = {}
         for _, row in census_df.iterrows():
             self._census_name_to_male_probability[row.firstname] = row.percm
+
+        self._handcoded_names_journals = {}
+        for _, row in pd.read_csv(Path('data', 'gender_inference',
+                                       'journals_handcoded_name_to_gender.csv')).iterrows():
+            hn = HumanName(f'{row["last_name"]}, {row["first_name"]}')
+            if row['final_gender'] in {'male', 'female'}:
+                gender = row['final_gender']
+            else:
+                gender = 'unknown'
+            self._handcoded_names_journals[str(hn)] = gender
+
+    def get_handcoded_gender_from_human_name(self, human_name: HumanName):
+        """
+        Returns handcoded gender of HumanName
+
+        :param human_name:
+        :return:
+        """
+
+        return self._handcoded_names_journals[str(human_name)]
+
 
     def guess_gender_of_human_name(self, human_name: HumanName, mode='gender_guesser'):
         """
@@ -287,3 +309,6 @@ class GenderGuesser:
             with open(Path('data', 'gender_inference', 'stanford_name_to_gender.json'), 'w') as out:
                 json.dump(stanford_name_to_gender_dict, out, sort_keys=True, indent=4)
             return stanford_name_to_gender_dict
+
+if __name__ == '__main__':
+    gg = GenderGuesser()

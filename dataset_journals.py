@@ -41,6 +41,8 @@ class JournalsDataset(Dataset):
                                                 'topic_names_jan_2020.csv'))
         self.store_aggregate_approach_and_geographical_info_in_df()
 
+        embed()
+
 
     def generate_general_journal_dataset(self):
         """
