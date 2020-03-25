@@ -16,7 +16,7 @@ class GenderGuesser:
 
     def __init__(self):
 
-        self._stanford_name_to_gender_dict = self.get_stanford_name_to_gender_dict()
+        #self._stanford_name_to_gender_dict = self.get_stanford_name_to_gender_dict()
         self._gender_guesser_instance = gender_guesser.detector.Detector()
         self._gender_of_name_assigned_by_hand_dict = self.get_hand_assigned_names()
 

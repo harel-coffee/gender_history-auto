@@ -106,7 +106,7 @@ class Dataset:
         :return:
         """
         topics = {}
-        df = pd.read_csv(file_path, encoding='cp1252')
+        df = pd.read_csv(file_path, encoding='utf8')
 
         for _, row in df.iterrows():
 
@@ -152,8 +152,8 @@ class Dataset:
 
         sum_of_means = 0
         for gen_approach in gen_approaches_to_id:
-            #e.g. ['X10', 'X30]
-            selectors = [f'X{i}' for i in gen_approaches_to_id[gen_approach]]
+            #e.g. ['topic.10', 'topic.30]
+            selectors = [f'topic.{i}' for i in gen_approaches_to_id[gen_approach]]
             self.df[f'gen_approach_{gen_approach}'] = self.df[selectors].sum(axis=1)
             m = self.df[f'gen_approach_{gen_approach}'].mean()
             sum_of_means += m

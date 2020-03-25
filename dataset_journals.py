@@ -41,9 +41,6 @@ class JournalsDataset(Dataset):
                                                 'topic_names_jan_2020.csv'))
         self.store_aggregate_approach_and_geographical_info_in_df()
 
-        embed()
-
-
     def generate_general_journal_dataset(self):
         """
         generate a general journal dataset by merging topic weights from
@@ -55,15 +52,20 @@ class JournalsDataset(Dataset):
         """
 
         gen_df = pd.read_csv(Path('data', 'journal_csv',
-                                  'doc_with_topiccovars_stm_GENJ_100_full_Sherl.csv'))
+                                  'doc_with_topiccovars_stm_GENJ_90_final.csv'))
 
         metadata_df = pd.read_csv(Path('data', 'journal_csv',
                                 'general_journals_full_texts.csv'))
         metadata_df['pages'] = metadata_df['pages'].astype(str)
 
-        #
-        # gen_df['ID_doi'] = ''
-        # gen_df['ID_jstor'] = ''
+        # put id_doi_jstor column into the same format as the results csv
+        metadata_df['id_doi_jstor'] = metadata_df['ID_jstor'].fillna(0).astype(int).astype(str)
+        metadata_df['id_doi_jstor'] = np.where(metadata_df['id_doi_jstor'] == '0',
+                                               metadata_df['ID_doi'] + 'NA',
+                                               metadata_df['id_doi_jstor'])
+
+        gen_df['ID_doi'] = ''
+        gen_df['ID_jstor'] = ''
         gen_df['article_type'] = ''
         gen_df['pages'] = ''
         gen_df['title'] = ''
@@ -77,25 +79,28 @@ class JournalsDataset(Dataset):
         for idx, row in gen_df.iterrows():
             print(idx)
 
-
-            metadata_row = metadata_df.loc[metadata_df['ID_jstor'] == row['ID_jstor']]
+            # find metadata row matching the DOI.JSTOR.ID
+            metadata_row_id = np.where(metadata_df['id_doi_jstor'] == row['DOI.JSTOR.ID'])[0]
+            if len(metadata_row_id) != 1:
+                raise ValueError(f"Exactly one row should match the id_doi_jstor "
+                                 f"{row['DOI.JSTOR.ID']}")
+            metadata_row = metadata_df.iloc[metadata_row_id[0]]
 
             try:
-                gen_df.at[idx, 'article_type'] = metadata_row.article_type.values[0]
-                gen_df.at[idx, 'pages'] = metadata_row.pages.values[0]
-                gen_df.at[idx, 'title'] = metadata_row.title.values[0]
-                gen_df.at[idx, 'language'] = metadata_row.language.values[0]
-                gen_df.at[idx, 'year'] = metadata_row.year.values[0]
-                gen_df.at[idx, 'volume'] = metadata_row.volume.values[0]
-                gen_df.at[idx, 'issue'] = metadata_row.issue.values[0]
-                gen_df.at[idx, 'journal'] = metadata_row.journal.values[0]
-                gen_df.at[idx, 'authors'] = metadata_row.authors.values[0]
+                gen_df.at[idx, 'article_type'] = metadata_row.article_type
+                gen_df.at[idx, 'pages'] = metadata_row.pages
+                gen_df.at[idx, 'title'] = metadata_row.title
+                gen_df.at[idx, 'language'] = metadata_row.language
+                gen_df.at[idx, 'year'] = metadata_row.year
+                gen_df.at[idx, 'volume'] = metadata_row.volume
+                gen_df.at[idx, 'issue'] = metadata_row.issue
+                gen_df.at[idx, 'journal'] = metadata_row.journal
+                gen_df.at[idx, 'authors'] = metadata_row.authors
+
+                gen_df.at[idx, 'author_genders'] = metadata_row.author_genders
+                gen_df.at[idx, 'text'] = metadata_row.text
             except IndexError:
                 continue
-
-        # delete rows with nan values
-        # gen_df = gen_df[np.isnan(gen_df.year)]
-        gen_df = gen_df[np.isnan(gen_df.ID_jstor) == False]
 
         # parse numbers to int
         gen_df.year = gen_df.year.astype(int)
@@ -118,16 +123,17 @@ class JournalsDataset(Dataset):
 
 
         # find the 4 most correlated topics
-        topic_selector = [f'X{i}' for i in range(1, 101)]
+        topic_selector = [f'topic.{i}' for i in range(1, 91)]
         topic_df = self.df[topic_selector]
         correlated_topics = []
-        for topic, correlation in topic_df.corr()[f'X{topic_id}'].sort_values(
+
+        for topic, correlation in topic_df.corr()[f'topic.{topic_id}'].sort_values(
                 ascending=False).iteritems():
             if correlation == 1:
                 continue
             if len(correlated_topics) > 3:
                 break
-            tid = int(topic[1:])
+            tid = int(topic[6:])
             correlated_topics.append({
                 'topic_id': tid,
                 'correlation': round(correlation, 3)
@@ -136,24 +142,26 @@ class JournalsDataset(Dataset):
         # find all docs with topic score > 0.2
 
         # create a sorted and filtered dataframe
-        sorted_df = self.df.sort_values(by=f'X{topic_id}', ascending=False)
+        sorted_df = self.df.sort_values(by=f'topic.{topic_id}', ascending=False)
         # filter to only keep articles with weight 20% or more
-        sorted_df = sorted_df[sorted_df[f'X{topic_id}'] > 0.2]
+        sorted_df = sorted_df[sorted_df[f'topic.{topic_id}'] > 0.2]
 
         docs = []
         # find number of mentions of all centuries
         centuries = {f'{i}xx': 0 for i in range(20, 9, -1)}
         for _, row in sorted_df.iterrows():
             docs.append({
-                'topic_weight': round(row[f'X{topic_id}'], 3),
+                'topic_weight': round(row[f'topic.{topic_id}'], 3),
                 'year': row.year,
                 'author_gender': row.author_genders,
                 'title': row.title
             })
-            for hit in re.findall('[1-2][0-9][a-zA-Z0-9]{2}', row.text):
-                hit = hit[:2] + 'xx'
-                if hit in centuries:
-                    centuries[hit] += 1
+
+            if isinstance(row.text, str):
+                for hit in re.findall('[1-2][0-9][a-zA-Z0-9]{2}', row.text):
+                    hit = hit[:2] + 'xx'
+                    if hit in centuries:
+                        centuries[hit] += 1
 
         # Store the results first as a list of lists
         out = [[""] * 10 for _ in range(500)]
@@ -424,12 +432,15 @@ class JournalsDataset(Dataset):
 if __name__ == '__main__':
 
     d = JournalsDataset()
+
+
+
     from divergence_analysis import divergence_analysis
 
-    d.plot_topics_to_weight_and_gender_graph()
+    # d.plot_topics_to_weight_and_gender_graph()
 
-    d = JournalsDataset()
-    for i in range(1, 101):
+    # d = JournalsDataset()
+    for i in range(1, 91):
         d.summarize_topic(i)
 
 
@@ -442,20 +453,20 @@ if __name__ == '__main__':
 #    d.plot_topic_grid(smoothing=5)
 
     # d.plot_topic_grid_of_selected_topics(smoothing=5, selected_topic_ids=selected_topic_ids)
-
-    d.plot_londa(
-#        data_type='terms'
-        data_type='topics',
-        term_or_topic_list=[
-            'gen_approach_Political History',
-            'gen_approach_Social History',
-            # 'gen_approach_Cultural History',
-            # 'gen_approach_Economic History',
-            'gen_approach_Women’s and Gender History'
-        ],
-        # terms=['women'],
-        smoothing=5
-    )
+#
+#     d.plot_londa(
+# #        data_type='terms'
+#         data_type='topics',
+#         term_or_topic_list=[
+#             'gen_approach_Political History',
+#             'gen_approach_Social History',
+#             # 'gen_approach_Cultural History',
+#             # 'gen_approach_Economic History',
+#             'gen_approach_Women’s and Gender History'
+#         ],
+#         # terms=['women'],
+#         smoothing=5
+#     )
 
     # d.plot_topics_to_weight_and_gender_graph()
 
