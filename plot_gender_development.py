@@ -1,8 +1,8 @@
-from dataset import Dataset
+from gender_history.datasets.dataset import Dataset
 import numpy as np
 #from configuration import TOPIC_IDS_TO_NAME
 from topics import TOPICS
-from scipy.interpolate import make_interp_spline, BSpline
+from scipy.interpolate import make_interp_spline
 
 from scipy.interpolate import interp1d
 from pathlib import Path
@@ -13,8 +13,6 @@ from sklearn.preprocessing import MinMaxScaler
 from collections import defaultdict
 
 import matplotlib.patches as mpatches
-from IPython import embed
-import re
 import seaborn as sns
 
 def plot_gender_development_over_time(
