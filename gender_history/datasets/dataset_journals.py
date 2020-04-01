@@ -4,12 +4,14 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 
-from gender_history.utilities import BASE_PATH
+from gender_history.utilities import BASE_PATH, WORD_SPLIT_REGEX
 
 from IPython import embed
 
 import re
 import csv
+
+
 
 
 class JournalsDataset(Dataset):
@@ -36,6 +38,7 @@ class JournalsDataset(Dataset):
         if use_equal_samples_dataset:
             self.df = self.create_df_1000_texts_per_5_year_interval()
 
+        self.use_equal_samples_dataset = use_equal_samples_dataset
         self.topics = self.load_topic_data(Path(BASE_PATH, 'data', 'journal_csv',
                                                 'topic_titles_and_terms.csv'))
         self.dataset_type = 'journals'
@@ -68,17 +71,18 @@ class JournalsDataset(Dataset):
                                                metadata_df['ID_doi'] + 'NA',
                                                metadata_df['id_doi_jstor'])
 
-        gen_df['ID_doi'] = ''
-        gen_df['ID_jstor'] = ''
-        gen_df['article_type'] = ''
-        gen_df['pages'] = ''
-        gen_df['title'] = ''
-        gen_df['language'] = ''
-        gen_df['year'] = ''
-        gen_df['volume'] = ''
-        gen_df['issue'] = ''
-        gen_df['journal'] = ''
-        gen_df['authors'] = ''
+        gen_df['m_ID_doi'] = ''
+        gen_df['m_ID_jstor'] = ''
+        gen_df['m_article_type'] = ''
+        gen_df['m_pages'] = ''
+        gen_df['m_title'] = ''
+        gen_df['m_language'] = ''
+        gen_df['m_year'] = ''
+        gen_df['m_volume'] = ''
+        gen_df['m_issue'] = ''
+        gen_df['m_journal'] = ''
+        gen_df['m_authors'] = ''
+        gen_df['m_text_len'] = 0
 
         for idx, row in gen_df.iterrows():
 
@@ -90,29 +94,30 @@ class JournalsDataset(Dataset):
             metadata_row = metadata_df.iloc[metadata_row_id[0]]
 
             try:
-                gen_df.at[idx, 'article_type'] = metadata_row.article_type
-                gen_df.at[idx, 'pages'] = metadata_row.pages
-                gen_df.at[idx, 'title'] = metadata_row.title
-                gen_df.at[idx, 'language'] = metadata_row.language
-                gen_df.at[idx, 'year'] = metadata_row.year
-                gen_df.at[idx, 'volume'] = metadata_row.volume
-                gen_df.at[idx, 'issue'] = metadata_row.issue
-                gen_df.at[idx, 'journal'] = metadata_row.journal
-                gen_df.at[idx, 'authors'] = metadata_row.authors
+                gen_df.at[idx, 'm_article_type'] = metadata_row.article_type
+                gen_df.at[idx, 'm_pages'] = metadata_row.pages
+                gen_df.at[idx, 'm_title'] = metadata_row.title
+                gen_df.at[idx, 'm_language'] = metadata_row.language
+                gen_df.at[idx, 'm_year'] = metadata_row.year
+                gen_df.at[idx, 'm_volume'] = metadata_row.volume
+                gen_df.at[idx, 'm_issue'] = metadata_row.issue
+                gen_df.at[idx, 'm_journal'] = metadata_row.journal
+                gen_df.at[idx, 'm_authors'] = metadata_row.authors
 
                 # get author gender from google sheet data
                 author_genders = gender_guesser.get_gender_of_journal_authors(metadata_row.authors)
                 if author_genders == 'undetermined':
                     print(metadata_row.authors, metadata_row.author_genders, author_genders)
 
-                gen_df.at[idx, 'author_genders'] = author_genders
-                gen_df.at[idx, 'text'] = metadata_row.text
+                gen_df.at[idx, 'm_author_genders'] = author_genders
+                gen_df.at[idx, 'm_text'] = metadata_row.text
+                gen_df.at[idx, 'm_text_len'] = len(re.findall(WORD_SPLIT_REGEX, metadata_row.text))
+
             except IndexError:
                 continue
 
         # parse numbers to int
-        gen_df.year = gen_df.year.astype(int)
-
+        gen_df['m_year'] = gen_df['m_year'].astype(int)
         gen_df.to_csv(Path(BASE_PATH, 'data', 'journal_csv', 'general_journals_dataset.csv'))
 
 
@@ -159,13 +164,13 @@ class JournalsDataset(Dataset):
         for _, row in sorted_df.iterrows():
             docs.append({
                 'topic_weight': round(row[f'topic.{topic_id}'], 3),
-                'year': row.year,
-                'author_gender': row.author_genders,
-                'title': row.title
+                'year': row.m_year,
+                'author_gender': row.m_author_genders,
+                'title': row.m_title
             })
 
-            if isinstance(row.text, str):
-                for hit in re.findall('[1-2][0-9][a-zA-Z0-9]{2}', row.text):
+            if isinstance(row.m_text, str):
+                for hit in re.findall('[1-2][0-9][a-zA-Z0-9]{2}', row.m_text):
                     hit = hit[:2] + 'xx'
                     if hit in centuries:
                         centuries[hit] += 1
@@ -439,6 +444,6 @@ class JournalsDataset(Dataset):
 if __name__ == '__main__':
 
     d = JournalsDataset()
-    x = d.df_with_equal_samples_per_5_year_period
+#    x = d.df_with_equal_samples_per_5_year_period
     embed()
 

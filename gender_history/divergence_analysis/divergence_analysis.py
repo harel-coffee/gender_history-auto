@@ -9,6 +9,7 @@ from gender_history.datasets.dataset_journals import JournalsDataset
 from gender_history.divergence_analysis.stats import StatisticalAnalysis
 
 from scipy.sparse import vstack
+from IPython import embed
 
 
 class DivergenceAnalysis():
@@ -65,14 +66,18 @@ class DivergenceAnalysis():
 
     def _initialize_analysis_and_dtms(self):
 
-
-
         if self.analysis_type == 'terms':
-            self.vocabulary = self.mc.get_vocabulary(max_terms=10000,
-                                             min_appearances=self.min_appearances_per_term,
-                                             include_2grams=True)
-            self.c1_dtm = self.c1.get_document_term_matrix(vocabulary=self.vocabulary)
-            self.c2_dtm = self.c2.get_document_term_matrix(vocabulary=self.vocabulary)
+            # self.vocabulary = self.mc.get_vocabulary(max_terms=10000,
+            #                                  min_appearances=self.min_appearances_per_term,
+            #                                  include_2grams=True)
+            # self.c1_dtm = self.c1.get_document_term_matrix(vocabulary=self.vocabulary)
+            # self.c2_dtm = self.c2.get_document_term_matrix(vocabulary=self.vocabulary)
+
+            # self.vocabulary = self.mc.get_default_vocabulary(no_terms=10000)
+            _, self.vocabulary = self.mc.get_vocabulary_and_document_term_matrix(max_features=50000)
+            self.c1_dtm, _ = self.c1.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
+            self.c2_dtm, _ = self.c2.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
+
         else:
             if self.analysis_type == 'topics':
                 self.vocabulary = [f'topic.{i}' for i in range(1, 91)]
@@ -116,7 +121,7 @@ class DivergenceAnalysis():
             else:
                 topic_idx = term_idx + 1
                 if self.analysis_type == 'topics':
-                    term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
+                    term = f'({topic_idx}) {self.c1.topics[topic_idx]["name"]}'
                 elif self.analysis_type == 'gen_approach':
                     term = self.vocabulary[term_idx]
 
@@ -124,12 +129,12 @@ class DivergenceAnalysis():
                 'term': term,
                 'dunning': dunning[term_idx],
                 'frequency_score': frequency_score[term_idx],
-                'count_total': count_all,
-                f'count {self.c1_name}': count_c1,
-                f'count {self.c2_name}': count_c2,
-                'frequency_total': count_all / total_terms_all,
-                f'frequency {self.c1_name}': count_c1 / total_terms_c1,
-                f'frequency {self.c2_name}': count_c2 / total_terms_c2,
+                'count both': count_all,
+                f'c {self.c1_name}': count_c1,
+                f'c {self.c2_name}': count_c2,
+                'freq both': count_all / total_terms_all,
+                f'f {self.c1_name}': count_c1 / total_terms_c1,
+                f'f {self.c2_name}': count_c2 / total_terms_c2,
             })
 
         df = pd.DataFrame(data)
@@ -147,27 +152,28 @@ class DivergenceAnalysis():
         """
 
         if self.analysis_type == 'terms':
-            headers = ['term', 'dunning', 'frequency_score', 'count_total',
-                       f'count {self.c1_name}', f'count {self.c2_name}']
+            headers = ['term', 'dunning', 'frequency_score',
+                       'count both', f'c {self.c1_name}', f'c {self.c2_name}']
         else:
-            headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
-                       f'frequency {self.c1_name}', f'frequency {self.c2_name}']
+            headers = ['term', 'dunning', 'frequency_score', 'freq both',
+                       f'f {self.c1_name}', f'f {self.c2_name}']
 
         year_df = {}
 
-        for years_range in [(1976, 1984), (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
-                             (2005, 2009), (2010, 2015)]:
+        for years_range in [
+            (1951, 1954), (1955, 1959), (1960, 1964), (1965, 1969),
+            (1970, 1974), (1975, 1979), (1980, 1984),
+            (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
+             (2005, 2009), (2010, 2015)]:
             y1, y2 = years_range
-
-            #TODO: fix year count (should be responsive to df vs sampled_df
-            c1_count = len(c1.df[(c1.df['year'] >= y1) & (c1.df['year'] <= y2)])
-            c2_count = len(c2.df[(c2.df['year'] >= y1) & (c2.df['year'] <= y2)])
+            c1_count = len(self.c1.df[(self.c1.df['m_year'] >= y1) & (self.c1.df['m_year'] <= y2)])
+            c2_count = len(self.c2.df[(self.c2.df['m_year'] >= y1) & (self.c2.df['m_year'] <= y2)])
             if c1_count > 0 or c2_count > 0:
                 year_df[f'{y1}-{y2}'] = {
                     f'{self.c1_name}': c1_count,
-                    f'{self.c1_name} freq': c1_count / len(c1),
+                    f'{self.c1_name} freq': c1_count / len(self.c1),
                     f'{self.c2_name}': c2_count,
-                    f'{self.c2_name} freq': c2_count / len(c2),
+                    f'{self.c2_name} freq': c2_count / len(self.c2),
                 }
         year_df = pd.DataFrame(year_df).transpose()
         print(tabulate(year_df, headers='keys'))
@@ -175,140 +181,140 @@ class DivergenceAnalysis():
         # embed()
 
 
-        print(f'\n\nTerms distinctive for Corpus 1: {self.c1_name}. {len(self.c1)} Theses\n')
+        print(f'\n\nTerms distinctive for Corpus 1: {self.c1_name}. {len(self.c1)} Documents\n')
         print(tabulate(df[headers][::-1][0:number_of_terms_or_topics_to_print], headers='keys'))
 
-        print(f'\n\nTerms distinctive for Corpus 2: {self.c2_name}. {len(self.c2)} Theses\n')
+        print(f'\n\nTerms distinctive for Corpus 2: {self.c2_name}. {len(self.c2)} Documents\n')
         print(tabulate(df[headers][0:number_of_terms_or_topics_to_print], headers='keys'))
 
-
-def divergence_analysis(master_dataset:Dataset,
-                        c1:Dataset,                 # sub corpus 1
-                        c2:Dataset,                 # sub corpus 2
-                        analysis_type='terms',
-                        number_of_terms_to_print=30,
-                        c1_name=None, c2_name=None,
-                        print_results=True, sort_by=None,
-                        min_appearances_per_term=50):
-    if not c1_name:
-        c1_name = c1.name
-    if not c2_name:
-        c2_name = c2.name
-
-    if not sort_by:
-        if analysis_type == 'terms':
-            sort_by = 'dunning'
-        else:
-            sort_by = 'frequency_score'
-
-
-    if analysis_type == 'terms':
-        vocabulary = master_dataset.get_vocabulary(max_terms=10000,
-                                                   min_appearances=min_appearances_per_term,
-                                                   include_2grams=True)
-        c1_dtm = c1.get_document_term_matrix(vocabulary=vocabulary)
-        c2_dtm = c2.get_document_term_matrix(vocabulary=vocabulary)
-    else:
-        if analysis_type == 'topics':
-            vocabulary = [f'X{i}' for i in range(1, 101)]
-        elif analysis_type == 'gen_approach':
-            vocabulary = [x for x in master_dataset.df.columns if x.startswith('gen_approach_')]
-        else:
-            raise NotImplemented(f"analysis for {analysis_type} not yet implemented.")
-        c1_dtm = c1.get_document_topic_matrix(vocabulary=vocabulary) * 4000
-        c2_dtm = c2.get_document_topic_matrix(vocabulary=vocabulary) * 4000
-
-    master_dtm = vstack([c1_dtm, c2_dtm])
-
-    s = StatisticalAnalysis(master_dtm, c1_dtm, c2_dtm, vocabulary)
-    dunning, _ = s.dunning_log_likelihood()
-    frequency_score, _ = s.frequency_score()
-#    mwr, _ = s.mann_whitney_rho()
-#    correlated_terms = s.correlation_coefficient()
-
-    total_terms_all = master_dtm.sum()
-    total_terms_c1 = c1_dtm.sum()
-    total_terms_c2 = c2_dtm.sum()
-
-    column_sums_all = np.array(master_dtm.sum(axis=0))[0]
-    column_sums_c1 = np.array(c1_dtm.sum(axis=0))[0]
-    column_sums_c2 = np.array(c2_dtm.sum(axis=0))[0]
-
-    data = []
-    for term_idx in range(len(vocabulary)):
-
-        count_all = column_sums_all[term_idx]
-        count_c1 = column_sums_c1[term_idx]
-        count_c2 = column_sums_c2[term_idx]
-
-
-        if analysis_type == 'terms':
-            term = vocabulary[term_idx]
-            if count_all < min_appearances_per_term:
-                continue
-        else:
-            topic_idx = term_idx + 1
-            if analysis_type == 'topics':
-                term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
-            elif analysis_type == 'gen_approach':
-                term = vocabulary[term_idx]
-
-        data.append({
-            'term': term,
-            'dunning': dunning[term_idx],
-            'frequency_score': frequency_score[term_idx],
-            'count_total': count_all,
-            f'count {c1_name}': count_c1,
-            f'count {c2_name}': count_c2,
-            'frequency_total': count_all / total_terms_all,
-            f'frequency {c1_name}': count_c1 / total_terms_c1,
-            f'frequency {c2_name}': count_c2 / total_terms_c2,
-        })
-
-
-    df = pd.DataFrame(data)
-
-
-    df.sort_values(by=sort_by, inplace=True)
-    df.reset_index(inplace=True)
-
-    if print_results:
-
-        if analysis_type == 'terms':
-            headers = ['term', 'dunning', 'frequency_score', 'count_total',
-                       f'count {c1_name}', f'count {c2_name}']
-        else:
-            headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
-                       f'frequency {c1_name}', f'frequency {c2_name}']
-
-        year_df = {}
-
-        for years_range in [(1976, 1984), (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
-                             (2005, 2009), (2010, 2015)]:
-            y1, y2 = years_range
-            c1_count = len(c1.df[(c1.df['year'] >= y1) & (c1.df['year'] <= y2)])
-            c2_count = len(c2.df[(c2.df['year'] >= y1) & (c2.df['year'] <= y2)])
-            if c1_count > 0 or c2_count > 0:
-                year_df[f'{y1}-{y2}'] = {
-                    f'{c1_name}': c1_count,
-                    f'{c1_name} freq': c1_count / len(c1),
-                    f'{c2_name}': c2_count,
-                    f'{c2_name} freq': c2_count / len(c2),
-                }
-        year_df = pd.DataFrame(year_df).transpose()
-        print(tabulate(year_df, headers='keys'))
-
-        # embed()
-
-
-        print(f'\n\nTerms distinctive for Corpus 1: {c1_name}. {len(c1)} Theses\n')
-        print(tabulate(df[headers][::-1][0:number_of_terms_to_print], headers='keys'))
-
-        print(f'\n\nTerms distinctive for Corpus 2: {c2_name}. {len(c2)} Theses\n')
-        print(tabulate(df[headers][0:number_of_terms_to_print], headers='keys'))
-
-
-    return df
+#
+# def divergence_analysis(master_dataset:Dataset,
+#                         c1:Dataset,                 # sub corpus 1
+#                         c2:Dataset,                 # sub corpus 2
+#                         analysis_type='terms',
+#                         number_of_terms_to_print=30,
+#                         c1_name=None, c2_name=None,
+#                         print_results=True, sort_by=None,
+#                         min_appearances_per_term=50):
+#     if not c1_name:
+#         c1_name = c1.name
+#     if not c2_name:
+#         c2_name = c2.name
+#
+#     if not sort_by:
+#         if analysis_type == 'terms':
+#             sort_by = 'dunning'
+#         else:
+#             sort_by = 'frequency_score'
+#
+#
+#     if analysis_type == 'terms':
+#         vocabulary = master_dataset.get_vocabulary(max_terms=10000,
+#                                                    min_appearances=min_appearances_per_term,
+#                                                    include_2grams=True)
+#         c1_dtm = c1.get_document_term_matrix(vocabulary=vocabulary)
+#         c2_dtm = c2.get_document_term_matrix(vocabulary=vocabulary)
+#     else:
+#         if analysis_type == 'topics':
+#             vocabulary = [f'X{i}' for i in range(1, 101)]
+#         elif analysis_type == 'gen_approach':
+#             vocabulary = [x for x in master_dataset.df.columns if x.startswith('gen_approach_')]
+#         else:
+#             raise NotImplemented(f"analysis for {analysis_type} not yet implemented.")
+#         c1_dtm = c1.get_document_topic_matrix(vocabulary=vocabulary) * 4000
+#         c2_dtm = c2.get_document_topic_matrix(vocabulary=vocabulary) * 4000
+#
+#     master_dtm = vstack([c1_dtm, c2_dtm])
+#
+#     s = StatisticalAnalysis(master_dtm, c1_dtm, c2_dtm, vocabulary)
+#     dunning, _ = s.dunning_log_likelihood()
+#     frequency_score, _ = s.frequency_score()
+# #    mwr, _ = s.mann_whitney_rho()
+# #    correlated_terms = s.correlation_coefficient()
+#
+#     total_terms_all = master_dtm.sum()
+#     total_terms_c1 = c1_dtm.sum()
+#     total_terms_c2 = c2_dtm.sum()
+#
+#     column_sums_all = np.array(master_dtm.sum(axis=0))[0]
+#     column_sums_c1 = np.array(c1_dtm.sum(axis=0))[0]
+#     column_sums_c2 = np.array(c2_dtm.sum(axis=0))[0]
+#
+#     data = []
+#     for term_idx in range(len(vocabulary)):
+#
+#         count_all = column_sums_all[term_idx]
+#         count_c1 = column_sums_c1[term_idx]
+#         count_c2 = column_sums_c2[term_idx]
+#
+#
+#         if analysis_type == 'terms':
+#             term = vocabulary[term_idx]
+#             if count_all < min_appearances_per_term:
+#                 continue
+#         else:
+#             topic_idx = term_idx + 1
+#             if analysis_type == 'topics':
+#                 term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
+#             elif analysis_type == 'gen_approach':
+#                 term = vocabulary[term_idx]
+#
+#         data.append({
+#             'term': term,
+#             'dunning': dunning[term_idx],
+#             'frequency_score': frequency_score[term_idx],
+#             'count_total': count_all,
+#             f'count {c1_name}': count_c1,
+#             f'count {c2_name}': count_c2,
+#             'frequency_total': count_all / total_terms_all,
+#             f'frequency {c1_name}': count_c1 / total_terms_c1,
+#             f'frequency {c2_name}': count_c2 / total_terms_c2,
+#         })
+#
+#
+#     df = pd.DataFrame(data)
+#
+#
+#     df.sort_values(by=sort_by, inplace=True)
+#     df.reset_index(inplace=True)
+#
+#     if print_results:
+#
+#         if analysis_type == 'terms':
+#             headers = ['term', 'dunning', 'frequency_score', 'count_total',
+#                        f'count {c1_name}', f'count {c2_name}']
+#         else:
+#             headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
+#                        f'frequency {c1_name}', f'frequency {c2_name}']
+#
+#         year_df = {}
+#
+#         for years_range in [(1976, 1984), (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
+#                              (2005, 2009), (2010, 2015)]:
+#             y1, y2 = years_range
+#             c1_count = len(c1.df[(c1.df['year'] >= y1) & (c1.df['year'] <= y2)])
+#             c2_count = len(c2.df[(c2.df['year'] >= y1) & (c2.df['year'] <= y2)])
+#             if c1_count > 0 or c2_count > 0:
+#                 year_df[f'{y1}-{y2}'] = {
+#                     f'{c1_name}': c1_count,
+#                     f'{c1_name} freq': c1_count / len(c1),
+#                     f'{c2_name}': c2_count,
+#                     f'{c2_name} freq': c2_count / len(c2),
+#                 }
+#         year_df = pd.DataFrame(year_df).transpose()
+#         print(tabulate(year_df, headers='keys'))
+#
+#         # embed()
+#
+#
+#         print(f'\n\nTerms distinctive for Corpus 1: {c1_name}. {len(c1)} Theses\n')
+#         print(tabulate(df[headers][::-1][0:number_of_terms_to_print], headers='keys'))
+#
+#         print(f'\n\nTerms distinctive for Corpus 2: {c2_name}. {len(c2)} Theses\n')
+#         print(tabulate(df[headers][0:number_of_terms_to_print], headers='keys'))
+#
+#
+#     return df
 
 def wordcloud(gender='female', relative_scaling=0.0):
 
@@ -378,11 +384,27 @@ def wordcloud(gender='female', relative_scaling=0.0):
 if __name__ == '__main__':
 
 
-    d = JournalsDataset(use_equal_samples_dataset=True)
-    c1 = d.copy().filter(author_gender='male')
-    c2 = d.copy().filter(author_gender='female')
+    d = JournalsDataset()
 
-    div = DivergenceAnalysis(d, c1, c2, 'male', 'female')
-    div.run_divergence_analysis('topics')
+    # Create two sub-datasets, one for female authors and one for male authors
+    c1 = d.copy().filter(author_gender='female')
+    c2 = d.copy().filter(author_gender='male')
+
+
+    # Run the divergence analysis
+    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='women', sub_corpus2_name='men')
+    div.run_divergence_analysis(analysis_type='terms', sort_by='frequency_score')
+
+
+#     d = JournalsDataset(use_equal_samples_dataset=False)
+#     # c1 = d.copy().filter(author_gender='female')
+#     # c2 = d.copy().filter(author_gender='male')
+# #    c1 = d.copy().filter(term_filter='women')
+# #    c2 = d.copy().filter(term_filter='not_women')
+#     c1 = d.copy().topic_percentile_score_filter(topic_id=25, min_percentile_score=80)
+#     c2 = d.copy().topic_percentile_score_filter(topic_id=45, min_percentile_score=80)
+#
+#     div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='men', sub_corpus2_name='women')
+#     div.run_divergence_analysis()
 
 

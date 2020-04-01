@@ -14,12 +14,14 @@ Here's one attempt of showing these three dimensions in a single chart:
 
 There's a lot going on in this graph. Let's start with the easiest part:
 
-Topic Weight (Y-axis): The y-axis shows the mean weight of a topic across all 10000 articles. 
+### Topic Weight (Y-axis):
+The y-axis shows the mean weight of a topic across all 10000 articles. 
 The largest topic, "General Historiography" has an overall weight of about 6.5%. "European 
 Colonization of Asia," one of the smaller topics in the bottom right, has a weight of about 0.4%.
 Note that this axis is on a log scale.
 
-Frequency Score / Gender Distribution (X-axis): The x-axis tells us how gendered a topic is from
+### Frequency Score / Gender Distribution (X-axis)
+The x-axis tells us how gendered a topic is from
 0 (only men write about a topic) to 1 (only women write about a topic).<br>
 The math behind this score is simple:<br>
 `frequency score(topic) = weight of topic among women / (weight of topic among women + weight of 
@@ -38,7 +40,8 @@ If we look at the average weights, however, we see that among women, "Gender and
 Feminism" has an average weight of 3.93% whereas among men, it has an average weight of 0.49%. This
 is the relationship that the frequency score expresses: 3.93% / (3.93% + 0.49%) = 0.89.
 
-Median Publication Year (dot color). Notice that the dots have different colors from dark blue to 
+### Median Publication Year (dot color). 
+Notice that the dots have different colors from dark blue to 
 dark red. These colors show the median publication year for a given topic.<br>
 What does that mean? Across all articles from 1951 to 2014, every topic has a certain total weight.
 For "Gender and Feminism," that total weight is 116. The median publication year indicates the year
@@ -55,7 +58,7 @@ Note: I don't like the color scheme. For a next iteration of this chart, I think
 a color for each decade from the 1960s to the 2000s. I think that will make the graph look a lot
 better.
 
-# Ok, so what do we see?
+## Ok, so what do we see?
 
 I think the chart is useful because it captures some of the general trends that we discuss: 
 work on "Gender and Feminism," "Family," "Doctors and Patients", "Consumption and Consumerism" is 
@@ -64,7 +67,7 @@ predominantly done by women. It is also worth noting that there is no male equiv
 simple answer to the question: What would we not know about if it weren't for women? is histories
 that touch on gender and feminism.
 
-# Date and gender correlation
+## Date and gender correlation
 
 There is something problematic about our general approach, though. Note that the most male-
 dominated topics are also the most outdated ones: "German and Austro-Hungarian Diplomatic 
@@ -81,7 +84,7 @@ the early 1980s whereas the average article by a women was published in the mid 
 articles by women seem to be, on average, more current while men seem to work more on outdated
 topics.
 
-# Dataset sampling
+## Dataset sampling
 
 How we account for this skew? One of the Dans (McFarland? Jurafsky?) suggested drawing a sample
 from the articles, so I generated a derived dataset with the following specifications:
@@ -96,7 +99,7 @@ per five year period. However, that doesn't solve the issue that men far outnumb
 early years, hence I selected 500 articles each by men and women for each 5 year period. But of 
 course, that massively oversamples articles by women in the 1950s and 60s.
 
-# Visualization with sampled dataset
+## Visualization with sampled dataset
 
 At any rate, here's the visualization that we get when using a dataset with the same number of
 articles by men and women for each 5 year period:

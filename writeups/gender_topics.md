@@ -6,6 +6,18 @@ point.
 
 Note: the following analysis uses exclusively the journals dataset.
 
+## Preamble
+
+I was almost already sending an email with links to writeups and then realized that we have
+no visualizations yet summarizing the contents of the journal articles. 
+
+So here is at least a still very ugly graph showing the number of articles published by men and 
+women for each year in our dataset.
+
+
+@Londa: can you let me know what other visualizations are useful for you that summarize the contents
+of our dataset?
+
 ## The "Women's and Gender History" General Approach
 As a way of grouping topics together, we have given each topic one or multiple general approaches
 where appropriate. For example, the "Markets and Trade" topic falls under the general approach
@@ -83,7 +95,7 @@ Before we dive into individual topics, it's worth observing that women's and gen
 seen through these four topics) already starts to rise in the 1970s. It's just that the "Family" 
 topic contributes most of that early rise while gender and feminism follows about one decade later.
 
-## Family
+### Family
 
 Let's have a look at the family topic now.
 
@@ -106,7 +118,7 @@ At any rate, the terms seem to show two slightly different trends: family, child
 all peak around 1980 while children and parents only peak around 2000. This might point to a later
 cultural history of childhood.
 
-## Gender and Feminism
+### Gender and Feminism
 
 The gender and feminism topic follows family by about one decade:
 
@@ -117,7 +129,7 @@ Noteworthy here is the term gender, which was barely used in 1980 but became pro
 The initial work in this area was almost exclusively done by women and even in the 2000s, the line
 is only slightly less than dark red (I can dig into the numbers for this).
 
-## Sexuality
+### Sexuality
 
 The sexuality topic is strikingly different.
 
@@ -129,7 +141,7 @@ done by men. The second peak in the 2000s, characterized by terms like sexuality
 represents work done mostly by women. Though if we dig into this further, I'm sure we'll find a strong
 gay history topic here as well.
 
-## Consumption and Consumerism
+### Consumption and Consumerism
 
 Finally, consumption and consumerism, which is still on the rise.
 
@@ -141,6 +153,73 @@ from looking washed out.
 
 I also don't know what to make of the peak with food around 1980. Maybe an earlier social history?
 Maybe agriculture related?
+
+
+# Male and female topics in general approaches
+
+So far, we have plotted a topic and its key terms. We can apply the same logic to general approaches
+and display key topics within those general approaches. 
+
+For the following charts, I have selected in particular topics that are male or female dominated. 
+I.e. it's not all of the topics within a general approach (though I'm happy to produce these 
+graphs as well) but just some that I found interesting.
+
+### Historiography
+
+[LINK]
+
+Take historiography. Overall, it skews male throughout our time period. However, the general chart
+hides important trends. For example, while more men write about within the "Narratives and 
+Discourses" topic, more women write in the "Cultural Turn" topic. I have added some notes on the
+contrast between these two topics 
+
+[LINK]
+here.
+
+### Indigenous History
+The indigenous history topics are also interesting because they show two unexpected patterns: <br>
+- the overall approach declines drastically from the 1950s to the present
+- the majority of the work in the 1950s and 60s comes from women.
+
+[PLOT]
+
+I have no idea what to make of these trends. Did Native American history become less important?
+Or is it just less of a clear cluster, i.e. it enters into U.S. history without being an almost
+separate field? Does a change in nomenclature (indian vs. native american) throw off our topic 
+model? I really don't know. Would be interesting to know more.
+
+Just to check that we're not completely off base, I also plotted the terms "native" and "indian" 
+to see if they show somewhat similar trends and it does seem that our "Indigenous History" topic
+tracks "indian" pretty well but "native" less so. (though native, off course, can not just mean
+native americans).
+
+[PLOT]
+
+### Social History
+
+The Social History general approach has 12 topics. I again selected four that show some interesting
+patterns. Demography presumably skews quite quantitative and it probably makes sense on that basis 
+that there are a lot of men writing about it.
+
+[PLOT]
+
+### Race and Racism
+
+This one actually surprised me--I would have expected to find more women here.
+
+[PLOT]
+
+### Political History
+
+For some general approaches, there are simply too many subtopics for me to pick. So instead,
+here's the graphs for the 20 political history topics. "Nations and boundaries" as one of the newer
+topics is definitely noteworthy here.
+
+[Plot]
+
+
+
+
 
 
 
