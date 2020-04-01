@@ -6,13 +6,16 @@ point.
 
 Note: the following analysis uses exclusively the journals dataset.
 
-## Preamble
+## Dataset summaries
 
 I was almost already sending an email with links to writeups and then realized that we have
 no visualizations yet summarizing the contents of the journal articles. 
 
 So here is at least a still very ugly graph showing the number of articles published by men and 
 women for each year in our dataset.
+
+
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/dataset_summaries/male_female_articles.png)
 
 
 @Londa: can you let me know what other visualizations are useful for you that summarize the contents
@@ -166,22 +169,20 @@ graphs as well) but just some that I found interesting.
 
 ### Historiography
 
-[LINK]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/topic_frequency_plots/Historiography.png)
 
 Take historiography. Overall, it skews male throughout our time period. However, the general chart
 hides important trends. For example, while more men write about within the "Narratives and 
 Discourses" topic, more women write in the "Cultural Turn" topic. I have added some notes on the
 contrast between these two topics 
-
-[LINK]
-here.
+[here.](https://github.com/srisi/gender_history/blob/9c90826734e3d7411efe12314379854496661141/writeups/gender_weight_scatterplot.md#visualization-with-sampled-dataset)
 
 ### Indigenous History
 The indigenous history topics are also interesting because they show two unexpected patterns: <br>
 - the overall approach declines drastically from the 1950s to the present
 - the majority of the work in the 1950s and 60s comes from women.
 
-[PLOT]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/topic_frequency_plots/Indigenous%20History.png)
 
 I have no idea what to make of these trends. Did Native American history become less important?
 Or is it just less of a clear cluster, i.e. it enters into U.S. history without being an almost
@@ -193,7 +194,8 @@ to see if they show somewhat similar trends and it does seem that our "Indigenou
 tracks "indian" pretty well but "native" less so. (though native, off course, can not just mean
 native americans).
 
-[PLOT]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/ngram_plots/native_and_indian.png)
+
 
 ### Social History
 
@@ -201,13 +203,13 @@ The Social History general approach has 12 topics. I again selected four that sh
 patterns. Demography presumably skews quite quantitative and it probably makes sense on that basis 
 that there are a lot of men writing about it.
 
-[PLOT]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/topic_frequency_plots/Social%20History.png)
 
 ### Race and Racism
 
 This one actually surprised me--I would have expected to find more women here.
 
-[PLOT]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/topic_frequency_plots/History%20of%20Race%20and%20Racism.png)
 
 ### Political History
 
@@ -215,7 +217,7 @@ For some general approaches, there are simply too many subtopics for me to pick.
 here's the graphs for the 20 political history topics. "Nations and boundaries" as one of the newer
 topics is definitely noteworthy here.
 
-[Plot]
+![](https://github.com/srisi/gender_history/raw/9c90826734e3d7411efe12314379854496661141/visualizations/topic_frequency_plots/Political%20History.png)
 
 
 
