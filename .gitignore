@@ -47,3 +47,15 @@ data/plots/author_genders_journals\.png
 data/plots/topic_plots_by_male_female\.png
 
 data/plots/topic_plots_by_overall_weight\.png
+
+data/journal_csv/doc_with_topiccovars_stm_GENJ_90_final_WITH_ID\.csv
+
+data/journal_csv/general_journals_dataset\.csv
+
+data/journal_csv/topic_words_stm_GENJ_90_final\.csv
+
+gender_history\.egg-info/
+
+data/dtms/
+
+data/journal_csv/general_journals_full_texts_raw\.csv

@@ -1,24 +1,14 @@
-from dataset import Dataset
-import numpy as np
+from gender_history.datasets.dataset import Dataset
 #from configuration import TOPIC_IDS_TO_NAME
 from topics import TOPICS
-from scipy.interpolate import make_interp_spline, BSpline
-
-from scipy.interpolate import interp1d
-from pathlib import Path
 
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from sklearn.preprocessing import MinMaxScaler
-from collections import defaultdict
 
-import matplotlib.patches as mpatches
 from IPython import embed
-import re
-import seaborn as sns
 import math
 
-from divergence_analysis import divergence_analysis
+from gender_history.divergence_analysis.divergence_analysis import divergence_analysis
 
 
 def distinctiveness_scatter_plot(dataset, terms=[], x_axis='mwr'):
@@ -87,7 +77,7 @@ def distinctiveness_scatter_plot(dataset, terms=[], x_axis='mwr'):
         ax.set_xlim(-dunning_max*10, dunning_max*10)
         ax.set_xscale('symlog')
 
-    from stats import StatisticalAnalysis
+    from gender_history.divergence_analysis.stats import StatisticalAnalysis
     vocabulary = [f'topic.{i}' for i in range(1, 71)]
     d_dtm = d.get_document_topic_matrix()
     c1_dtm = female.get_document_topic_matrix() * 300
@@ -104,7 +94,7 @@ def distinctiveness_scatter_plot(dataset, terms=[], x_axis='mwr'):
 
 def pca_scatter():
 
-    from stats import StatisticalAnalysis
+    from gender_history.divergence_analysis.stats import StatisticalAnalysis
     from sklearn.decomposition import PCA
     d = Dataset()
     vocabulary = [f'topic.{i}' for i in range(1, 71)]

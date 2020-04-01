@@ -6,11 +6,11 @@ from pathlib import Path
 import json
 from nameparser import HumanName
 
-from dataset_dissertation import DissertationDataset
+from gender_history.datasets.dataset_dissertation import DissertationDataset
 
 import gender_guesser.detector
 import pandas as pd
-from IPython import embed
+
 
 class GenderGuesser:
 
@@ -28,22 +28,65 @@ class GenderGuesser:
         self._handcoded_names_journals = {}
         for _, row in pd.read_csv(Path('data', 'gender_inference',
                                        'journals_handcoded_name_to_gender.csv')).iterrows():
-            hn = HumanName(f'{row["last_name"]}, {row["first_name"]}')
+            if isinstance(row['last_name'], str):
+                full_name = f'{row["first_name"]} {row["last_name"]}'
+            elif isinstance(row['first_name'], str):
+                full_name = row['first_name'].strip()
+            else:
+                raise ValueError('No first or last name available')
             if row['final_gender'] in {'male', 'female'}:
                 gender = row['final_gender']
             else:
                 gender = 'unknown'
-            self._handcoded_names_journals[str(hn)] = gender
+            self._handcoded_names_journals[full_name] = gender
 
-    def get_handcoded_gender_from_human_name(self, human_name: HumanName):
+    def get_gender_of_journal_authors(self, author_names: str):
+        """
+        Returns the combined genders of one or multiple journal authors
+
+        Returns:
+        all male            -> 'male'
+        all female          -> 'female'
+        men and women       -> 'mixed'
+        one or more unknown -> 'undetermined'
+
+        >>> g = GenderGuesser()
+        >>> g.get_gender_of_journal_authors('Susanne Hoeber Rudolph; Lloyd I. Rudolph')
+        'mixed'
+
+        :param author_names: str
+        :return:
+        """
+        if author_names == 'None':
+            return 'undetermined'
+
+        author_genders = set()
+        for author in author_names.split(';'):
+            author_genders.add(self.get_handcoded_gender_from_human_name(author.strip()))
+
+        if author_genders == {'male'}:
+            return 'male'
+        # ... or all female
+        elif author_genders == {'female'}:
+            return'female'
+        # ... or at least one male and one female
+        elif author_genders == {'female', 'male'}:
+            return 'mixed'
+        # ... or everything else, including androgynous or unknown names
+        else:
+            return 'undetermined'
+
+
+
+    def get_handcoded_gender_from_human_name(self, name: str):
         """
         Returns handcoded gender of HumanName
 
-        :param human_name:
+        :param name: str
         :return:
         """
 
-        return self._handcoded_names_journals[str(human_name)]
+        return self._handcoded_names_journals[name]
 
 
     def guess_gender_of_human_name(self, human_name: HumanName, mode='gender_guesser'):

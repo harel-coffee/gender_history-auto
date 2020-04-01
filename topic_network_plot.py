@@ -1,12 +1,10 @@
 import networkx as nx
-from stats import StatisticalAnalysis
-from dataset import Dataset
+from gender_history.divergence_analysis.stats import StatisticalAnalysis
+from gender_history.datasets.dataset import Dataset
 from topics import TOPICS
 import numpy as np
 from pathlib import Path
-from divergence_analysis import divergence_analysis
-
-import matplotlib.pyplot as plt
+from gender_history.divergence_analysis.divergence_analysis import divergence_analysis
 
 from IPython import embed
 
