@@ -78,6 +78,8 @@ same holds potentially for "Sports and Class in Great Britain."
 What kind of history does the general "Women's and Gender History" approach have in our journal 
 dataset? Let's have a first look.
 
+Note: you can click on any graph to make it larger.
+
 ![](https://github.com/srisi/gender_history/raw/refactor/visualizations/topic_frequency_plots/Women's%20and%20Gender%20History.png)
 
 
