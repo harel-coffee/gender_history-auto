@@ -1,6 +1,7 @@
 from gender_history.divergence_analysis.divergence_analysis import DivergenceAnalysis
 from gender_history.datasets.dataset_journals import JournalsDataset
 from gender_history.datasets.dataset_dissertation import DissertationDataset
+from gender_history.datasets.dataset import Dataset
 from gender_history.utilities import BASE_PATH
 
 from matplotlib.collections import LineCollection
@@ -10,24 +11,27 @@ import matplotlib.cm as cm
 import matplotlib.colors
 
 
-from collections import defaultdict
 import numpy as np
 from IPython import embed
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from matplotlib.axes._subplots import Subplot
-
-import pickle
-from gender_history.visualizations.ngram_plot import create_ngram_plot, load_master_viz_data
 
 
 
-def draw_gender_frequency_scatterplot(figsize, filename, show_labels=True, transparent_image=False,
-                                      use_equal_samples_dataset=False):
+def draw_gender_frequency_scatterplot(
+        dataset: Dataset,
+        figsize: int,
+        filename: str,
+        show_labels: bool=True,
+        transparent_image: bool=False,
+        dynamic_y_coords: bool=False
+):
     """
 
+    dynamic_y_coords: default (False) uses 0.001 to 0.1. With dynamic y_coords, they are adjusted
+    by local min/max
 
     :param figsize:
     :param filename:
@@ -36,18 +40,10 @@ def draw_gender_frequency_scatterplot(figsize, filename, show_labels=True, trans
     :return:
     """
 
-    dataset = JournalsDataset(use_equal_samples_dataset=use_equal_samples_dataset)
-
-    dataset = JournalsDataset()
-
     c1 = dataset.copy().filter(author_gender='female')
     c2 = dataset.copy().filter(author_gender='male')
     div = DivergenceAnalysis(dataset, c1, c2)
     divergence_df = div.run_divergence_analysis('topics')
-
-    embed()
-
-
 
     df_sorted_by_years = dataset.df.sort_values(by='m_year')
 
@@ -113,7 +109,12 @@ def draw_gender_frequency_scatterplot(figsize, filename, show_labels=True, trans
     # y axis
     # ax.set_ylabel('Topic Weight')
     # ax.label_params(labelsize=20)
-    ax.set_ylim(0.002, 0.1)
+
+    if dynamic_y_coords:
+        ax.set_ylim(min(y_coords) * 0.9, max(y_coords) * 1.1)
+    else:
+        ax.set_ylim(0.002, 0.1)
+
     ax.set_yscale('log')
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1.0))
     ax.grid(b=True, which='minor', color='lightgray', linestyle='--')
@@ -162,25 +163,91 @@ def draw_set_of_gender_frequency_scatterplots():
 
     for (name, use_equal_samples_dataset) in [('_eq_samples_dataset', True), ('', False)]:
 
+        if use_equal_samples_dataset:
+            dataset = JournalsDataset(use_equal_samples_dataset=use_equal_samples_dataset)
+        else:
+            dataset = JournalsDataset()
+
         draw_gender_frequency_scatterplot(
+            dataset,
             figsize=36, show_labels=True, transparent_image=False,
-            use_equal_samples_dataset=use_equal_samples_dataset,
             filename=f'gfs_labeling_copy{name}.png'
         )
 
         draw_gender_frequency_scatterplot(
+            dataset,
             figsize=12, show_labels=False, transparent_image=True,
-            use_equal_samples_dataset=use_equal_samples_dataset,
             filename=f'gfs_transparent_base_layer{name}.png'
         )
 
         draw_gender_frequency_scatterplot(
+            dataset,
             figsize=12, show_labels=True, transparent_image=False,
-            use_equal_samples_dataset=use_equal_samples_dataset,
             filename=f'gfs_standard_all_labels{name}.png',
         )
 
         break
 
+def draw_scatterplots_of_journals():
+    """
+    Creates scatter plots for all journals as well as (JAH + AHR) and all journals
+    minus History and Theory
+
+    :return:
+    """
+
+    valid_journals = {
+        'Comparative Studies in Society and History',
+        'The Journal of Modern History',
+        'The Journal of American History',
+        'Journal of World History',
+        'The Journal of Interdisciplinary History',
+        'Journal of Social History',
+        'The American Historical Review',
+        'Reviews in American History',
+        'History and Theory',
+        'Ethnohistory'
+    }
+
+    for journal in valid_journals:
+
+        dataset = JournalsDataset()
+        dataset.filter_by_journal([journal])
+        draw_gender_frequency_scatterplot(
+            dataset,
+            figsize=36, show_labels=True, transparent_image=False,
+            filename=f'single_journal{journal.replace(" ", "_")}.png',
+            dynamic_y_coords=True
+        )
+
+    # all except history and theory
+    valid_journals.remove('History and Theory')
+    dataset = JournalsDataset()
+    dataset.filter_by_journal(list(valid_journals))
+    draw_gender_frequency_scatterplot(
+        dataset,
+        figsize=36, show_labels=True, transparent_image=False,
+        filename=f'all_except_history_and_theory.png',
+        dynamic_y_coords=True
+
+    )
+
+    # AHR and JAH
+    dataset = JournalsDataset()
+    dataset.filter_by_journal([
+        'The Journal of American History',
+        'The American Historical Review'
+    ])
+    draw_gender_frequency_scatterplot(
+        dataset,
+        figsize=36, show_labels=True, transparent_image=False,
+        filename=f'ahr_and_jah.png',
+        dynamic_y_coords=True
+    )
+
+
+
+
+
 if __name__ == '__main__':
-    draw_set_of_gender_frequency_scatterplots()
+    draw_scatterplots_of_journals()

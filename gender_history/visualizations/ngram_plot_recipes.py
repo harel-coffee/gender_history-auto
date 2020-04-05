@@ -113,4 +113,5 @@ if __name__ == '__main__':
     ]
     term_list = [f'topic.{i}' for i in term_list]
 
-    plot_multiple_terms(term_list=term_list)
+    plot_multiple_terms(term_list=['race', 'racism', 'gay'],
+                        )

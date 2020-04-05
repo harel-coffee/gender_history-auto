@@ -13,7 +13,6 @@ import csv
 
 
 
-
 class JournalsDataset(Dataset):
 
     def __init__(self, use_equal_samples_dataset: bool = False):
@@ -42,6 +41,8 @@ class JournalsDataset(Dataset):
         self.topics = self.load_topic_data(Path(BASE_PATH, 'data', 'journal_csv',
                                                 'topic_titles_and_terms.csv'))
         self.dataset_type = 'journals'
+        self.journal_filter = None
+
         self.store_aggregate_approach_and_geographical_info_in_df()
 
         self.name = f'Journals Dataset with {len(self.df)} articles.'
@@ -119,6 +120,61 @@ class JournalsDataset(Dataset):
         # parse numbers to int
         gen_df['m_year'] = gen_df['m_year'].astype(int)
         gen_df.to_csv(Path(BASE_PATH, 'data', 'journal_csv', 'general_journals_dataset.csv'))
+
+
+    def filter_by_journal(self, included_journals_list: list):
+        """
+
+        Journals list:
+        - 'Comparative Studies in Society and History',
+        - 'The Journal of Modern History',
+        - 'The Mississippi Valley Historical Review', 'The Journal of American History',
+        - 'Journal of World History',
+        - 'The Journal of Interdisciplinary History',
+        - 'Journal of Social History',
+        - 'The American Historical Review',
+        - 'Reviews in American History',
+        - 'History and Theory',
+        - 'Ethnohistory',
+
+        :param included_journals_list:
+        :return:
+        """
+
+        valid_journals = [
+            'Comparative Studies in Society and History',
+            'The Journal of Modern History',
+            'The Mississippi Valley Historical Review', 'The Journal of American History',
+            'Journal of World History',
+            'The Journal of Interdisciplinary History',
+            'Journal of Social History',
+            'The American Historical Review',
+            'Reviews in American History',
+            'History and Theory',
+            'Ethnohistory'
+        ]
+
+
+        self.df['journal_selector'] = False
+
+        for journal in included_journals_list:
+            if journal not in valid_journals:
+                raise ValueError(f'{journal} is not a valid journal. Valid journals are:'
+                                 f'{valid_journals}')
+
+            selector = self.df.m_journal == journal
+            self.df['journal_selector'] = (selector | self.df['journal_selector'])
+
+        # if JAH included, add Mississippi Valley Historical Review
+        if 'The Journal of American History' in included_journals_list:
+            selector = self.df.m_journal == 'The Mississippi Valley Historical Review'
+            self.df['journal_selector'] = (selector | self.df['journal_selector'])
+
+        self.df = self.df[self.df.journal_selector == True]
+        self.journal_filter = included_journals_list
+
+        return self
+
 
 
     def summarize_topic(self, topic_id):
@@ -444,6 +500,7 @@ class JournalsDataset(Dataset):
 if __name__ == '__main__':
 
     d = JournalsDataset()
+    d.filter_by_journal(['Ethnohistory'])
 #    x = d.df_with_equal_samples_per_5_year_period
     embed()
 

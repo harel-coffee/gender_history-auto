@@ -385,6 +385,8 @@ if __name__ == '__main__':
 
 
     d = JournalsDataset()
+    # d = d.topic_percentile_score_filter(topic_id=61, min_percentile_score=80)
+    # d = d.filter(term_filter='black')
 
     # Create two sub-datasets, one for female authors and one for male authors
     c1 = d.copy().filter(author_gender='female')
@@ -393,7 +395,7 @@ if __name__ == '__main__':
 
     # Run the divergence analysis
     div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='women', sub_corpus2_name='men')
-    div.run_divergence_analysis(analysis_type='terms', sort_by='frequency_score')
+    div.run_divergence_analysis(analysis_type='topics', sort_by='frequency_score')
 
 
 #     d = JournalsDataset(use_equal_samples_dataset=False)
