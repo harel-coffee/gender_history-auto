@@ -17,6 +17,7 @@ All of the axis in this graph mean the same as in the first one, it's just large
 probably need to click on the image to zoom in. In return, you'll be able to see the topic 
 distribution in the middle in more detail.
 
+You can find scatterplots for all individual journals [here.](https://github.com/srisi/gender_history/tree/master/visualizations/gender_frequency_scatterplots)
 
 ## AHR
 With that in mind, let's have a look at the AHR chart:
@@ -59,6 +60,7 @@ most topics are either very male or female.
 This is where our Native American history topics get their weight. I think this is a very 
 anthropology/ethnology heavy topic that doesn't exist anymore today, hence why our "Indigenous History"
 general approach peaks in the 1950s and 60s.
+![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/gender_frequency_scatterplots/single_journalEthnohistory.png)
 
 
 ## Other observations
