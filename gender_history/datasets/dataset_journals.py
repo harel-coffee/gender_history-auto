@@ -155,6 +155,7 @@ class JournalsDataset(Dataset):
         ]
 
 
+
         self.df['journal_selector'] = False
 
         for journal in included_journals_list:
@@ -498,6 +499,24 @@ class JournalsDataset(Dataset):
     #     plt.show()
 
 if __name__ == '__main__':
+
+    valid_journals = [
+        'Comparative Studies in Society and History',
+        'The Journal of Modern History',
+        'The Mississippi Valley Historical Review', 'The Journal of American History',
+        'Journal of World History',
+        'The Journal of Interdisciplinary History',
+        'Journal of Social History',
+        'The American Historical Review',
+        'Reviews in American History',
+        'History and Theory',
+        'Ethnohistory'
+    ]
+
+    for journal in valid_journals:
+        d = JournalsDataset()
+        d.filter_by_journal([journal])
+        print(journal, len(d.df))
 
     d = JournalsDataset()
     d.filter_by_journal(['Ethnohistory'])
