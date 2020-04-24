@@ -55,7 +55,6 @@ def draw_gender_frequency_scatterplot(
                              analysis_type='topics', sort_by='dunning')
     divergence_df = div.run_divergence_analysis()
 
-    get_number_of_male_and_female_authored_articles_by_year(dataset.start_year, dataset.end_year)
 
     fig = plt.figure(figsize=(figsize, figsize))
     gs = gridspec.GridSpec(nrows=2,
@@ -154,7 +153,8 @@ def draw_gender_frequency_scatterplot(
 
 
     male_data, female_data, years = get_number_of_male_and_female_authored_articles_by_year(
-        start_year=dataset.start_year, end_year=dataset.end_year + 1
+        start_year=dataset.start_year, end_year=dataset.end_year + 1,
+        dataset_name=dataset.dataset_type
     )
 
     gender_ax = fig.add_subplot(gs[1, 0])
@@ -185,7 +185,8 @@ def draw_gender_frequency_scatterplot(
         plt.show()
 
 
-def get_number_of_male_and_female_authored_articles_by_year(start_year, end_year) -> (list, list, list):
+def get_number_of_male_and_female_authored_articles_by_year(start_year, end_year, dataset_name
+                                                            ) -> (list, list, list):
     """
     returns number of male and female authored articles and list of years for male/female subplot
 
@@ -197,7 +198,10 @@ def get_number_of_male_and_female_authored_articles_by_year(start_year, end_year
     :return:
     """
 
-    d = JournalsDataset()
+    if dataset_name == 'journals':
+        d = JournalsDataset()
+    else:
+        d = DissertationDataset()
 
     male_data = [0] * (d.end_year - d.start_year + 1)
     female_data = [0] * (d.end_year - d.start_year + 1)
@@ -381,7 +385,7 @@ def draw_all_years():
 if __name__ == '__main__':
     # draw_scatterplots_of_journals()
 
-    # draw_journal_and_dissertation_overview()
+    #draw_journal_and_dissertation_overview()
     draw_all_years()
 
     # dataset = JournalsDataset()
