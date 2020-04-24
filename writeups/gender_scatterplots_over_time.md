@@ -51,7 +51,7 @@ some arguments about what would we not know without women more complicated.
 Here's the overall chart for dissertations. Note that journals go back to 1950. We'll
 compare the two datasets more closely on a decade by decade basis.
 
-![](../visualizations/gender_frequency_scatterplots/topic_scatter_journals.png)
+![](../visualizations/gender_frequency_scatterplots/topic_scatter_dissertations.png)
 
 
 # 1960s
