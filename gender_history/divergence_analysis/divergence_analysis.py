@@ -16,7 +16,6 @@ from IPython import embed
 
 import re
 
-
 class DivergenceAnalysis():
 
     def __init__(self,
@@ -26,7 +25,8 @@ class DivergenceAnalysis():
                  sub_corpus1_name: str=None,
                  sub_corpus2_name: str=None,
                  analysis_type: str = 'terms',
-                 sort_by: str='dunning'):
+                 sort_by: str='dunning',
+                 compare_to_overall_weights: bool=False):
 
         self.mc = master_corpus
         self.c1 = sub_corpus1
@@ -39,6 +39,7 @@ class DivergenceAnalysis():
         self.c2_name = sub_corpus2_name
         self.analysis_type = analysis_type
         self.sort_by = sort_by
+        self.compare_to_overall_weights = compare_to_overall_weights
 
     def run_divergence_analysis(self,
                                 number_of_terms_or_topics_to_print: int=30,
@@ -141,6 +142,14 @@ class DivergenceAnalysis():
         column_sums_c1 = np.array(self.c1_dtm.sum(axis=0))[0]
         column_sums_c2 = np.array(self.c2_dtm.sum(axis=0))[0]
 
+        if self.analysis_type == 'topics' and self.compare_to_overall_weights:
+            d = JournalsDataset()
+            dc1 = d.copy().filter(author_gender='female')
+            dc2 = d.copy().filter(author_gender='male')
+            jdiv = DivergenceAnalysis(d, dc1, dc2, sub_corpus1_name='women', sub_corpus2_name='men',
+                                      analysis_type='topics', sort_by='dunning')
+            ddf = jdiv.run_divergence_analysis(print_results=False)
+
         data = []
         for term_idx in range(len(self.vocabulary)):
 
@@ -176,12 +185,17 @@ class DivergenceAnalysis():
             }
             if self.analysis_type == 'topics':
                 datum['topic_id'] = topic_idx
+            if self.analysis_type == 'topics' and self.compare_to_overall_weights:
+                r = ddf[ddf.topic_id == topic_idx].iloc[0]
+                datum['fs_comp_to_overall'] = datum['frequency_score'] - r['frequency_score']
+
+
             data.append(datum)
 
             if self.analysis_type == 'terms':
-                if datum['term'].find('child') > -1:
+                if datum['terms'].find('child') > -1:
                     print(datum)
-                if datum['term'] == 'gay':
+                if datum['terms'] == 'gay':
                     print(datum)
 
 
@@ -203,7 +217,12 @@ class DivergenceAnalysis():
             headers = ['terms', 'dunning', 'frequency_score',
                        'count both', f'c {self.c1_name}', f'c {self.c2_name}']
         else:
-            headers = [f'{self.analysis_type}', 'dunning', 'frequency_score', 'freq both',
+            if self.analysis_type == 'topics' and self.compare_to_overall_weights:
+                headers = [f'{self.analysis_type}', 'dunning', 'frequency_score',
+                           'fs_comp_to_overall',
+                           'freq both', f'f {self.c1_name}', f'f {self.c2_name}']
+            else:
+                headers = [f'{self.analysis_type}', 'dunning', 'frequency_score', 'freq both',
                        f'f {self.c1_name}', f'f {self.c2_name}']
 
         year_df = {}
@@ -284,14 +303,13 @@ class DivergenceAnalysis():
                     print(f'   ({row.m_year}) {row.m_authors}: {row.m_title}')
 
 
-
-
-
-
 if __name__ == '__main__':
 
+    # generate_average_overall_freq_scores()
 
-    d = DissertationDataset()
+
+    # d = DissertationDataset()
+    d = JournalsDataset()
     # d.filter(start_year=1990)
 
     # d.topic_score_filter(31, min_topic_weight=0.1)
@@ -305,8 +323,8 @@ if __name__ == '__main__':
     # d = d.filter(term_filter='childhood')
 
     # Create two sub-datasets, one for female authors and one for male authors
-    c1 = d.copy().filter(author_gender='female')
-    c2 = d.copy().filter(author_gender='male')
+    c1 = d.copy().filter(term_filter={'term': 'gender', 'min_count': 10})
+    c2 = d.copy().filter(term_filter={'term': 'women', 'min_count': 10})
     #
     # c1 = d.copy().topic_score_filter(71, min_percentile_score=90)
     # c2 = d.copy().topic_score_filter(71, max_percentile_score=89)
@@ -318,8 +336,8 @@ if __name__ == '__main__':
 
 
     # Run the divergence analysis
-    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='women', sub_corpus2_name='men',
-                             analysis_type='topics', sort_by='dunning')
+    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='gender', sub_corpus2_name='women',
+                             analysis_type='topics', sort_by='dunning', compare_to_overall_weights=True)
     div.run_divergence_analysis(number_of_terms_or_topics_to_print=10)
 
     div.print_articles_for_top_topics(top_terms_or_topics=10, articles_per_term_or_topic=5)
