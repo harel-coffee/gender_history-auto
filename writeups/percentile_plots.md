@@ -49,7 +49,7 @@ plots for all topics and general approaches [here](https://github.com/srisi/gend
 With introductions out of the way, let's have a look at the 
 "Women's and Gender History" general approach:
 
-![](../visualizations/topic_percentile_plots/gen_approach_Women's_and_Gender_History.png)
+![](../visualizations/topic_percentile_plots/gen_approach_gender.png)
 
 And, not unexpected, women are vastly overrepresented in the top 10%. Almost
 30% of all articles published by women score in the top decile for women's and
