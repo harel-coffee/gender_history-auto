@@ -6,10 +6,15 @@ from tabulate import tabulate
 
 from gender_history.datasets.dataset import Dataset
 from gender_history.datasets.dataset_journals import JournalsDataset
+from gender_history.datasets.dataset_dissertation import DissertationDataset
 from gender_history.divergence_analysis.stats import StatisticalAnalysis
 
-from scipy.sparse import vstack
+
+
+from scipy.sparse import vstack, csr_matrix
 from IPython import embed
+
+import re
 
 
 class DivergenceAnalysis():
@@ -19,7 +24,9 @@ class DivergenceAnalysis():
                  sub_corpus1: Dataset,
                  sub_corpus2: Dataset,
                  sub_corpus1_name: str=None,
-                 sub_corpus2_name: str=None):
+                 sub_corpus2_name: str=None,
+                 analysis_type: str = 'terms',
+                 sort_by: str='dunning'):
 
         self.mc = master_corpus
         self.c1 = sub_corpus1
@@ -30,39 +37,32 @@ class DivergenceAnalysis():
         if not sub_corpus2_name:
             sub_corpus2_name = sub_corpus2.name
         self.c2_name = sub_corpus2_name
-        self.analysis_type = None
-
-    def run_divergence_analysis(self,
-                                analysis_type: str='terms',
-                                number_of_terms_or_topics_to_print: int=30,
-                                print_results: bool=True,
-                                sort_by: str=None,
-                                min_appearances_per_term: int=50):
-
-        if self.analysis_type is not None:
-            print("WARNING! Running divergence analysis with pre-initialized analysis config. "
-                  "You are likely re-running an analysis with a pre-initialized "
-                  "DivergenceAnalysis object. Are you certain that's what you want to do?")
-
-        if not analysis_type in {'terms', 'topics', 'gen_approach'}:
-            raise ValueError(f'analysis_type has to be "terms", "topics", or "gen_approach".')
-
         self.analysis_type = analysis_type
-        self.min_appearances_per_term = min_appearances_per_term
         self.sort_by = sort_by
 
+    def run_divergence_analysis(self,
+                                number_of_terms_or_topics_to_print: int=30,
+                                print_results: bool=True,
+                                min_appearances_per_term: int=50):
+
+        if not self.analysis_type in {'terms', 'topics', 'gen_approach'}:
+            raise ValueError(f'analysis_type has to be "terms", "topics", or "gen_approach".')
+
+        self.min_appearances_per_term = min_appearances_per_term
+
         if self.sort_by is None:
-            if analysis_type == 'terms':
+            if self.analysis_type == 'terms':
                 self.sort_by = 'dunning'
             else:
                 self.sort_by = 'frequency_score'
 
         self._initialize_analysis_and_dtms()
-        output_data_df = self._generate_output_data()
-        if print_results:
-            self._print_results(output_data_df, number_of_terms_or_topics_to_print)
+        self.output_data_df = self._generate_output_data()
 
-        return output_data_df
+        if print_results:
+            self._print_results(number_of_terms_or_topics_to_print)
+
+        return self.output_data_df
 
     def _initialize_analysis_and_dtms(self):
 
@@ -74,7 +74,23 @@ class DivergenceAnalysis():
             # self.c2_dtm = self.c2.get_document_term_matrix(vocabulary=self.vocabulary)
 
             # self.vocabulary = self.mc.get_default_vocabulary(no_terms=10000)
-            _, self.vocabulary = self.mc.get_vocabulary_and_document_term_matrix(max_features=50000)
+            mc_dtm, vocabulary = self.mc.get_vocabulary_and_document_term_matrix(
+                max_features=10000, exclude_stop_words=True)
+
+
+            # only retain up to 1000 words that appear at least 1000 times in the corpus
+            # appear at least 1000 times -> a single article on a topic cannot cause a huge spike
+            # 1000 words -> we're interested in key terms
+            count_sums = np.array(mc_dtm.sum(axis=0)).flatten()
+            assert len(vocabulary) == len(count_sums)
+            count_sorted = sorted([(count_sums[i], vocabulary[i]) for i in range(len(vocabulary))], reverse=True)
+            self.vocabulary = []
+            for count, term in count_sorted:
+                if (count > 1000 and len(self.vocabulary) < 1000) or term == 'gay':
+                    self.vocabulary.append(term)
+
+            print(f'Vocabulary length: {len(self.vocabulary)}')
+
             self.c1_dtm, _ = self.c1.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
             self.c2_dtm, _ = self.c2.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
 
@@ -86,11 +102,29 @@ class DivergenceAnalysis():
             else:
                 raise NotImplemented(f"analysis for {self.analysis_type} not yet implemented.")
 
-            # TODO: don't use 4000 word default
-            self.c1_dtm = self.c1.get_document_topic_matrix(vocabulary=self.vocabulary) * 4000
-            self.c2_dtm = self.c2.get_document_topic_matrix(vocabulary=self.vocabulary) * 4000
+            # multiply topic weights with text length to get an estimate for number of words
+            # belonging to each topic.
+            c1_text_len_arr = np.array(self.c1.df.m_text_len)
+            c2_text_len_arr = np.array(self.c2.df.m_text_len)
+            self.c1_dtm = self.c1.get_document_topic_matrix(vocabulary=self.vocabulary)
+            self.c2_dtm = self.c2.get_document_topic_matrix(vocabulary=self.vocabulary)
+            assert self.c1_dtm.shape[0] == len(c1_text_len_arr)
+            assert self.c2_dtm.shape[0] == len(c2_text_len_arr)
+            # multiply each dtm row with the number of terms
+            self.c1_dtm = csr_matrix((self.c1_dtm.T.toarray() * c1_text_len_arr).T)
+            self.c2_dtm = csr_matrix((self.c2_dtm.T.toarray() * c2_text_len_arr).T)
+
+            c1_col_sums = np.array(self.c1_dtm.sum(axis=1)).flatten()
+            c2_col_sums = np.array(self.c2_dtm.sum(axis=1)).flatten()
+
+
+            # one topic can belong to multiple general approaches, so don't run for that.
+            if self.analysis_type in ['terms', 'topics']:
+                assert np.allclose(c1_col_sums, c1_text_len_arr, rtol=1e-04, atol=1e-06)
+                assert np.allclose(c2_col_sums, c2_text_len_arr, rtol=1e-04, atol=1e-06)
 
         self.master_dtm = vstack([self.c1_dtm, self.c2_dtm])
+
 
 
     def _generate_output_data(self):
@@ -121,12 +155,16 @@ class DivergenceAnalysis():
             else:
                 topic_idx = term_idx + 1
                 if self.analysis_type == 'topics':
-                    term = f'({topic_idx}) {self.c1.topics[topic_idx]["name"]}'
+                    topic_name = self.c1.topics[topic_idx]["name"]
+                    if topic_name.startswith('Noise'):
+                        continue
+                    else:
+                        term = f'({topic_idx}) {topic_name}'
                 elif self.analysis_type == 'gen_approach':
                     term = self.vocabulary[term_idx]
 
-            data.append({
-                'term': term,
+            datum = {
+                f'{self.analysis_type}': term,
                 'dunning': dunning[term_idx],
                 'frequency_score': frequency_score[term_idx],
                 'count both': count_all,
@@ -135,7 +173,17 @@ class DivergenceAnalysis():
                 'freq both': count_all / total_terms_all,
                 f'f {self.c1_name}': count_c1 / total_terms_c1,
                 f'f {self.c2_name}': count_c2 / total_terms_c2,
-            })
+            }
+            if self.analysis_type == 'topics':
+                datum['topic_id'] = topic_idx
+            data.append(datum)
+
+            if self.analysis_type == 'terms':
+                if datum['term'].find('child') > -1:
+                    print(datum)
+                if datum['term'] == 'gay':
+                    print(datum)
+
 
         df = pd.DataFrame(data)
         df.sort_values(by=self.sort_by, inplace=True)
@@ -143,7 +191,7 @@ class DivergenceAnalysis():
 
         return df
 
-    def _print_results(self, df, number_of_terms_or_topics_to_print):
+    def _print_results(self, number_of_terms_or_topics_to_print):
         """
         Prints the results in a table
 
@@ -152,10 +200,10 @@ class DivergenceAnalysis():
         """
 
         if self.analysis_type == 'terms':
-            headers = ['term', 'dunning', 'frequency_score',
+            headers = ['terms', 'dunning', 'frequency_score',
                        'count both', f'c {self.c1_name}', f'c {self.c2_name}']
         else:
-            headers = ['term', 'dunning', 'frequency_score', 'freq both',
+            headers = [f'{self.analysis_type}', 'dunning', 'frequency_score', 'freq both',
                        f'f {self.c1_name}', f'f {self.c2_name}']
 
         year_df = {}
@@ -178,204 +226,63 @@ class DivergenceAnalysis():
         year_df = pd.DataFrame(year_df).transpose()
         print(tabulate(year_df, headers='keys'))
 
-        # embed()
+
+        print(f'\n\n{self.analysis_type} distinctive for Corpus 1: {self.c1_name}. {len(self.c1)} Documents\n')
+        print(tabulate(self.output_data_df[headers][::-1][0:number_of_terms_or_topics_to_print], headers='keys'))
+
+        print(f'\n\n{self.analysis_type} distinctive for Corpus 2: {self.c2_name}. {len(self.c2)} Documents\n')
+        print(tabulate(self.output_data_df[headers][0:number_of_terms_or_topics_to_print], headers='keys'))
+
+    def print_articles_for_top_topics(self, top_terms_or_topics=3, articles_per_term_or_topic=3):
+
+        if self.analysis_type == 'terms':
+            self.c1.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary, store_in_df=True,
+                                                            use_frequencies=False)
+            self.c2.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary, store_in_df=True,
+                                                            use_frequencies=False)
 
 
-        print(f'\n\nTerms distinctive for Corpus 1: {self.c1_name}. {len(self.c1)} Documents\n')
-        print(tabulate(df[headers][::-1][0:number_of_terms_or_topics_to_print], headers='keys'))
-
-        print(f'\n\nTerms distinctive for Corpus 2: {self.c2_name}. {len(self.c2)} Documents\n')
-        print(tabulate(df[headers][0:number_of_terms_or_topics_to_print], headers='keys'))
-
-#
-# def divergence_analysis(master_dataset:Dataset,
-#                         c1:Dataset,                 # sub corpus 1
-#                         c2:Dataset,                 # sub corpus 2
-#                         analysis_type='terms',
-#                         number_of_terms_to_print=30,
-#                         c1_name=None, c2_name=None,
-#                         print_results=True, sort_by=None,
-#                         min_appearances_per_term=50):
-#     if not c1_name:
-#         c1_name = c1.name
-#     if not c2_name:
-#         c2_name = c2.name
-#
-#     if not sort_by:
-#         if analysis_type == 'terms':
-#             sort_by = 'dunning'
-#         else:
-#             sort_by = 'frequency_score'
-#
-#
-#     if analysis_type == 'terms':
-#         vocabulary = master_dataset.get_vocabulary(max_terms=10000,
-#                                                    min_appearances=min_appearances_per_term,
-#                                                    include_2grams=True)
-#         c1_dtm = c1.get_document_term_matrix(vocabulary=vocabulary)
-#         c2_dtm = c2.get_document_term_matrix(vocabulary=vocabulary)
-#     else:
-#         if analysis_type == 'topics':
-#             vocabulary = [f'X{i}' for i in range(1, 101)]
-#         elif analysis_type == 'gen_approach':
-#             vocabulary = [x for x in master_dataset.df.columns if x.startswith('gen_approach_')]
-#         else:
-#             raise NotImplemented(f"analysis for {analysis_type} not yet implemented.")
-#         c1_dtm = c1.get_document_topic_matrix(vocabulary=vocabulary) * 4000
-#         c2_dtm = c2.get_document_topic_matrix(vocabulary=vocabulary) * 4000
-#
-#     master_dtm = vstack([c1_dtm, c2_dtm])
-#
-#     s = StatisticalAnalysis(master_dtm, c1_dtm, c2_dtm, vocabulary)
-#     dunning, _ = s.dunning_log_likelihood()
-#     frequency_score, _ = s.frequency_score()
-# #    mwr, _ = s.mann_whitney_rho()
-# #    correlated_terms = s.correlation_coefficient()
-#
-#     total_terms_all = master_dtm.sum()
-#     total_terms_c1 = c1_dtm.sum()
-#     total_terms_c2 = c2_dtm.sum()
-#
-#     column_sums_all = np.array(master_dtm.sum(axis=0))[0]
-#     column_sums_c1 = np.array(c1_dtm.sum(axis=0))[0]
-#     column_sums_c2 = np.array(c2_dtm.sum(axis=0))[0]
-#
-#     data = []
-#     for term_idx in range(len(vocabulary)):
-#
-#         count_all = column_sums_all[term_idx]
-#         count_c1 = column_sums_c1[term_idx]
-#         count_c2 = column_sums_c2[term_idx]
-#
-#
-#         if analysis_type == 'terms':
-#             term = vocabulary[term_idx]
-#             if count_all < min_appearances_per_term:
-#                 continue
-#         else:
-#             topic_idx = term_idx + 1
-#             if analysis_type == 'topics':
-#                 term = f'({topic_idx}) {c1.topics[topic_idx]["name"]}'
-#             elif analysis_type == 'gen_approach':
-#                 term = vocabulary[term_idx]
-#
-#         data.append({
-#             'term': term,
-#             'dunning': dunning[term_idx],
-#             'frequency_score': frequency_score[term_idx],
-#             'count_total': count_all,
-#             f'count {c1_name}': count_c1,
-#             f'count {c2_name}': count_c2,
-#             'frequency_total': count_all / total_terms_all,
-#             f'frequency {c1_name}': count_c1 / total_terms_c1,
-#             f'frequency {c2_name}': count_c2 / total_terms_c2,
-#         })
-#
-#
-#     df = pd.DataFrame(data)
-#
-#
-#     df.sort_values(by=sort_by, inplace=True)
-#     df.reset_index(inplace=True)
-#
-#     if print_results:
-#
-#         if analysis_type == 'terms':
-#             headers = ['term', 'dunning', 'frequency_score', 'count_total',
-#                        f'count {c1_name}', f'count {c2_name}']
-#         else:
-#             headers = ['term', 'dunning', 'frequency_score', 'frequency_total',
-#                        f'frequency {c1_name}', f'frequency {c2_name}']
-#
-#         year_df = {}
-#
-#         for years_range in [(1976, 1984), (1985, 1989), (1990, 1994), (1995, 1999), (2000, 2004),
-#                              (2005, 2009), (2010, 2015)]:
-#             y1, y2 = years_range
-#             c1_count = len(c1.df[(c1.df['year'] >= y1) & (c1.df['year'] <= y2)])
-#             c2_count = len(c2.df[(c2.df['year'] >= y1) & (c2.df['year'] <= y2)])
-#             if c1_count > 0 or c2_count > 0:
-#                 year_df[f'{y1}-{y2}'] = {
-#                     f'{c1_name}': c1_count,
-#                     f'{c1_name} freq': c1_count / len(c1),
-#                     f'{c2_name}': c2_count,
-#                     f'{c2_name} freq': c2_count / len(c2),
-#                 }
-#         year_df = pd.DataFrame(year_df).transpose()
-#         print(tabulate(year_df, headers='keys'))
-#
-#         # embed()
-#
-#
-#         print(f'\n\nTerms distinctive for Corpus 1: {c1_name}. {len(c1)} Theses\n')
-#         print(tabulate(df[headers][::-1][0:number_of_terms_to_print], headers='keys'))
-#
-#         print(f'\n\nTerms distinctive for Corpus 2: {c2_name}. {len(c2)} Theses\n')
-#         print(tabulate(df[headers][0:number_of_terms_to_print], headers='keys'))
-#
-#
-#     return df
-
-def wordcloud(gender='female', relative_scaling=0.0):
-
-    # local imports so Pillow and wordclouds are not hard requirements for running any code
-    from PIL import Image
-    from wordcloud import WordCloud
-
-    def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
-
-        color = icon.getpixel((int(position[1] + 2), int(position[0] + 2)))
-
-        print(color)
-
-        if color[0] == color[1] == color[2]: color = (0, 0, 0, 255)
-        # if color[0] > 200: color = (220, 0, 0, 255)
-
-        if (color[0] + color[1] + color[2]) > 230:
-            print(word, color, font_size)
-        return color
-
-    if gender == 'female':
-        icon_path = Path('data', 'plots', 'word_clouds', 'icon_female.png')
-    else:
-        icon_path = Path('data', 'plots', 'word_clouds', 'icon_male.png')
-
-    icon = Image.open(icon_path)
-
-    basewidth = 3000
-    wpercent = (basewidth / float(icon.size[0]))
-    hsize = int((float(icon.size[1]) * float(wpercent)))
-    icon = icon.resize((basewidth, hsize))#, icon.ANTIALIAS)
-    icon = icon.convert('RGBA')
-
-    d = Dataset()
-    c1 = d.copy().filter(author_gender='female')
-    c2 = d.copy().filter(author_gender='male')
-    data = divergence_analysis(d, c1, c2)
-
-    mask = Image.new("RGBA", icon.size, (255, 255, 255))
-    mask.paste(icon, icon)
-    mask = np.array(mask)
+        print(f'\nSample articles of distinctive {self.analysis_type} for {self.c1_name}')
+        for _, row in self.output_data_df.iloc[::-1].iloc[:top_terms_or_topics].iterrows():
 
 
-    word_dict = {}
-    for _, row in data.iterrows():
-        dunning = row['dunning']
+            if self.analysis_type == 'topics':
+                topic_id = row['topic_id']
+                column_str = f'topic.{topic_id}'
+                print(f'\nTopic {topic_id} ({self.mc.topics[topic_id]["name"]}). Highest scoring items:')
 
-        if (gender == 'female' and dunning > 0):
-            word_dict[row['term']] = dunning
-        if gender == 'male' and dunning < 0:
-            word_dict[row['term']] = -dunning
+            else:
+                column_str = row['term']
+                print(f'\n Term: {column_str}. Highest scoring items:')
 
-    print("Total tokens: {}".format(len(word_dict)))
+            for _, row in self.c1.df.sort_values(by=column_str, ascending=False).iloc[:articles_per_term_or_topic].iterrows():
 
-    wc = WordCloud(background_color='white', max_font_size=300, mask=mask,
-                   max_words=2000, relative_scaling=relative_scaling, min_font_size=4)
-    wc.generate_from_frequencies(word_dict)
-    wc.recolor(color_func=grey_color_func)
+                if self.analysis_type == 'terms':
+                    count_term = re.findall(r'\b\w\w+\b', row.m_text.lower()).count(column_str)
+                    print(f'   Count {column_str}: {count_term}. ({row.m_year}) {row.m_authors}: {row.m_title}')
+                else:
+                    print(f'   ({row.m_year}) {row.m_authors}: {row.m_title}')
 
 
-    wc.to_file(Path('data', 'plots', 'word_clouds', f'{gender}_{relative_scaling}.png'))
+        print(f'\n\nSample articles for distinctive {self.analysis_type} for {self.c2_name}')
+        for _, row in self.output_data_df.iloc[:top_terms_or_topics].iterrows():
+
+            if self.analysis_type == 'topics':
+                topic_id = row['topic_id']
+                column_str = f'topic.{topic_id}'
+                print(f'\nTopic {topic_id} ({self.mc.topics[topic_id]["name"]}). Highest scoring items:')
+
+            else:
+                column_str = row['term']
+                print(f'\n Term: {column_str}. Highest scoring items:')
+
+            for _, row in self.c2.df.sort_values(by=column_str, ascending=False).iloc[:articles_per_term_or_topic].iterrows():
+                if self.analysis_type == 'terms':
+                    count_term = re.findall(r'\b\w\w+\b', row.m_text.lower()).count(column_str)
+                    print(f'   Count {column_str}: {count_term}. ({row.m_year}) {row.m_authors}: {row.m_title}')
+                else:
+                    print(f'   ({row.m_year}) {row.m_authors}: {row.m_title}')
+
 
 
 
@@ -384,18 +291,40 @@ def wordcloud(gender='female', relative_scaling=0.0):
 if __name__ == '__main__':
 
 
-    d = JournalsDataset()
+    d = DissertationDataset()
+    # d.filter(start_year=1990)
+
+    # d.topic_score_filter(31, min_topic_weight=0.1)
+    #d.topic_score_filter(21, min_percentile_score=95)
+
+    # d.filter(term_filter={'term':'wom[ae]n', 'min_count': 10})
+    # d.filter(term_filter={'term':'gender', 'min_count': 10})
+
+
     # d = d.topic_percentile_score_filter(topic_id=61, min_percentile_score=80)
-    # d = d.filter(term_filter='black')
+    # d = d.filter(term_filter='childhood')
 
     # Create two sub-datasets, one for female authors and one for male authors
     c1 = d.copy().filter(author_gender='female')
     c2 = d.copy().filter(author_gender='male')
+    #
+    # c1 = d.copy().topic_score_filter(71, min_percentile_score=90)
+    # c2 = d.copy().topic_score_filter(71, max_percentile_score=89)
+    #
+    # c1 = d.copy().filter(term_filter='gay')
+    # c2 = d.copy().filter(term_filter='not_gay')
+
+    print(len(c1), len(c2), len(d))
 
 
     # Run the divergence analysis
-    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='women', sub_corpus2_name='men')
-    div.run_divergence_analysis(analysis_type='topics', sort_by='frequency_score')
+    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='women', sub_corpus2_name='men',
+                             analysis_type='topics', sort_by='dunning')
+    div.run_divergence_analysis(number_of_terms_or_topics_to_print=10)
+
+    div.print_articles_for_top_topics(top_terms_or_topics=10, articles_per_term_or_topic=5)
+
+    embed()
 
 
 #     d = JournalsDataset(use_equal_samples_dataset=False)

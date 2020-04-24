@@ -130,7 +130,13 @@ class StatisticalAnalysis:
             x = np.squeeze(np.asarray(self.dtm_tf_plaintiff[:, i].todense()))
             y = np.squeeze(np.asarray(self.dtm_tf_defendant[:, i].todense()))
 
-            mwu = mwu_scipy(x, y, alternative='two-sided')
+            try:
+                mwu = mwu_scipy(x, y, alternative='two-sided')
+                mwr[i] = mwu.statistic / (len(x) * len(y))
+                mwr_p[i] = self._get_p_value_as_string(mwu.pvalue)
+            except ValueError:
+                mwr[i] = 0
+                mwr_p[i] = 1
 
             mwr[i] = mwu.statistic / (len(x) * len(y))
             mwr_p[i] = self._get_p_value_as_string(mwu.pvalue)

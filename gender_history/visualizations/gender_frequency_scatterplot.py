@@ -23,7 +23,7 @@ import matplotlib.gridspec as gridspec
 def draw_gender_frequency_scatterplot(
         dataset: Dataset,
         figsize: int,
-        filename: str,
+        filename: str=None,
         show_labels: bool=True,
         transparent_image: bool=False,
         dynamic_y_coords: bool=False
@@ -144,7 +144,8 @@ def draw_gender_frequency_scatterplot(
     else:
         dpi = 600
 
-    plt.savefig(Path(BASE_PATH, 'visualizations', 'gender_frequency_scatterplots', filename),
+    if filename:
+        plt.savefig(Path(BASE_PATH, 'visualizations', 'gender_frequency_scatterplots', filename),
                 dpi=dpi, transparent=transparent_image)
     plt.show()
 
@@ -250,4 +251,12 @@ def draw_scatterplots_of_journals():
 
 
 if __name__ == '__main__':
-    draw_scatterplots_of_journals()
+    # draw_scatterplots_of_journals()
+
+    dataset = JournalsDataset()
+    dataset.filter(start_year=1950, end_year=1960)
+    draw_gender_frequency_scatterplot(
+        dataset,
+        figsize=36, show_labels=True, transparent_image=False,
+        # filename=f'gfs_labeling_copy{name}.png'
+    )

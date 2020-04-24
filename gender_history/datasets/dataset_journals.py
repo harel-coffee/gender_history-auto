@@ -38,12 +38,9 @@ class JournalsDataset(Dataset):
             self.df = self.create_df_1000_texts_per_5_year_interval()
 
         self.use_equal_samples_dataset = use_equal_samples_dataset
-        self.topics = self.load_topic_data(Path(BASE_PATH, 'data', 'journal_csv',
-                                                'topic_titles_and_terms.csv'))
+
         self.dataset_type = 'journals'
         self.journal_filter = None
-
-        self.store_aggregate_approach_and_geographical_info_in_df()
 
         self.name = f'Journals Dataset with {len(self.df)} articles.'
 
@@ -56,7 +53,7 @@ class JournalsDataset(Dataset):
 
         :return:
         """
-        from name_to_gender import GenderGuesser
+        from gender_history.datasets.name_to_gender import GenderGuesser
         gender_guesser = GenderGuesser()
 
         gen_df = pd.read_csv(Path(BASE_PATH, 'data', 'journal_csv',

@@ -63,20 +63,26 @@ def topic_percentile_plot(
     # get percentage of male/female articles in each decile
     male_docs = df[df.m_author_genders == 'male']
     female_docs = df[df.m_author_genders == 'female']
-    percentile_freqs_male = male_docs.m_percentile.value_counts(normalize=True)\
-        .reset_index().sort_values(by='index')
-    percentile_freqs_female = female_docs.m_percentile.value_counts(normalize=True)\
-        .reset_index().sort_values(by='index')
 
     freq_male = []
     freq_female = []
     for start, end in percentile_ranges_to_display:
-        freq_male.append(percentile_freqs_male[start: end].m_percentile.sum() * 100)
-        freq_female.append(percentile_freqs_female[start: end].m_percentile.sum() * 100)
+        freq_male.append(len(male_docs[(male_docs.m_percentile >= start) &
+                          (male_docs.m_percentile < end)]) / len(male_docs) * 100)
+        freq_female.append(len(female_docs[(female_docs.m_percentile >= start) &
+                          (female_docs.m_percentile < end)]) / len(female_docs) * 100)
+
+
+    imbalance_1p = freq_female[-1] / freq_male[-1]
+    print(selection_column, selection_name, imbalance_1p)
+
+        #
+        # freq_male.append(percentile_freqs_male[start: end].m_percentile.sum() * 100)
+        # freq_female.append(percentile_freqs_female[start: end].m_percentile.sum() * 100)
 
     # freq_male = ((male_docs.m_percentile.value_counts(normalize=True).reset_index().sort_values(by='index').m_percentile) * 100).tolist()
     # freq_female = ((female_docs.m_percentile.value_counts(normalize=True).reset_index().sort_values(by='index').m_percentile) * 100).tolist()
-    # embed()
+
 
    # Format axes
     def ax_settings(ax, var_name, x_min, x_max):
@@ -98,64 +104,120 @@ def topic_percentile_plot(
 
     number_gp = len(percentile_ranges_to_display)
     # Manipulate each axes object in the left. Try to tune some parameters and you'll know how each command works.
-    fig = plt.figure(figsize=(12, 12))
-    gs = gridspec.GridSpec(nrows=number_gp,
-                           ncols=2,
+    fig = plt.figure(figsize=(20, 12))
+    gs = gridspec.GridSpec(nrows=number_gp + 1,
+                           ncols=5,
                            figure=fig,
-                           width_ratios=[3, 1],
-                           height_ratios=[1] * number_gp,
+                           width_ratios=[0.5, 0.5, 0.5, 3, 1],
+                           height_ratios=[0.5] + [1] * number_gp,
                            wspace=0.2, hspace=0.05
                            )
-    ax = [None] * (number_gp + 1)
+    # ax = [None] * (number_gp + 1)
     # features = list(range(0, 100, 10))
+
+    ax_percentile = fig.add_subplot(gs[0, 0])
+    ax_percentile.text(0, 0.2, f'Percentile', fontsize=15)
+    ax_min = fig.add_subplot(gs[0, 1])
+
+    if selection_column.startswith('topic.') or selection_column.startswith('gen_approach'):
+        indicator = 'Weight'
+    else:
+        indicator = 'Frequency'
+
+    ax_min.text(0, 0.2, f'Min {indicator}', fontsize=15)
+    ax_max = fig.add_subplot(gs[0, 2])
+    ax_max.text(0, 0.2, f'Max {indicator}', fontsize=15)
+
+    for a in [ax_percentile, ax_min, ax_max]:
+        a.get_yaxis().set_visible(False)
+        a.get_xaxis().set_visible(False)
+        a.spines["top"].set_visible(False)
+        a.spines["right"].set_visible(False)
+        # a.spines["bottom"].set_visible(False)
+        a.spines["left"].set_visible(False)
+
 
     # Create a figure, partition the figure into 7*2 boxes, set up an ax array to store axes objects, and create a list of age group names.
     for idx, (start, end) in enumerate(percentile_ranges_to_display):
-        ax[idx] = fig.add_subplot(gs[idx, 0])
 
-        ax_settings(ax[idx], f'Percentile: {start}-{end}', 1951, 2015)
+        ax_percentile = fig.add_subplot(gs[idx + 1, 0])
+        ax_percentile.text(0, 0, f'{start}-{end}', fontsize=15)
+        min_weight = round(df[selection_column].quantile(start / 100), 6) * 100
+        max_weight = round(df[selection_column].quantile(end / 100), 6) * 100
+
+
+        ax_min = fig.add_subplot(gs[idx + 1, 1])
+        ax_min.text(0, 0, '{:.4f}%'.format(min_weight), fontsize=15)
+        ax_max = fig.add_subplot(gs[idx + 1, 2])
+        ax_max.text(0, 0, '{:.4f}%'.format(max_weight), fontsize=15)
+
+        for a in [ax_percentile, ax_min, ax_max]:
+            a.get_yaxis().set_visible(False)
+            a.get_xaxis().set_visible(False)
+            a.spines["top"].set_visible(False)
+            a.spines["right"].set_visible(False)
+            a.spines["bottom"].set_visible(False)
+            a.spines["left"].set_visible(False)
+
+        ax = fig.add_subplot(gs[idx + 1, 3])
+
+        ax.set_xlim(1951, 2015)
+        ax.set_yticks([])
+
+        ax.spines['left'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+
+        ax.spines['bottom'].set_edgecolor('#444444')
+        ax.spines['bottom'].set_linewidth(2)
+        #
+        # # settings for x, y, varname
+        # title = f'Percentile: {start}-{end}'
+        # ax.text(1950, 0.0, title, fontsize=15)
 
         clip = (1951, 2015)
 
         sns.kdeplot(data=df[
             (df.m_author_genders == 'male') & (df.m_percentile >= start) & (df.m_percentile < end)
-            ].m_year, ax=ax[idx], shade=True, color="blue", legend=False, bw=.1, clip=clip)
+            ].m_year, ax=ax, shade=True, color="blue", legend=False, bw=.1, clip=clip)
 
 #        ax[i].set(ylim=(0, 0.1))
         sns.kdeplot(data=df[
             (df.m_author_genders == 'female') & (df.m_percentile >= start) & (df.m_percentile < end)
             ].m_year,
-                    ax=ax[idx], shade=True, color="red", legend=False, bw=.1, clip=clip)
+                    ax=ax, shade=True, color="red", legend=False, bw=.1, clip=clip)
 
         # scale plots
         # kdeplots by default take up the maximum range, i.e. male and female plots always show the
         # same max value
-        scale_male = freq_male[idx] / (freq_male[idx] + freq_female[idx])
-        scale_female = freq_female[idx] / (freq_male[idx] + freq_female[idx])
-        print(idx, scale_male, scale_female)
+        scale_male = freq_male[idx] / (freq_male[idx] + freq_female[idx] + 0.00000001)
+        scale_female = freq_female[idx] / (freq_male[idx] + freq_female[idx] + 0.00000001)
 
         # line 1 -> male, line 2 -> female
 
-        if freq_female[idx] > 0:
-            ax[idx].lines[1].set_ydata(ax[idx].lines[1].get_ydata() * scale_female)
-            female_collection = ax[idx].collections[1].get_paths()
-            female_collection[0].vertices[:, 1] *= scale_female
-        if freq_male[idx] > 0:
-            ax[idx].lines[0].set_ydata(ax[idx].lines[0].get_ydata() * scale_male)
-            # Collections, i.e. the patches under the lines
-            male_collection = ax[idx].collections[0].get_paths()
-            male_collection[0].vertices[:, 1] *= scale_male
+        try:
+            if freq_female[idx] > 0:
+                ax.lines[1].set_ydata(ax.lines[1].get_ydata() * scale_female)
+                female_collection = ax.collections[1].get_paths()
+                female_collection[0].vertices[:, 1] *= scale_female
+            if freq_male[idx] > 0:
+                ax.lines[0].set_ydata(ax.lines[0].get_ydata() * scale_male)
+                # Collections, i.e. the patches under the lines
+                male_collection = ax.collections[0].get_paths()
+                male_collection[0].vertices[:, 1] *= scale_male
+        except IndexError:
+            pass
 
         if idx < (number_gp - 1):
-            ax[idx].set_xticks([])
+            ax.set_xticks([])
 
 
-    ax[0].legend(['Male', 'Female'], facecolor='w')
+    # ax[.legend(['Male', 'Female'], facecolor='w')
 
     # adding legends on the top axes object
     bar_height = 3
     for idx in range(len((percentile_ranges_to_display))):
-        ax = fig.add_subplot(gs[idx, 1])
+        ax = fig.add_subplot(gs[idx + 1, 4])
 
         ax.barh(y=0, width=freq_male[idx], color='#004c99', height=bar_height)
         ax.barh(y=3, width=freq_female[idx], color='red', height=bar_height)
@@ -188,10 +250,9 @@ def plot_all_topics_and_general_approaches():
 
 
 
-    dataset = JournalsDataset()
+    dataset = JournalsDataset(use_equal_samples_dataset=True)
 
     for column in dataset.df.columns:
-
         print(column)
 
         if column.startswith('gen_approach'):
@@ -209,11 +270,82 @@ def plot_all_topics_and_general_approaches():
                                   filename=f'{topic_no}_{topic_name.replace(" ", "_")}.png',
                                   show_plot=False)
 
+def get_1percent_ratios():
+
+    dataset = JournalsDataset()
+    # dataset.filter(start_year=1980)
+    df = dataset.df
+    results = {}
+    for column in df.columns:
+        if column.startswith('topic') or column.startswith('gen_a'):
+            top1p = df[df[column] >= df[column].quantile(0.99)]
+            male = len(top1p[top1p.m_author_genders == 'male'])
+            female = len(top1p[top1p.m_author_genders == 'female'])
+
+            if column.startswith('topic'):
+                name = dataset.topics[int(column[6:])]['name']
+            else:
+                name = column
+
+            print(column, name, female/male, male, female)
+
+            results[name] = female / male * 7506 / 2016
+
+    for x in sorted(results.items(), key=lambda x: x[1], reverse=True)[:10]:
+        print(x)
+
+
 
 if __name__ == '__main__':
 
-    # dataset = JournalsDataset()
-    # topic_percentile_plot(dataset=dataset, selection_column="topic.16",
-    #                       selection_name='Gender and Feminism')
 
-    plot_all_topics_and_general_approaches()
+    # get_1percent_ratios()
+    # plot_all_topics_and_general_approaches()
+
+
+    # dataset = JournalsDataset(use_equal_samples_dataset=True)
+    # # dataset.filter(start_year=2000)
+    #
+    # dataset = JournalsDataset()
+
+    '''
+    # post 2000
+    1534 articles by men, 1040 mention womaen   68%
+    751 by women, 633 mention womaen            84%
+    
+    # before 1970
+    1633 by men, 526 mention womaen             32%
+    140 by women, 63 mention womaen             45%
+    
+
+
+    '''
+    dataset = JournalsDataset()
+    dataset.get_vocabulary_and_document_term_matrix(max_features=10000, use_frequencies=True,
+                                                    store_in_df=True)
+    dataset.df['womaen'] = dataset.df['women'] + dataset.df['woman']
+
+    # embed()
+
+
+    topic_percentile_plot(dataset=dataset, selection_column="gender",
+                          selection_name='term: gender',
+                          filename='term_gender.png')
+    topic_percentile_plot(dataset=dataset, selection_column="she",
+                          selection_name='term: she',
+                          filename='she.png')
+    # topic_percentile_plot(dataset=dataset, selection_column="gender",
+    #                       selection_name='term: gender',
+    #                       filename='term_gender.png')
+    # topic_percentile_plot(dataset=dataset, selection_column="womaen",
+    #                       selection_name='terms: woman and women',
+    #                       filename='term_womaen_post2000.png')
+    # topic_percentile_plot(dataset=dataset, selection_column="topic.61",
+    #                       selection_name='Topic Gender and Feminism',
+    #                       filename='61_gender.png')
+    # topic_percentile_plot(dataset=dataset, selection_column="gen_approach_Women's and Gender History",
+    #                       selection_name="General Approach Women's and Gender History",
+    #                       filename='gen_approach_gender.png')
+
+
+    # plot_all_topics_and_general_approaches()

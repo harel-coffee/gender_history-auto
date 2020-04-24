@@ -23,7 +23,6 @@ import html
 import numpy as np
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.feature_extraction import stop_words
 
 from scipy.sparse import csr_matrix
 
@@ -33,7 +32,7 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
-from gender_history.utilities import WORD_SPLIT_REGEX, BASE_PATH
+from gender_history.utilities import WORD_SPLIT_REGEX, BASE_PATH, STOP_WORDS
 
 import seaborn as sns
 
@@ -58,10 +57,15 @@ class Dataset:
         self.institution_filter = None
         self.advisor_gender_filter = None
         self.descendants_filter = None
-        self.topic_percentile_score_filters = []
+        self.topic_score_filters = []
         self.vocabulary_set = None
 
         self._df_with_equal_samples_per_5_year_period = None
+
+        self.topics = self.load_topic_data(Path(BASE_PATH, 'data', 'journal_csv',
+                                                'topic_titles_and_terms.csv'))
+
+        self.store_aggregate_approach_and_geographical_info_in_df()
 
 
     def __len__(self):
@@ -76,7 +80,7 @@ class Dataset:
         string_to_hash = (
             f'{self.dataset_type}{self.start_year}{self.end_year}{self.author_gender}'
             f'{self.term_filter}{self.institution_filter}{self.advisor_gender_filter}'
-            f'{self.descendants_filter}{self.topic_percentile_score_filters}'
+            f'{self.descendants_filter}{self.topic_score_filters}'
             f'{self.use_equal_samples_dataset}'
         )
         md5 = hashlib.md5(string_to_hash.encode('utf8')).hexdigest()
@@ -90,30 +94,31 @@ class Dataset:
         """
         df_with_equal_samples = None
 
-        # for start_year in range(1950, 2014, 5):
-        #     print(start_year)
-        #     date_docs = self.df[(start_year <= self.df.m_year) & (self.df.m_year < start_year + 5)]
-        #     print(f'Docs from {start_year} to {start_year + 4}: {len(date_docs)}')
-        #
-        #     date_docs_sample = date_docs.sample(n=1000, replace=True, random_state=0)
-        #     if df_with_equal_samples is None:
-        #         df_with_equal_samples = date_docs_sample
-        #     else:
-        #         df_with_equal_samples = df_with_equal_samples.append(date_docs_sample)
-
-
         for start_year in range(1950, 2014, 5):
             print(start_year)
-            for gender in ['female', 'male']:
-                date_docs = self.df[(start_year <= self.df.m_year) &
-                                    (self.df.m_year < start_year + 5) &
-                                    (self.df.m_author_genders == gender)]
-                print(f'{gender} docs from {start_year} to {start_year + 4}: {len(date_docs)}')
-                date_docs_sample = date_docs.sample(n=5000, replace=True, random_state=0)
-                if df_with_equal_samples is None:
-                    df_with_equal_samples = date_docs_sample
-                else:
-                    df_with_equal_samples = df_with_equal_samples.append(date_docs_sample)
+            date_docs = self.df[(start_year <= self.df.m_year) & (self.df.m_year < start_year + 5)]
+            print(f'Docs from {start_year} to {start_year + 4}: {len(date_docs)}')
+
+            date_docs_sample = date_docs.sample(n=2000, replace=True, random_state=0)
+            if df_with_equal_samples is None:
+                df_with_equal_samples = date_docs_sample
+            else:
+                df_with_equal_samples = df_with_equal_samples.append(date_docs_sample)
+
+        # for start_year in range(1950, 2014, 5):
+        #     print(start_year)
+        #     for gender in ['female', 'male']:
+        #         date_docs = self.df[(start_year <= self.df.m_year) &
+        #                             (self.df.m_year < start_year + 5) &
+        #                             (self.df.m_author_genders == gender)]
+        #         print(f'{gender} docs from {start_year} to {start_year + 4}: {len(date_docs)}')
+        #         date_docs_sample = date_docs.sample(n=5000, replace=True, random_state=0)
+        #         if df_with_equal_samples is None:
+        #             df_with_equal_samples = date_docs_sample
+        #         else:
+        #             df_with_equal_samples = df_with_equal_samples.append(date_docs_sample)
+
+        df_with_equal_samples.reset_index(drop=True, inplace=True)
 
         return df_with_equal_samples
 
@@ -228,7 +233,8 @@ class Dataset:
 
 
 
-    def topic_percentile_score_filter(self, topic_id, min_percentile_score=0, max_percentile_score=100):
+    def topic_score_filter(self, topic_id, min_percentile_score=0, max_percentile_score=100,
+                           min_topic_weight=0):
         """
         Filter the dataset such that it only contains documents that score between
         min_percentile_score and max_percentile_score for a topic
@@ -243,20 +249,20 @@ class Dataset:
         21634
 
         # select dissertations that score in the top decile (strongest) for the gender topic (28)
-        >>> d.topic_percentile_score_filter(topic_id=28, min_percentile_score=90)
+        >>> d.topic_score_filter(topic_id=28, min_percentile_score=90)
         >>> print(len(d), min(d.df['percentile_score_topic.28']))
         2164 90.0
 
         # select 50th-70th decile
         >>> d2 = Dataset()
-        >>> d2.topic_percentile_score_filter('topic.28', min_percentile_score=50, max_percentile_score=70)
+        >>> d2.topic_score_filter('topic.28', min_percentile_score=50, max_percentile_score=70)
         >>> len(d2)
         6491
 
         # filters can be combined
         >>> d3 = Dataset()
-        >>> d3.topic_percentile_score_filter(14, min_percentile_score=80)
-        >>> d3.topic_percentile_score_filter(28, min_percentile_score=80)
+        >>> d3.topic_score_filter(14, min_percentile_score=80)
+        >>> d3.topic_score_filter(28, min_percentile_score=80)
         >>> len(d3)
         866
 
@@ -265,23 +271,34 @@ class Dataset:
         if not isinstance(topic_id, str):
             topic_id = f'topic.{topic_id}'
 
-        if not f'percentile_score_{topic_id}' in self.df.columns:
-            # add all of the topics at once because if we filter topics twice, the ranks would be
-            # influenced by the first selection
-            for i in range(1, 91):
-                t = f'topic.{i}'
-                self.df[f'percentile_score_{t}'] = self.df[t].rank(pct=True) * 100 // 10 * 10
-        self.df = self.df[self.df[f'percentile_score_{topic_id}'] >= min_percentile_score]
-        self.df = self.df[self.df[f'percentile_score_{topic_id}'] <= max_percentile_score]
-        self.df = self.df.reset_index()
-        self.topic_percentile_score_filters.append({
-            'topic': topic_id,
-            'min_percentile_score': min_percentile_score,
-            'max_percentile_score': max_percentile_score
-        })
+        if min_percentile_score > 0 or max_percentile_score < 100:
+            if not f'percentile_score_{topic_id}' in self.df.columns:
+                # add all of the topics at once because if we filter topics twice, the ranks would be
+                # influenced by the first selection
+                for i in range(1, 91):
+                    t = f'topic.{i}'
+                    self.df[f'percentile_score_{t}'] = self.df[t].rank(pct=True) * 100
+            self.df = self.df[self.df[f'percentile_score_{topic_id}'] >= min_percentile_score]
+            self.df = self.df[self.df[f'percentile_score_{topic_id}'] <= max_percentile_score]
+            self.df = self.df.reset_index(drop=True)
+
+            self.topic_score_filters.append({
+                'topic': topic_id,
+                'min_percentile_score': min_percentile_score,
+                'max_percentile_score': max_percentile_score
+            })
+
+        if min_topic_weight > 0:
+            self.df = self.df[self.df[topic_id] > min_topic_weight]
+            self.df = self.df.reset_index(drop=True)
+            self.topic_score_filters.append({
+                'topic': topic_id,
+                'min_weight': min_topic_weight
+            })
+
         return self
-#
-#
+
+
     def filter(self, start_year=None, end_year=None, author_gender=None,
                term_filter=None, institution_filter=None, advisor_gender=None,
                has_descendants=None):
@@ -314,7 +331,7 @@ class Dataset:
 
         # filter by term or regex
         # regex example: r'\bgender\b'
-        >>> d.filter(term_filter='gender')
+        >>> d.filter(term_filter={'term':'gender', 'min_count':'5'})
         >>> len(d)
         13
 
@@ -356,17 +373,32 @@ class Dataset:
             if self.dataset_type == 'journals':
                 raise ValueError('advisor gender filter is only available for dissertations')
 
-            df = df[df.m_AdvisorGender == advisor_gender]
+            df = df[df.m_advisor_gender == advisor_gender]
             self.advisor_gender = advisor_gender
 
 
         if term_filter:
-            if term_filter.startswith('not_'):
-                term_filter = term_filter[4:]
-                df = df[df['m_text'].str.contains(pat=term_filter, regex=True) == False]
+
+
+            term = term_filter['term']
+            if 'min_count' in term_filter:
+                min_count = term_filter['min_count']
             else:
-                df = df[df['m_text'].str.contains(pat=term_filter, regex=True) == True]
+                min_count = 0
+            if 'max_count' in term_filter:
+                max_count = term_filter['max_count']
+            else:
+                max_count = 10000000
+
+            pattern = r'\b' + term + r'\b'
+
+            # store count of search term
+            df['m_tf_count'] = df.m_text.str.count(pat=pattern)
+
+            df = df[(df.m_tf_count >= min_count) & (df.m_tf_count <= max_count)]
+
             self.term_filter = term_filter
+
 
         if institution_filter:
             if self.dataset_type == 'journals':
@@ -381,94 +413,17 @@ class Dataset:
         if has_descendants == True:
             if self.dataset_type == 'journals':
                 raise ValueError('descendant filter is only available for dissertations')
-            df = df[df.m_AnyDescendants == 1]
+            df = df[df.m_descendants > 0]
             self.descendants_filter = True
 
         if has_descendants == False:
             if self.dataset_type == 'journals':
                 raise ValueError('descendant filter is only available for dissertations')
-            df = df[df.m_AnyDescendants == 0]
+            df = df[df.m_descendants == 0]
             self.descendants_filter = False
 
-        self.df = df.reset_index()
+        self.df = df.reset_index(drop=True)
         return self
-
-    #
-    # def get_vocabulary(self, exclude_stopwords=True, max_terms=None, min_appearances=None,
-    #                    include_2grams=False):
-    #     """
-    #     Returns a list of all terms that appear in the text column
-    #
-    #     :return: list
-    #
-    #     # stop words are excluded by default
-    #     >>> d = Dataset()
-    #     >>> len(d.get_vocabulary(exclude_stopwords=True))
-    #     176458
-    #     >>> d.get_vocabulary().count('are')
-    #     0
-    #
-    #     # you can also limit the number of terms and require a minimum number of appearances
-    #     >>> voc = d.get_vocabulary(max_terms=1000, min_appearances=2)
-    #     >>> len(voc)
-    #     1000
-    #
-    #     """
-    #     if not max_terms:
-    #         max_terms = 1000000
-    #
-    #     vocab_path = Path(BASE_PATH, 'data', 'dtms',
-    #                         f'{self.__hash__()}_{max_terms}_{exclude_stopwords}_'
-    #                         f'{min_appearances}_{include_2grams}.pickle')
-    #     if vocab_path.exists():
-    #         with open(vocab_path, 'rb') as infile:
-    #             return pickle.load(infile)
-    #
-    #
-    #     print(f'Generating vocabulary with {max_terms} terms.')
-    #     vocabulary = Counter()
-    #     for text_idx, text in enumerate(self.df['m_text']):
-    #         if text_idx % 1000 == 0:
-    #             print("vocab text ", text_idx)
-    #
-    #         text_split = re.findall(WORD_SPLIT_REGEX, text)
-    #         for idx, word in enumerate(text_split):
-    #             vocabulary[word] += 1
-    #             if include_2grams:
-    #                 try:
-    #                     gram = '{} {}'.format(word, text_split[idx+1])
-    #                     vocabulary[gram] += 1
-    #                 except IndexError:
-    #                     pass
-    #
-    #     if exclude_stopwords:
-    #         clean_vocabulary = Counter()
-    #         stopwords = stop_words.ENGLISH_STOP_WORDS.union({'wa', 'ha',
-    #                                                  'óé', 'dotbelow', 'cyrillic'})
-    #
-    #         for ngram in vocabulary:
-    #             valid = True
-    #             for term in ngram.split():
-    #                 if term in stopwords:
-    #                     valid = False
-    #             if valid:
-    #                 clean_vocabulary[ngram] = vocabulary[ngram]
-    #         vocabulary = clean_vocabulary
-    #
-    #
-    #     vocab_list = []
-    #     for word, count in vocabulary.most_common(max_terms):
-    #         if min_appearances and count < min_appearances:
-    #             continue
-    #         else:
-    #             vocab_list.append(word)
-    #
-    #     vocab_list = sorted(vocab_list)
-    #
-    #     with open(vocab_path, 'wb') as outfile:
-    #         pickle.dump(vocab_list, outfile)
-    #
-    #     return sorted(vocab_list)
 
 
     def get_document_topic_matrix(self, vocabulary):
@@ -517,9 +472,22 @@ class Dataset:
                 pickle.dump(vocabulary, outfile)
             return vocabulary
 
+
+    def get_percentage_of_stopwords(self):
+
+
+        vectorizer_no_stopwords = CountVectorizer(max_features=1000000)
+        dtm_no_stopwords = vectorizer_no_stopwords.fit_transform(self.df['m_text'].to_list())
+
+        vectorizer_stopwords = CountVectorizer(max_features=999700, stop_words=STOP_WORDS)
+        dtm_stopwords = vectorizer_stopwords.fit_transform(self.df['m_text'].tolist())
+
+        embed()
+
+
     def get_vocabulary_and_document_term_matrix(self, vocabulary=None, max_features=100000,
                                  use_frequencies=False, ngram_range=(1, 1), split_apostrophes=True,
-                                    store_in_df=False):
+                                 store_in_df=False, exclude_stop_words=False):
         """
 
         Returns a document-term sparse matrix. each row represents a document and each column a
@@ -550,7 +518,7 @@ class Dataset:
                             f'vocabulary_{self.__hash__()}_{len(vocabulary)}_{use_frequencies}_'
                             f'{max_features}_{ngram_range}'
                             f'{split_apostrophes}.pickle')
-            if dtm_path.exists():
+            if False:
                 with open(dtm_path, 'rb') as infile:
                     dtm = pickle.load(infile)
                 with open(vocabulary_path, 'rb') as infile:
@@ -560,10 +528,16 @@ class Dataset:
             print(f"Generating document term matrix...")
             token_pattern = WORD_SPLIT_REGEX
             if split_apostrophes:
-                token_pattern = r'\b\w\w+\b'
+                # token_pattern = r'\b\w\w+\b'
+                token_pattern = r'\b[a-z][a-z]+\b'
+            stop_words = None
+            if exclude_stop_words:
+                stop_words = STOP_WORDS
             vectorizer = CountVectorizer(vocabulary=vocabulary, token_pattern=token_pattern,
                                          ngram_range=ngram_range,
-                                         max_features=max_features, stop_words='english')
+                                         max_features=max_features,
+                                         stop_words=stop_words)
+                                         # stop_words='english')
             dtm = vectorizer.fit_transform(self.df['m_text'].to_list())
             # for frequencies, don't use TfidfVectorizer because not including stop words will
             # inflate the frequencies of the non-stopword-terms

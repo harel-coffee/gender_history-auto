@@ -5,7 +5,7 @@ import pandas as pd
 from nameparser import HumanName
 import re
 
-from name_to_gender import GenderGuesser
+from gender_history.datasets.name_to_gender import GenderGuesser
 
 # from gender_inference import guess_gender_census, guess_gender_first_name_only_usa, \
 #     guess_gender_with_middle_name_and_international_names, get_hand_coded_gender

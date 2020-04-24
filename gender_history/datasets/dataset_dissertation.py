@@ -9,25 +9,28 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 import numpy as np
 
+from gender_history.utilities import BASE_PATH, WORD_SPLIT_REGEX
+
+from nameparser import HumanName
+import re
+
 class DissertationDataset(Dataset):
 
     def __init__(self):
 
-
         try:
-            self.df = pd.read_csv(Path('data', 'dissertations',
+            self.df = pd.read_csv(Path(BASE_PATH, 'data', 'dissertations',
                                        'cleaned_history_dissertations_dataset.csv'),
                                   encoding='utf-8')
         except FileNotFoundError:
             self.create_merged_and_cleaned_dataset()
-            self.df = pd.read_csv(Path('data', 'dissertations',
+            self.df = pd.read_csv(Path(BASE_PATH, 'data', 'dissertations',
                                        'cleaned_history_dissertations_dataset.csv'),
                                   encoding='utf-8')
 
-        self.topics = self.load_topic_data(Path('data', 'dissertations', 'topic_terms.csv'))
+        super(DissertationDataset, self).__init__()
+        self.dataset_type = 'dissertations'
 
-
-        super(Dataset, self).__init__()
 
 
     def print_differences_between_filtered_and_unfiltered_datasets(self):
@@ -48,82 +51,121 @@ class DissertationDataset(Dataset):
             topic_str = topics_list[topic_id]
             print(f'{topic_str}. Dif: {difs[topic_id]}.')
 
+    @staticmethod
+    def proquest_name_parser(name):
+        """
+        Parses those strange proquest names like
+        'larocque,_brendan_p.:0'
+
+        :param name:
+        :return:
+        """
+
+        name = name[:-2].replace('_', ' ')
+        name = " ".join([n.capitalize() for n in name.split()])
+        hn = HumanName(name)
+
+        name_str = hn.first
+        if hn.middle:
+            name_str += f' {hn.middle}'
+        name_str += f' {hn.last}'
+
+        return name_str
+
 
     def create_merged_and_cleaned_dataset(self):
 
-        self.df = pd.read_csv(Path('data', 'dissertations', 'doc_with_outcome_and_abstract_stm.csv'),
-                              encoding='windows-1252')
 
         print("creating and storing a merged, cleaned dataset at "
               "cleaned_history_dissertations_dataset.csv")
 
-        # creating the tokenized and lemmatized abstract takes time -> do it when the dataset
-        # first gets opened and store all tokenized abstracts
-        print("tokenizing abstracts")
-        wnl = WordNetLemmatizer()
-        tokenizer = RegexpTokenizer(r'\b\w\w+\b')
-        tokenized_abstracts = []
-        for abstract in self.df['Abstract']:
-            # abstract contains html entities like &eacute -> remove
-            abstract = html.unescape(abstract)
-            # I have no idea what encoding proquest / the csv uses but apostrophes are parsed very
-            # weirdly -> replace
-            abstract = abstract.replace('?óé?¿é?ó', "'")
-            tokenized_abstract = " ".join([wnl.lemmatize(t) for t in tokenizer.tokenize(abstract)])
-            tokenized_abstract = tokenized_abstract.lower()
-            tokenized_abstracts.append(tokenized_abstract)
-        self.df['tokenized_abstract'] = tokenized_abstracts
+        theses = []
+        raw_df = pd.read_csv(Path(BASE_PATH, 'data', 'dissertations', 'proquest_raw_dataset.csv'),
+                             encoding='windows-1252')
+        raw_df['ProQuest.Thesis.ID'] = raw_df['ProQuest.Thesis.ID'].astype('str')
+        raw_df['AdvisorID'].fillna('unknown', inplace=True)
 
-        # 8/14/19: load updated thesis field data from all_data.csv
-        fields_df = pd.read_csv(Path('data', 'dissertations', 'all_data.csv'), encoding='ISO-8859-1')
+        weights_df = pd.read_csv(
+            Path(BASE_PATH, 'data', 'dissertations', 'dissertation_topic_weights.csv')
+        )
+        gender_df = pd.read_csv(
+            Path(BASE_PATH, 'data', 'dissertations', 'author_genders_dissertations.csv')
+        )
+        gender_df['assigned'].fillna(value='unknown', inplace=True)
 
-        # all_data.csv and the original csv file have different indexes
-        # -> sort by ID and reindex
-        fields_df = fields_df.sort_values(by='ID')
-        self.df = self.df.sort_values(by='ID')
-        fields_df['IDC'] = fields_df['ID']
-        self.df['IDC'] = self.df['ID']
-        fields_df = fields_df.set_index(keys=['IDC'])
-        self.df = self.df.set_index(keys=['IDC'])
-        assert np.all(self.df['ID'] == fields_df['ID'])
-        for field in ['ThesisProQuestFields', 'ThesisNrcFields',
-                      'Inferred NRC Department(NRC Area: SubField)']:
-            self.df[field] = fields_df[field]
+        name_to_gender = {}
+        for _, row in gender_df.iterrows():
+            name_to_gender[row['name'].lower()] = row['assigned']
 
-        selector_1 = self.df['ThesisProQuestFields'].str.contains('histor', case=False) == True
-        selector_2 = self.df['Abstract'].str.contains('histor', case=False) == True
-        selector_3 = self.df['ThesisProQuestFields'].str.contains('Middle Ages') == True
-        selector_4 = self.df['ThesisProQuestFields'].str.contains('Ancient civilizations') == True
-        self.df['is_history'] = (selector_1 | selector_2 | selector_3 | selector_4)
+        count_found_in_name_to_gender = 0
 
-        # plot differences between historical and non-historical data
-        hist = self.df[self.df['is_history'] == True]
-        non_hist = self.df[self.df['is_history'] == False]
-        print(f'Historical dissertations: {len(hist)}. Non-historical dissertations: {len(non_hist)}')
-        difs = {}
-        for topic_id in range(1, 71):
-            dif = abs(np.mean(hist[f'topic.{topic_id}']) - np.mean(non_hist[f'topic.{topic_id}']))
-            difs[topic_id] = dif
-        sorted_topic_ids = [t[0] for t in sorted(difs.items(), key=lambda x: x[1], reverse=True)]
-        #        self.grid_plot_topics(sorted_topic_ids, hue='is_history', store_as_filename='history_filter.png')
+        for _, pid in weights_df.ProQid.iteritems():
 
-        embed()
+            pid = str(pid)
 
-        print("storing non-history dataset at non_history_dissertations_in_dataset")
-        non_history_df = self.df[self.df['is_history'] == False]
-        non_history_df.reset_index(inplace=True)
-        non_history_df.to_csv(Path('data', 'dissertations',
-                                           'non_history_dissertations_in_dataset.csv'),
-                              encoding='utf8')
+            raw_row = raw_df[raw_df['ProQuest.Thesis.ID'] == pid]
+            if not len(raw_row) == 1:
+                print("not 1 row")
+                embed()
 
-        print("Eliminating non-history dissertations from the dataset")
+            raw_row = raw_row.iloc[0]
 
-        self.df = self.df[self.df['is_history'] == True]
-        self.df.reset_index(inplace=True)
+            thesis = {'m_pid' : pid}
+            thesis['m_year'] = int(raw_row['ThesisYear'])
+            thesis['m_descendants'] = int(raw_row['NumDirectDescendants'])
 
-        self.df.to_csv(Path('data', 'dissertations',
-                                    'cleaned_history_dissertations_dataset.csv'), encoding='utf8')
+            thesis['m_title'] = raw_row['ThesisTitle']
+            thesis['m_keywords'] = raw_row['ThesisKeywords']
+            thesis['m_institution'] = raw_row['ThesisInstitution']
+            thesis['m_text'] = raw_row['Abstract']
+            thesis['m_text_len'] = len(re.findall(WORD_SPLIT_REGEX, thesis['m_text']))
 
+            # Advisee name and gender
+            try:
+                thesis['m_authors'] = self.proquest_name_parser(raw_row['AdviseeID'])
+            except ValueError:
+                print('author embed')
+                embed()
+
+            assert raw_row['AdviseeGender'] == raw_row['AdviseeGender.1']
+
+            thesis['m_author_genders'] = raw_row['AdviseeGender']
+            if thesis['m_authors'].lower() in name_to_gender:
+                thesis['m_author_genders'] = name_to_gender[thesis['m_authors'].lower()]
+                count_found_in_name_to_gender += 1
+
+            # Advisor name and gender
+            if raw_row['AdvisorID'] == 'unknown':
+                thesis['m_advisor'] = 'unknown'
+            else:
+                try:
+                    thesis['m_advisor'] = self.proquest_name_parser(raw_row['AdvisorID'])
+                except:
+                    print("advisor embed")
+                    embed()
+
+            assert raw_row['AdvisorGender'] == raw_row['AdvisorGender.1']
+            thesis['m_advisor_gender'] = raw_row['AdvisorGender']
+            if thesis['m_advisor'].lower() in name_to_gender:
+                thesis['m_advisor_gender'] = name_to_gender[thesis['m_advisor'].lower()]
+
+            theses.append(thesis)
+
+            weights_row = weights_df[weights_df['ProQid'] == pid]
+            if not len(weights_row) == 1:
+                print("weights row not len 1")
+                embed()
+
+            weights_row = weights_row.iloc[0]
+            for i in range(1, 91):
+                thesis[f'topic.{i}'] = weights_row[f'X{i}']
+
+        dissertations_df = pd.DataFrame(theses)
+        dissertations_df.to_csv(Path(BASE_PATH, 'data', 'dissertations',
+                                     'cleaned_history_dissertations_dataset.csv'),
+                                encoding='utf-8')
+
+        return
 
     # def gender(self):
     #
@@ -176,6 +218,3 @@ class DissertationDataset(Dataset):
 
 if __name__ == '__main__':
     d = DissertationDataset()
-
-    d.gender()
-    embed()
