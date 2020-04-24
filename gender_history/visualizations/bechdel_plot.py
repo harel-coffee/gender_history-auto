@@ -25,7 +25,7 @@ def plot_bechdel(term='she', dataset=None):
 
     if not dataset:
         dataset = JournalsDataset()
-        dataset.get_vocabulary_and_document_term_matrix(max_features=10000, use_frequencies=True,
+        dataset.get_vocabulary_and_document_term_matrix(vocabulary=[term], use_frequencies=True,
                                                     store_in_df=True)
     df = dataset.df
     male_data = []
@@ -45,9 +45,10 @@ def plot_bechdel(term='she', dataset=None):
     gs = gridspec.GridSpec(nrows=1, ncols= 1, figure=fig)
     ax = fig.add_subplot(gs[0,0])
 
-    x = [i for i in range(dataset.start_year + 2, dataset.end_year - 1 )]
-    rolling_mean_male = pd.DataFrame(male_data).rolling(center=True, window=5).mean()[0].tolist()[2:-2]
-    rolling_mean_female = pd.DataFrame(female_data).rolling(center=True, window=5).mean()[0].tolist()[2:-2]
+    x = [i for i in range(dataset.start_year + 2, dataset.end_year - 4 )]
+    print(x)
+    rolling_mean_male = pd.DataFrame(male_data).rolling(center=True, window=5).mean()[0].tolist()[2:-5]
+    rolling_mean_female = pd.DataFrame(female_data).rolling(center=True, window=5).mean()[0].tolist()[2:-5]
 
     ax.plot(x, rolling_mean_male, color='blue')
     ax.plot(x, rolling_mean_female, color='red')
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     plot_bechdel(term='she', dataset=dataset)
     plot_bechdel(term='women', dataset=dataset)
     plot_bechdel(term='gender', dataset=dataset)
-    plot_bechdel(term='sex', dataset=dataset)
-    plot_bechdel(term='sexuality', dataset=dataset)
+    # plot_bechdel(term='sex', dataset=dataset)
+    # plot_bechdel(term='sexuality', dataset=dataset)
 
 
