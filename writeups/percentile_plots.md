@@ -7,7 +7,8 @@ My attempt to grapple with these questions are the following percentile plots.
 
 Before going further, let's have a look at one of them. And let's select one
 that we don't particularly care about before getting into more gender related topics.
-![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/topic_percentile_plots/28_Holocaust.png)
+![](../visualizations/topic_percentile_plots/28_Holocaust.png)
+
 
 What's going on here?
 
@@ -48,7 +49,7 @@ plots for all topics and general approaches [here](https://github.com/srisi/gend
 With introductions out of the way, let's have a look at the 
 "Women's and Gender History" general approach:
 
-![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/topic_percentile_plots/gen_approach_Women's_and_Gender_History.png)
+![](../visualizations/topic_percentile_plots/gen_approach_Women's_and_Gender_History.png)
 
 And, not unexpected, women are vastly overrepresented in the top 10%. Almost
 30% of all articles published by women score in the top decile for women's and
