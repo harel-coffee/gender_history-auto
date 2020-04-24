@@ -73,7 +73,7 @@ just not the topic someone writes about, they will score low for the general app
 ## Gender and Feminism
 
 So let's switch to "gender and feminism."
-![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/topic_percentile_plots/61_Gender_and_Feminism.png)
+![](../visualizations/topic_percentile_plots/61_Gender_and_Feminism.png)
 
 Gender and feminism shows many of the trends of the general approach, just more pronounced. Men
 almost don't exist in the top 1%. Also, we can see publications in the top decile ramping up in the 1970s but top percentile 
@@ -86,32 +86,28 @@ decile, though.
 
 Also, about 18% of all articles written by women score in the top 5% for this topic.
 
+## Doctors and Patients
 
-Some more notes on strange topics:
+Doctors and Patients is a a good candidate for a topic that women helped to establish. Look in
+particular at the top 5% and top 1%. Those are the articles that really establish the topic and
+women clearly dominate here.
 
-## Nations and Boundaries
+![](../visualizations/topic_percentile_plots/32_Doctors_&_Patients.png)
 
-Long story short: it's a noise topic and should not be called nations and boundaries. 
-Londa and I had labeled it as nations and boundaries because the articles have this theme of nations, 
-boundaries, violence, and memory. 
-The percentile chart looks like this:
-![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/topic_percentile_plots/17_Nations_and_Boundaries.png)
-Did no one think to write about nations and boundaries before 2000 and since then, everyone does?
+## Consumption and Consumerism
 
-No. It's that the most frequent terms for the topic are mostly recent year numbers 
-(2000, 1999, 2001, 2005, 1998). And guess what recent historians write about: nations, borders, and 
-violence. 
+Consumption and consumerism shows a similar story.
 
--> relabeled as Noise(Dates)
+![](../visualizations/topic_percentile_plots/76_Consumption_and_consumerism.png)
 
 ## Sports and Class in Great Britain
 
-Sports and class in GB is another strange topic in that [I had found](https://github.com/srisi/gender_history/blob/master/writeups/gender_topics.md)
+Sports and class in GB is strange topic in that [I had found](https://github.com/srisi/gender_history/blob/master/writeups/gender_topics.md)
 that the topic was quite distinctive for women and yet, it's almost exclusively men who have written
 the articles that score the highest for this topic. 
 
 I think the percentile plot can help a little:
-![](https://raw.githubusercontent.com/srisi/gender_history/master/visualizations/topic_percentile_plots/89_Sports_and_Class_in_Great_Britain.png)
+![](../visualizations/topic_percentile_plots/89_Sports_and_Class_in_Great_Britain.png)
 
 Yes, women are over-represented from the 50th to the 99th percentile. However in the top 1%, men
 outnumber women 2 to 1.

@@ -2,7 +2,7 @@
 
 ## Are men or women more likely to have descendants?
 
-Yes. Women who graduated during the 1990s are more likely to have descendants and that
+Women who graduated during the 1990s are more likely to have descendants and that
 difference is statistically significant.
 ```
 1980s

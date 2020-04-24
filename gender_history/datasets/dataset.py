@@ -44,7 +44,7 @@ import hashlib
 
 class Dataset:
 
-    def __init__(self):
+    def __init__(self, **kwargs):
 
         # earliest and latest year in dataset
         self.start_year = min(self.df.m_year)
@@ -62,8 +62,8 @@ class Dataset:
 
         self._df_with_equal_samples_per_5_year_period = None
 
-        self.topics = self.load_topic_data(Path(BASE_PATH, 'data', 'journal_csv',
-                                                'topic_titles_and_terms.csv'))
+        if not kwargs.get('skip_loading_topics'):
+            self.topics = self.load_topic_data()
 
         self.store_aggregate_approach_and_geographical_info_in_df()
 
@@ -167,7 +167,7 @@ class Dataset:
         return deepcopy(self)
 
 
-    def load_topic_data(self, file_path):
+    def load_topic_data(self):
         """
         Return a dict that maps from topic id to a dict with names, gen/spec approaches,
         gen/spec area, and terms prob/frex for all 90 topics
@@ -176,7 +176,18 @@ class Dataset:
         :return: dict
         """
         topics = {}
-        df = pd.read_csv(file_path, encoding='utf-8')
+        df = pd.read_csv(Path(BASE_PATH, 'data', 'journal_csv',
+                              'topic_titles_and_terms.csv'),
+                         encoding='utf-8')
+
+
+        overall_freq_score_path = Path(BASE_PATH, 'data', 'journal_csv',
+                                                'overall_freq_scores.pickle')
+        if overall_freq_score_path.exists():
+            with open(overall_freq_score_path, 'r') as infile:
+                overall_freq_scores = pickle.load(infile)
+        else:
+            pass
 
         for _, row in df.iterrows():
 
