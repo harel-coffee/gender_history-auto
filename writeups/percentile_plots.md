@@ -67,16 +67,16 @@ of men in the bottom deciles has certainly dropped but not vanished. And the num
 bottom deciles has remained stable, if anything, it has increased slightly. 
 
 Part of the explanation probably lies with the fact that we're throwing multiple topics into one pot, 
-namely, in addition to "gender and feminism," this group includes
+namely, in addition to "Women and Gender," this group includes
  "family," "sexuality," and "consumption and consumerism." If these are
 just not the topic someone writes about, they will score low for the general approach.
 
-## Gender and Feminism
+## Women and Gender
 
-So let's switch to "gender and feminism."
+So let's switch to "Women and Gender."
 ![](../visualizations/topic_percentile_plots/61_Gender_and_Feminism.png)
 
-Gender and feminism shows many of the trends of the general approach, just more pronounced. Men
+Women and Gender shows many of the trends of the general approach, just more pronounced. Men
 almost don't exist in the top 1%. Also, we can see publications in the top decile ramping up in the 1970s but top percentile 
 publications really dominate in the 1980s and early 90s. I think we can say that it's during those
 times that gender becomes established as a framework.
