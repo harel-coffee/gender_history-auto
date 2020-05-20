@@ -52,6 +52,13 @@ def topic_percentile_plot(
          (70, 80), (80, 90), (90, 100), (95, 100), (99, 100)
     ]
 
+    percentile_ranges_to_display = [
+        (0, 70),
+        (70, 90),
+        (90, 99),
+        (99, 100)
+    ]
+
     df = dataset.df
 
     # Generate decile data
@@ -294,9 +301,53 @@ def get_1percent_ratios():
     for x in sorted(results.items(), key=lambda x: x[1], reverse=True)[:10]:
         print(x)
 
+def get_percentile_data(topic_id):
 
+    d = JournalsDataset()
+    men = d.copy().filter(author_gender='male')
+    women = d.copy().filter(author_gender='female')
+    years = [i for i in range(d.start_year, d.end_year + 1)]
+    topic_weight_ranges = [
+        (0, 0.001),
+        (0.001, 0.01),
+        (0.01, 0.1),
+        (0.1, 1)
+    ]
+
+    output_df = pd.DataFrame()
+
+    for weight_min, weight_max in topic_weight_ranges:
+        data_men = []
+        data_women = []
+        for year in years:
+            year_men = men.copy().filter(start_year=year, end_year=year)
+            articles_men = len(year_men)
+            year_women = women.copy().filter(start_year=year, end_year=year)
+            articles_women = len(year_women)
+
+            men_articles_in_weight = len(year_men.topic_score_filter(topic_id=topic_id,
+                                     min_topic_weight=weight_min, max_topic_weight=weight_max))
+            women_articles_in_weight = len(year_women.topic_score_filter(topic_id=topic_id,
+                                     min_topic_weight=weight_min, max_topic_weight=weight_max))
+
+            data_men.append(men_articles_in_weight / articles_men)
+            data_women.append(women_articles_in_weight / articles_women)
+
+        data_men_rolling = pd.DataFrame(data_men).rolling(center=True,
+                                                          window=5).mean()[0].tolist()[2:-5]
+        data_women_rolling =  pd.DataFrame(data_women).rolling(center=True,
+                                                           window=5).mean()[0].tolist()[2:-5]
+
+        output_df[f'men_{weight_min}-{weight_max}'] = data_men_rolling
+        output_df[f'women_{weight_min}-{weight_max}'] = data_women_rolling
+
+    output_df['years'] = years[2:-5]
+    topic_name = d.topics[topic_id]['name'].replace(' ', '_')
+    output_df.to_csv(Path(BASE_PATH, 'visualizations', 'plotly_data', f'{topic_name}_percentiles.csv'))
 
 if __name__ == '__main__':
+
+    get_percentile_data(71)
 
 
     # get_1percent_ratios()
@@ -321,19 +372,19 @@ if __name__ == '__main__':
 
     '''
     dataset = JournalsDataset()
-    dataset.get_vocabulary_and_document_term_matrix(max_features=10000, use_frequencies=True,
-                                                    store_in_df=True)
-    dataset.df['womaen'] = dataset.df['women'] + dataset.df['woman']
+    # dataset.get_vocabulary_and_document_term_matrix(max_features=10000, use_frequencies=True,
+    #                                                 store_in_df=True)
+    # dataset.df['womaen'] = dataset.df['women'] + dataset.df['woman']
 
     # embed()
 
 
-    topic_percentile_plot(dataset=dataset, selection_column="gender",
-                          selection_name='term: gender',
-                          filename='term_gender.png')
-    topic_percentile_plot(dataset=dataset, selection_column="she",
-                          selection_name='term: she',
-                          filename='she.png')
+    # topic_percentile_plot(dataset=dataset, selection_column="gender",
+    #                       selection_name='term: gender',
+    #                       filename='term_gender.png')
+    topic_percentile_plot(dataset=dataset, selection_column="topic.71",
+                          selection_name='Women and Gender',
+                          filename='61_percentiles.png')
     # topic_percentile_plot(dataset=dataset, selection_column="gender",
     #                       selection_name='term: gender',
     #                       filename='term_gender.png')

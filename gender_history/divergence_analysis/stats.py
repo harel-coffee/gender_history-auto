@@ -12,21 +12,31 @@ from sklearn.feature_extraction.text import TfidfTransformer
 
 class StatisticalAnalysis:
 
-    def __init__(self, dtm_count_all, dtm_count_plaintiff, dtm_count_defendant, vocabulary):
+    def __init__(self, dtm_count_all, dtm_count_plaintiff, dtm_count_defendant, vocabulary,
+                 skip_tf_transform=False):
+        """
+
+
+        :param dtm_count_all:
+        :param dtm_count_plaintiff:
+        :param dtm_count_defendant:
+        :param vocabulary:
+        :param skip_tf_transform: skips term frequency transformation (use only for dunning)
+        """
 
         self.dtm_count_all = dtm_count_all
         self.dtm_count_plaintiff = dtm_count_plaintiff
         self.dtm_count_defendant = dtm_count_defendant
         self.vocabulary = vocabulary
 
-        # create and store term-frequency normalized document-term-matrices.
-        tf_transformer_sides = TfidfTransformer(use_idf=False)
-        tf_transformer_sides.fit(dtm_count_all)
-        self.dtm_tf_plaintiff = tf_transformer_sides.transform(self.dtm_count_plaintiff.copy())
-        self.dtm_tf_defendant = tf_transformer_sides.transform(self.dtm_count_defendant.copy())
+        if not skip_tf_transform:
+            # create and store term-frequency normalized document-term-matrices.
+            tf_transformer_sides = TfidfTransformer(use_idf=False)
+            tf_transformer_sides.fit(dtm_count_all)
+            self.dtm_tf_plaintiff = tf_transformer_sides.transform(self.dtm_count_plaintiff.copy())
+            self.dtm_tf_defendant = tf_transformer_sides.transform(self.dtm_count_defendant.copy())
 
-
-    def frequency_score(self):
+    def frequency_score(self, return_p_values=False):
         """
         Calculates the frequency score for each term.
 
@@ -87,12 +97,10 @@ class StatisticalAnalysis:
                 defendant_freq = defendant_term_sums[i] / defendant_total
                 frequency_scores[i] = plaintiff_freq / (plaintiff_freq+defendant_freq)
 
-            p = binom_test(plaintiff_term_sums[i], plaintiff_term_sums[i] + defendant_term_sums[i],
-                           p_plaintiff)
-            frequency_scores_p[i] = self._get_p_value_as_string(p)
-
-#            if self.vocabulary[i] == 'want':
-#                from IPython import embed; embed()
+            if return_p_values:
+                p = binom_test(plaintiff_term_sums[i], plaintiff_term_sums[i] + defendant_term_sums[i],
+                               p_plaintiff)
+                frequency_scores_p[i] = self._get_p_value_as_string(p)
 
         return frequency_scores, frequency_scores_p
 

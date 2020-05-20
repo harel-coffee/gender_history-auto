@@ -42,7 +42,7 @@ def topics_and_descendants():
     div = DivergenceAnalysis(d, c1, c2,
                              sub_corpus1_name='has descendants',
                              sub_corpus2_name='no descendants',
-                             analysis_type='topics', sort_by='dunning')
+                             analysis_type='topics', sort_by='frequency_score')
     div.run_divergence_analysis(number_of_terms_or_topics_to_print=10)
 
 def topics_and_descendants_male():

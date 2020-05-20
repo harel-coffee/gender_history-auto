@@ -60,6 +60,8 @@ def plot_bechdel(term='she', dataset=None):
     plt.savefig(Path(BASE_PATH, 'visualizations', 'bechdel', f'bechdel_{term}.png'))
     plt.show()
 
+    return rolling_mean_male, rolling_mean_female, x
+
 
 
 

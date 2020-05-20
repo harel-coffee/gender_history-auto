@@ -14,7 +14,7 @@ For women, the topics are:
 --  ----------------------------------  ----------------  -----------------  -----------  ----------  ----------
 83  (61) Gender and Feminism                 1.20179e+06           0.879186   0.013838    0.041409    0.00569023
 82  (46) Family                         450656                     0.753186   0.0166644   0.0346414   0.0113518
-81  (32) Doctors & Patients             229529                     0.758294   0.00805475  0.0169878   0.00541485
+81  (32) Body History                   229529                     0.758294   0.00805475  0.0169878   0.00541485
 80  (76) Consumption and consumerism    136193                     0.705405   0.00853473  0.0155044   0.00647504
 79  (45) Cultural Turn                   68048.6                   0.600953   0.0216482   0.0292282   0.0194082
 78  (71) Sexuality                       49462.2                   0.628844   0.00918562  0.0134353   0.00792977
@@ -106,7 +106,7 @@ Women:
 --  ------------------------------------------  ----------  -----------------  -----------  ----------  ----------
 83  (61) Gender and Feminism                    132238               0.894352   0.0237381   0.0509479   0.00601836
 82  (46) Family                                  23348               0.761456   0.0113671   0.0194604   0.00609643
-81  (32) Doctors & Patients                      12211.7             0.737454   0.00739005  0.0121149   0.00431309
+81  (32) Body History                            12211.7             0.737454   0.00739005  0.0121149   0.00431309
 80  (45) Cultural Turn                            8433.14            0.601986   0.03108     0.0391042   0.0258544
 79  (76) Consumption and consumerism              8340.54            0.68989    0.00825764  0.0123874   0.00556821
 ```
@@ -195,7 +195,7 @@ for this subset is 2.4% higher than for the overall dataset.
 83  (61) Gender and Feminism                      62129.4            0.903748             0.0245615   0.0111981   0.0463527  0.00493671
 82  (37) France                                   30822.3            0.927801             0.415269    0.00431223  0.0198504  0.00154471
 81  (51) British Early Modern Political History   17556.5            0.796131             0.316925    0.00946408  0.0256796  0.0065759
-80  (32) Doctors & Patients                       14505.3            0.868913             0.110619    0.00372922  0.0133549  0.00201478
+80  (32) Body History                             14505.3            0.868913             0.110619    0.00372922  0.0133549  0.00201478
 79  (79) Legal History                             9910.49           0.695975             0.102904    0.0168315   0.0322458  0.014086
 78  (28) Holocaust                                 7168.05           0.704978             0.0936619   0.0108453   0.0214164  0.00896243
 ```
@@ -213,9 +213,9 @@ Topic 61 (Gender and Feminism). Highest scoring items:
    (1997) Henriette Donner: Under the Cross: Why V.A.D.s Performed the Filthiest Task in the Dirtiest War: Red Cross Women Volunteers, 1914-1918
 ```
 
-Or Doctors and Patients:
+Or Body History:
 ``` 
-Topic 32 (Doctors & Patients). Highest scoring items:
+Topic 32 (Body History). Highest scoring items:
    (2007) Frances Clarke: So Lonesome I Could Die: Nostalgia and Debates over Emotional Control in the Civil War North
    (2001) Cheryl A. Wells: Battle Time: Gender, Modernity, and Confederate Hospitals
    (2003) Darlene Clark Hine: Black Professionals and Race Consciousness: Origins of the Civil Rights Movement, 1890-1950
@@ -262,7 +262,7 @@ topics distinctive for Corpus 1: women. 169 Documents
     topics                               dunning    frequency_score    fs_comp_to_overall    freq both     f women        f men
 --  ---------------------------------  ---------  -----------------  --------------------  -----------  ----------  -----------
 83  (61) Gender and Feminism            4707.4             0.930632             0.0514459   0.00973312  0.0436208   0.00325142
-82  (32) Doctors & Patients              709.345           0.835329             0.0770351   0.0038118   0.0116912   0.00230471
+82  (32) Body History                    709.345           0.835329             0.0770351   0.0038118   0.0116912   0.00230471
 81  (45) Cultural Turn                   469.819           0.699646             0.0986925   0.0111437   0.0213921   0.00918353
 80  (39) Music                           335.222           0.764497             0.164035    0.00372721  0.00889232  0.00273928
 79  (76) Consumption and consumerism     330.561           0.846427             0.141022    0.00158784  0.00507517  0.000920821
@@ -278,7 +278,68 @@ Topic 45 (Cultural Turn). Highest scoring items:
    (2007) Anna Katherine Froula: Soldier Girls: Popular representations of America's women in uniform from World War II to the "War on Terror"
 ```
 
-We definitely need a few more of these analyses, in particular for sexuality but I'm running out 
-of the time and will leave it as is for the moment.
+
+## Gender differences in articles mentioning gender at least 10 times
+
+If we are interested in particular in gender history as opposed to women's history,
+we can create a corpus of articles that mention gender at least 10 times and then compare male
+and female authors within that. 
+
+Sorted by frequency score, that gives us:
+```
+terms distinctive for Corpus 1: male. 93 Documents
+
+     terms          dunning    frequency_score    count both    c male    c female
+---  -----------  ---------  -----------------  ------------  --------  ----------
+226  gay          112.439             0.733779           446       276         170
+225  masculinity  195.755             0.705865          1033       605         428
+224  americans    118.557             0.670073           951       518         433
+223  him          193.019             0.669816          1554       846         708
+222  service      125.784             0.668166          1034       561         473
+221  black        352.21              0.667399          2926      1585        1341
+220  he           507.627             0.637385          6446      3279        3167
+219  united       136.109             0.629315          1964       982         982
+218  his          502.384             0.622519          8132      4007        4125
+217  war          220.302             0.620546          3689      1810        1879
+``` 
+
+For women:
+``` 
+terms distinctive for Corpus 2: female. 174 Documents
+
+    terms                dunning    frequency_score    count both    c male    c female
+--  -----------  ---------------  -----------------  ------------  --------  ----------
+ 0  feminist      -620.737                 0.154205          1588       154        1434
+ 1  feminism      -385.292                 0.180666          1157       133        1024
+ 2  chinese       -414.325                 0.192507          1340       165        1175
+ 3  welfare       -111.759                 0.311054           933       196         737
+ 4  movement      -174.986                 0.32987           1784       401        1383
+ 5  women        -2556.36                  0.340928         29584      6909       22675
+ 6  mothers        -90.0651                0.347158          1132       270         862
+ 7  rights         -92.1136                0.374559          1695       442        1253
+ 8  woman         -207.181                 0.382797          4339      1161        3178
+ 9  home           -99.1389                0.384447          2138       575        1563
+```
+
+Sample articles:
+``` 
+Sample articles of distinctive terms for male
+
+ Term: gay. Highest scoring items:
+   Count gay: 78. (2007) Craig M. Loftin: Unacceptable Mannerisms: Gender Anxieties, Homosexual Activism, and Swish in the United States, 1945-1965
+   Count gay: 51. (1985) George Chauncey: Christian Brotherhood or Sexual Perversion? Homosexual Identities and the Construction of Sexual Boundaries in the World War One Era
+   Count gay: 47. (1988) Martin Bauml Duberman: Reclaiming the Gay Past
+   Count gay: 35. (2005) Daniel Wickberg: Heterosexual White Male: Some Recent Inversions in American Cultural History
+   Count gay: 14. (2000) K. A. Cuordileone: "Politics in an Age of Anxiety": Cold War Political Culture and the Crisis in American Masculinity, 1949-1960
+
+ Term: masculinity. Highest scoring items:
+   Count masculinity: 58. (2007) Robert A. Nye: Western Masculinities in War and Peace
+   Count masculinity: 55. (2004) Joseph S. Alter: Indian Clubs and Colonialism: Hindu Masculinity and Muscular Christianity
+   Count masculinity: 54. (2000) K. A. Cuordileone: "Politics in an Age of Anxiety": Cold War Political Culture and the Crisis in American Masculinity, 1949-1960
+   Count masculinity: 48. (1996) Thomas Miller Klubock: Working-Class Masculinity, Middle-Class Morality, and Labor Politics in the Chilean Copper Mines
+   Count masculinity: 38. (2005) Edward Behrend-Martínez: Manhood and the Neutered Body in Early Modern Spain
+
+```
+
 
 

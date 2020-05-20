@@ -42,17 +42,17 @@ def draw_gender_frequency_scatterplot(
 
     c1 = dataset.copy().filter(author_gender='female')
     c2 = dataset.copy().filter(author_gender='male')
-    div = DivergenceAnalysis(dataset, c1, c2)
-    divergence_df = div.run_divergence_analysis('topics')
+    div = DivergenceAnalysis(dataset, c1, c2, analysis_type='topics')
+    divergence_df = div.run_divergence_analysis(print_results=False)
 
     df_sorted_by_years = dataset.df.sort_values(by='m_year')
 
 
     fig = plt.figure(figsize=(figsize, figsize))
     gs = gridspec.GridSpec(nrows=1,
-                           ncols=2,
+                           ncols=1,
                            figure=fig,
-                           width_ratios=[1, 0.05],
+                           width_ratios=[1],
                            height_ratios=[1],
                            wspace=0.2, hspace=0.05
                            )
@@ -69,7 +69,8 @@ def draw_gender_frequency_scatterplot(
         if isinstance(gen_approach, str) and gen_approach.find('Noise') > -1:
             continue
 
-        x = divergence_df[divergence_df['index'] == topic_id - 1]['frequency_score'].values[0]
+        # embed()
+        x = divergence_df[divergence_df.topic_id == topic_id].iloc[0].frequency_score
         x_coords.append(x)
         y = dataset.df[f'topic.{topic_id}'].mean()
         y_coords.append(y)
@@ -122,27 +123,30 @@ def draw_gender_frequency_scatterplot(
 
     # ax.yaxis.set_minor_locator(MultipleLocator(5))
 
-    ax.scatter(x_coords, y_coords, c=color_codes, s=200, cmap='jet',
-               norm=normalized_cmap)
+    # ax.scatter(x_coords, y_coords, c=color_codes, s=200, cmap='jet',
+    #            norm=normalized_cmap)
+    ax.scatter(x_coords, y_coords, facecolors='#1f77b4', edgecolors='black', s=200)
 
-    lc = LineCollection([], cmap='jet', norm=plt.Normalize(0.0, 1.0))
+    # 1f77b4
 
-    cbar_ax = fig.add_subplot(gs[0, 1])
-    cbar = fig.colorbar(lc,
-                        cax=cbar_ax,
-                        ticks = [0.0, 0.50, 1.0],
-                        fraction=0.03)
-    cbar.ax.set_yticklabels([
-        min(color_codes),
-        int(np.median(np.array(color_codes))),
-        max(color_codes)
-    ])
-    cbar.ax.tick_params(labelsize=14)
+    # lc = LineCollection([], cmap='jet', norm=plt.Normalize(0.0, 1.0))
+
+    # cbar_ax = fig.add_subplot(gs[0, 1])
+    # cbar = fig.colorbar(lc,
+    #                     cax=cbar_ax,
+    #                     ticks = [0.0, 0.50, 1.0],
+    #                     fraction=0.03)
+    # cbar.ax.set_yticklabels([
+    #     min(color_codes),
+    #     int(np.median(np.array(color_codes))),
+    #     max(color_codes)
+    # ])
+    # cbar.ax.tick_params(labelsize=14)
 
     if figsize == 36:
         dpi = 300
     else:
-        dpi = 600
+        dpi = 300
 
     if filename:
         plt.savefig(Path(BASE_PATH, 'visualizations', 'gender_frequency_scatterplots', filename),
@@ -254,9 +258,10 @@ if __name__ == '__main__':
     # draw_scatterplots_of_journals()
 
     dataset = JournalsDataset()
-    dataset.filter(start_year=1950, end_year=1960)
+    # dataset.filter(start_year=1950, end_year=1960)
     draw_gender_frequency_scatterplot(
         dataset,
-        figsize=36, show_labels=True, transparent_image=False,
+        figsize=12, show_labels=False, transparent_image=True,
+        filename='no_color_no_labels.png'
         # filename=f'gfs_labeling_copy{name}.png'
     )

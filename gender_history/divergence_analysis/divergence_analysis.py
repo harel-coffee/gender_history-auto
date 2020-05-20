@@ -9,10 +9,14 @@ from gender_history.datasets.dataset_journals import JournalsDataset
 from gender_history.datasets.dataset_dissertation import DissertationDataset
 from gender_history.divergence_analysis.stats import StatisticalAnalysis
 
+from gender_history.utilities import BASE_PATH
+
 
 
 from scipy.sparse import vstack, csr_matrix
 from IPython import embed
+
+import pickle
 
 import re
 
@@ -26,7 +30,8 @@ class DivergenceAnalysis():
                  sub_corpus2_name: str=None,
                  analysis_type: str = 'terms',
                  sort_by: str='dunning',
-                 compare_to_overall_weights: bool=False):
+                 compare_to_overall_weights: bool=False,
+                 use_default_vocabulary=False):
 
         self.mc = master_corpus
         self.c1 = sub_corpus1
@@ -40,6 +45,7 @@ class DivergenceAnalysis():
         self.analysis_type = analysis_type
         self.sort_by = sort_by
         self.compare_to_overall_weights = compare_to_overall_weights
+        self.use_default_vocabulary = use_default_vocabulary
 
     def run_divergence_analysis(self,
                                 number_of_terms_or_topics_to_print: int=30,
@@ -65,32 +71,50 @@ class DivergenceAnalysis():
 
         return self.output_data_df
 
+    @staticmethod
+    def get_default_vocabulary():
+        """
+        Loads the 10000 most frequent non-stop word terms in the journal dataset
+
+        :return: list
+        """
+
+        vocabulary_path = Path(BASE_PATH, 'data', 'journal_csv', 'default_vocabulary.pickle')
+
+        if not vocabulary_path.exists():
+            print("generating new default vocabulary with 1000 non-stop word terms.")
+            d = JournalsDataset()
+            _, vocabulary = d.get_vocabulary_and_document_term_matrix(
+                max_features=999, exclude_stop_words=True
+            )
+            vocabulary.append('gay')
+            with open(vocabulary_path, 'wb') as outfile:
+                pickle.dump(vocabulary, outfile)
+
+        with open(vocabulary_path, 'rb') as infile:
+            return pickle.load(infile)
+
+    # @profile
     def _initialize_analysis_and_dtms(self):
 
         if self.analysis_type == 'terms':
-            # self.vocabulary = self.mc.get_vocabulary(max_terms=10000,
-            #                                  min_appearances=self.min_appearances_per_term,
-            #                                  include_2grams=True)
-            # self.c1_dtm = self.c1.get_document_term_matrix(vocabulary=self.vocabulary)
-            # self.c2_dtm = self.c2.get_document_term_matrix(vocabulary=self.vocabulary)
+            if self.use_default_vocabulary:
+                self.vocabulary = self.get_default_vocabulary()
+            else:
+                mc_dtm, vocabulary = self.mc.get_vocabulary_and_document_term_matrix(
+                    max_features=10000, exclude_stop_words=True)
+                # only retain up to 1000 words that appear at least 1000 times in the corpus
+                # appear at least 1000 times -> a single article on a topic cannot cause a huge spike
+                # 1000 words -> we're interested in key terms
+                count_sums = np.array(mc_dtm.sum(axis=0)).flatten()
+                assert len(vocabulary) == len(count_sums)
+                count_sorted = sorted([(count_sums[i], vocabulary[i]) for i in range(len(vocabulary))], reverse=True)
+                self.vocabulary = []
+                for count, term in count_sorted:
+                    if (count > 1000 and len(self.vocabulary) < 1000) or term == 'gay':
+                        self.vocabulary.append(term)
 
-            # self.vocabulary = self.mc.get_default_vocabulary(no_terms=10000)
-            mc_dtm, vocabulary = self.mc.get_vocabulary_and_document_term_matrix(
-                max_features=10000, exclude_stop_words=True)
-
-
-            # only retain up to 1000 words that appear at least 1000 times in the corpus
-            # appear at least 1000 times -> a single article on a topic cannot cause a huge spike
-            # 1000 words -> we're interested in key terms
-            count_sums = np.array(mc_dtm.sum(axis=0)).flatten()
-            assert len(vocabulary) == len(count_sums)
-            count_sorted = sorted([(count_sums[i], vocabulary[i]) for i in range(len(vocabulary))], reverse=True)
-            self.vocabulary = []
-            for count, term in count_sorted:
-                if (count > 1000 and len(self.vocabulary) < 1000) or term == 'gay':
-                    self.vocabulary.append(term)
-
-            print(f'Vocabulary length: {len(self.vocabulary)}')
+                print(f'Vocabulary length: {len(self.vocabulary)}')
 
             self.c1_dtm, _ = self.c1.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
             self.c2_dtm, _ = self.c2.get_vocabulary_and_document_term_matrix(vocabulary=self.vocabulary)
@@ -107,8 +131,8 @@ class DivergenceAnalysis():
             # belonging to each topic.
             c1_text_len_arr = np.array(self.c1.df.m_text_len)
             c2_text_len_arr = np.array(self.c2.df.m_text_len)
-            self.c1_dtm = self.c1.get_document_topic_matrix(vocabulary=self.vocabulary)
-            self.c2_dtm = self.c2.get_document_topic_matrix(vocabulary=self.vocabulary)
+            self.c1_dtm = self.c1.get_document_topic_matrix()
+            self.c2_dtm = self.c2.get_document_topic_matrix()
             assert self.c1_dtm.shape[0] == len(c1_text_len_arr)
             assert self.c2_dtm.shape[0] == len(c2_text_len_arr)
             # multiply each dtm row with the number of terms
@@ -127,7 +151,7 @@ class DivergenceAnalysis():
         self.master_dtm = vstack([self.c1_dtm, self.c2_dtm])
 
 
-
+    # @profile
     def _generate_output_data(self):
 
         s = StatisticalAnalysis(self.master_dtm, self.c1_dtm, self.c2_dtm, self.vocabulary)
@@ -141,6 +165,7 @@ class DivergenceAnalysis():
         column_sums_all = np.array(self.master_dtm.sum(axis=0))[0]
         column_sums_c1 = np.array(self.c1_dtm.sum(axis=0))[0]
         column_sums_c2 = np.array(self.c2_dtm.sum(axis=0))[0]
+
 
         if self.analysis_type == 'topics' and self.compare_to_overall_weights:
             d = JournalsDataset()
@@ -271,7 +296,7 @@ class DivergenceAnalysis():
                 print(f'\nTopic {topic_id} ({self.mc.topics[topic_id]["name"]}). Highest scoring items:')
 
             else:
-                column_str = row['term']
+                column_str = row['terms']
                 print(f'\n Term: {column_str}. Highest scoring items:')
 
             for _, row in self.c1.df.sort_values(by=column_str, ascending=False).iloc[:articles_per_term_or_topic].iterrows():
@@ -292,7 +317,7 @@ class DivergenceAnalysis():
                 print(f'\nTopic {topic_id} ({self.mc.topics[topic_id]["name"]}). Highest scoring items:')
 
             else:
-                column_str = row['term']
+                column_str = row['terms']
                 print(f'\n Term: {column_str}. Highest scoring items:')
 
             for _, row in self.c2.df.sort_values(by=column_str, ascending=False).iloc[:articles_per_term_or_topic].iterrows():
@@ -310,21 +335,24 @@ if __name__ == '__main__':
 
     # d = DissertationDataset()
     d = JournalsDataset()
+
+
+
     # d.filter(start_year=1990)
 
     # d.topic_score_filter(31, min_topic_weight=0.1)
     #d.topic_score_filter(21, min_percentile_score=95)
 
     # d.filter(term_filter={'term':'wom[ae]n', 'min_count': 10})
-    # d.filter(term_filter={'term':'gender', 'min_count': 10})
+    d.filter(term_filter={'term':'gender', 'min_count': 10})
 
 
     # d = d.topic_percentile_score_filter(topic_id=61, min_percentile_score=80)
     # d = d.filter(term_filter='childhood')
 
-    # Create two sub-datasets, one for female authors and one for male authors
-    c1 = d.copy().filter(term_filter={'term': 'gender', 'min_count': 10})
-    c2 = d.copy().filter(term_filter={'term': 'women', 'min_count': 10})
+    # # Create two sub-datasets, one for female authors and one for male authors
+    # c1 = d.copy().filter(term_filter={'term': 'gender', 'min_count': 10})
+    # c2 = d.copy().filter(term_filter={'term': 'women', 'min_count': 10})
     #
     # c1 = d.copy().topic_score_filter(71, min_percentile_score=90)
     # c2 = d.copy().topic_score_filter(71, max_percentile_score=89)
@@ -332,13 +360,17 @@ if __name__ == '__main__':
     # c1 = d.copy().filter(term_filter='gay')
     # c2 = d.copy().filter(term_filter='not_gay')
 
+    c1 = d.copy().filter(author_gender='male')
+    c2 = d.copy().filter(author_gender='female')
+
+
     print(len(c1), len(c2), len(d))
 
 
     # Run the divergence analysis
-    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='gender', sub_corpus2_name='women',
-                             analysis_type='topics', sort_by='dunning', compare_to_overall_weights=True)
-    div.run_divergence_analysis(number_of_terms_or_topics_to_print=10)
+    div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='male', sub_corpus2_name='female',
+                             analysis_type='terms', sort_by='dunning', compare_to_overall_weights=True)
+    div.run_divergence_analysis(number_of_terms_or_topics_to_print=100)
 
     div.print_articles_for_top_topics(top_terms_or_topics=10, articles_per_term_or_topic=5)
 
