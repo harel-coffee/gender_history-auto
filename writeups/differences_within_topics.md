@@ -379,3 +379,14 @@ terms distinctive for Corpus 2: 1990-2009. 650 Documents
  8  british      -470.494           0.268411          3475            417           3058  0.0013981      0.000619163    0.00168761
  9  colonial     -451.788           0.295532          4196            566           3630  0.00168818     0.000840399    0.00200328
 ```
+
+Unsurprisingly, articles mentioning "white" a lot are about race: 
+``` 
+ Term: white. Highest scoring items:
+   Count white: 232. (2000) Walter Johnson: The Slave Trader, the White Slave, and the Politics of Racial Determination in the 1850s
+   Count white: 203. (1999) Martha Mabie Gardner: Working on White Womanhood: White Working Women in the San Francisco Anti-Chinese Movement, 1877-1890
+   Count white: 196. (2000) Aline Helg: Black Men, Racial Stereotyping, and Violence in the U.S. South and Cuba at the Turn of the Century
+   Count white: 185. (2001) Mara L. Keire: The Vice Trust: A Reinterpretation of the White Slavery Scare in the United States, 1907-1917
+   Count white: 180. (2005) Jamie J. Fader; Mark J. Stern; Michael B. Katz: The New African American Inequality
+
+```
