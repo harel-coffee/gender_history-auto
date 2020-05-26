@@ -234,13 +234,33 @@ Holocaust:
 ```
 
 
-Or Body History:
+Body History:
 ``` 
    (1979) D. Maier: Nineteenth-Century Asante Medical Practices
    (2007) Frances Clarke: So Lonesome I Could Die: Nostalgia and Debates over Emotional Control in the Civil War North
    (2001) Cheryl A. Wells: Battle Time: Gender, Modernity, and Confederate Hospitals
    (2003) Darlene Clark Hine: Black Professionals and Race Consciousness: Origins of the Civil Rights Movement, 1890-1950
    (1996) Margaret H. Darrow: French Volunteer Nursing and the Myth of War Experience in World War I
+```
+
+Cultural History of the U.S. Civil War:
+``` 
+   (2007) Kate Masur: "A Rare Phenomenon of Philological Vegetation": The Word "Contraband" and the Meanings of Emancipation in the United States
+   (1999) Alice Fahs: The Feminized Civil War: Gender, Northern Popular Literature, and the Memory of the War, 1861-1900
+   (1990) Drew Gilpin Faust: Altars of Sacrifice: Confederate Women and the Narratives of War
+   (2007) Frances Clarke: So Lonesome I Could Die: Nostalgia and Debates over Emotional Control in the Civil War North
+   (1996) Megan J. McClintock: Civil War Pensions and the Reconstruction of Union Families
+``` 
+
+Political Economy:
+```
+   (1990) Susan Pedersen: Gender, Welfare, and Citizenship in Britain during the Great War
+   (1996) Megan J. McClintock: Civil War Pensions and the Reconstruction of Union Families
+   (2003) Margot Canaday: Building a Straight State: Sexuality and Social Citizenship under the 1944 G.I. Bill
+   (2006) Elna C. Green: Protecting Confederate Soldiers and Mothers: Pensions, Gender, and the Welfare State in the U.S. South, a Case Study from Florida
+   (2001) Jacqueline Jones: Federal Power, Southern Power: A Long View, 1860-1940
+
+
 ```
 
 
@@ -255,6 +275,43 @@ topics distinctive for Corpus 1: women. 169 Documents
 81  (45) Cultural Turn                   469.819           0.699646             0.0986925   0.0111437   0.0213921   0.00918353
 80  (39) Music                           335.222           0.764497             0.164035    0.00372721  0.00889232  0.00273928
 79  (76) Consumption and consumerism     330.561           0.846427             0.141022    0.00158784  0.00507517  0.000920821
+```
+
+## Nazi History
+
+``` 
+
+topics distinctive for Corpus 1: women. 119 Documents
+
+    topics                                       dunning    frequency_score    fs_overall    freq both     f women        f men
+--  -----------------------------------------  ---------  -----------------  ------------  -----------  ----------  -----------
+83  (61) Women and Gender                       83002.8            0.885244      0.879186  0.00908895   0.036037    0.00467154
+82  (28) Holocaust                              17004.1            0.713715      0.611316  0.0119317    0.0245779   0.00985868
+81  (54) Witchcraft and Magic                   16556.2            0.750052      0.64804   0.00755377   0.0176843   0.00589313
+80  (77) Classics                               10767.8            0.670738      0.421338  0.0134099    0.0238358   0.0117009
+79  (47) Progressive Era to New Deal             9452.17           0.69508       0.488343  0.00841545   0.0162543   0.00713048
+78  (30) Urban History                           9418.58           0.737488      0.557972  0.00496557   0.0111171   0.00395719
+77  (70) 20th Century British Foreign Policy     7316.55           0.713504      0.290825  0.00514705   0.0105946   0.00425408
+76  (39) Music                                   6589.12           0.632287      0.600461  0.015128     0.0236194   0.0137361
+75  (14) Colonies and Empires                    5850.03           0.641046      0.570176  0.0115537    0.0185772   0.0104023
+74  (9) Natural Resources and the Environment    4795.62           0.864825      0.409526  0.000648723  0.00235791  0.000368549
+
+
+topics distinctive for Corpus 2: men. 838 Documents
+
+    topics                                                 dunning    frequency_score    fs_overall    freq both      f women       f men
+--  ---------------------------------------------------  ---------  -----------------  ------------  -----------  -----------  ----------
+ 0  (82) German Intellectual History                     -28074.9           0.281299       0.250662   0.0442048   0.0189237    0.048349
+ 1  (25) Narratives and Discourses                       -23359.6           0.216264       0.322415   0.0234561   0.00720746   0.0261196
+ 2  (10) Nutrition and Climate                           -15915.5           0.0377944      0.46098    0.0066467   0.000301928  0.00768675
+ 3  (66) German and Austro-Hungarian Diplomatic History  -15380.5           0.333942       0.21653    0.0392809   0.0211818    0.0422477
+ 4  (58) Soviet Union                                     -7495.63          0.278136       0.472853   0.011513    0.00485642   0.0126041
+ 5  (67) Italian Renaissance                              -5918.92          0.199596       0.529866   0.00538857  0.00150259   0.00602557
+ 6  (31) Military History                                 -5783.94          0.336296       0.381601   0.0151529   0.00825116   0.0162842
+ 7  (75) Agricultural History                             -4991.93          0.30247        0.513642   0.00939029  0.00442486   0.0102042
+ 8  (33) Political History (Revolutions)                  -4604.73          0.423009       0.422508   0.0478856   0.0364773    0.0497557
+ 9  (57) Demography                                       -4464.13          0.371661       0.414266   0.0180978   0.0113583    0.0192026
+
 ```
 
 
