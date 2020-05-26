@@ -74,7 +74,7 @@ class DivergenceAnalysis():
     @staticmethod
     def get_default_vocabulary():
         """
-        Loads the 10000 most frequent non-stop word terms in the journal dataset
+        Loads the 1000 most frequent non-stop word terms in the journal dataset
 
         :return: list
         """
@@ -100,6 +100,7 @@ class DivergenceAnalysis():
         if self.analysis_type == 'terms':
             if self.use_default_vocabulary:
                 self.vocabulary = self.get_default_vocabulary()
+
             else:
                 mc_dtm, vocabulary = self.mc.get_vocabulary_and_document_term_matrix(
                     max_features=10000, exclude_stop_words=True)
@@ -212,7 +213,7 @@ class DivergenceAnalysis():
                 datum['topic_id'] = topic_idx
             if self.analysis_type == 'topics' and self.compare_to_overall_weights:
                 r = ddf[ddf.topic_id == topic_idx].iloc[0]
-                datum['fs_comp_to_overall'] = datum['frequency_score'] - r['frequency_score']
+                datum['fs_overall'] = r['frequency_score']
 
 
             data.append(datum)
@@ -240,11 +241,12 @@ class DivergenceAnalysis():
 
         if self.analysis_type == 'terms':
             headers = ['terms', 'dunning', 'frequency_score',
-                       'count both', f'c {self.c1_name}', f'c {self.c2_name}']
+                       'count both', f'c {self.c1_name}', f'c {self.c2_name}',
+                       'freq both', f'f {self.c1_name}', f'f {self.c2_name}']
         else:
             if self.analysis_type == 'topics' and self.compare_to_overall_weights:
                 headers = [f'{self.analysis_type}', 'dunning', 'frequency_score',
-                           'fs_comp_to_overall',
+                           'fs_overall',
                            'freq both', f'f {self.c1_name}', f'f {self.c2_name}']
             else:
                 headers = [f'{self.analysis_type}', 'dunning', 'frequency_score', 'freq both',
@@ -269,6 +271,8 @@ class DivergenceAnalysis():
                 }
         year_df = pd.DataFrame(year_df).transpose()
         print(tabulate(year_df, headers='keys'))
+
+        self.output_data_df.style.format({'freq both': ":.2%"})
 
 
         print(f'\n\n{self.analysis_type} distinctive for Corpus 1: {self.c1_name}. {len(self.c1)} Documents\n')
@@ -369,12 +373,12 @@ if __name__ == '__main__':
 
     # Run the divergence analysis
     div = DivergenceAnalysis(d, c1, c2, sub_corpus1_name='male', sub_corpus2_name='female',
-                             analysis_type='terms', sort_by='dunning', compare_to_overall_weights=True)
+                             analysis_type='terms', sort_by='frequency_score',
+                             compare_to_overall_weights=True)
     div.run_divergence_analysis(number_of_terms_or_topics_to_print=100)
 
     div.print_articles_for_top_topics(top_terms_or_topics=10, articles_per_term_or_topic=5)
 
-    embed()
 
 
 #     d = JournalsDataset(use_equal_samples_dataset=False)

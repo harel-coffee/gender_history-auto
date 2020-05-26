@@ -180,24 +180,27 @@ rhetorically as one of the most obviously male-coded topics.
 But women have also contributed substantially to the topic. 
 
 What we can do is compare topics that men and women write about ONLY in a dataset of the articles 
-that score in the top 5% for the military history topic.
+that score in the top 10% for the military history topic.
 
-That gives us 62 articles by women and 423 by men.
+That gives us 134 articles by women and 830 by men.
 
 That gives us the following topics as over-represented among the female-authored articles.
-Note that fs_comp_to_overall means: frequency score compared to overall frequency score, i.e.
-what is the frequency score within the top 5% military history articles compared to all articles.
-0.24 for Gender and Feminism, for example, means that the gender and feminism frequency score
-for this subset is 2.4% higher than for the overall dataset.
+Note that fs_overall means: frequency score in all articles.
+e.g. in the overall sample, the women and gender frequency score is 0.88. In the war 
+sub-sample, it is 0.90
 ``` 
-    topics                                         dunning    frequency_score    fs_comp_to_overall    freq both    f women       f men
---  -------------------------------------------  ---------  -----------------  --------------------  -----------  ---------  ----------
-83  (61) Gender and Feminism                      62129.4            0.903748             0.0245615   0.0111981   0.0463527  0.00493671
-82  (37) France                                   30822.3            0.927801             0.415269    0.00431223  0.0198504  0.00154471
-81  (51) British Early Modern Political History   17556.5            0.796131             0.316925    0.00946408  0.0256796  0.0065759
-80  (32) Body History                             14505.3            0.868913             0.110619    0.00372922  0.0133549  0.00201478
-79  (79) Legal History                             9910.49           0.695975             0.102904    0.0168315   0.0322458  0.014086
-78  (28) Holocaust                                 7168.05           0.704978             0.0936619   0.0108453   0.0214164  0.00896243
+    topics                                         dunning    frequency_score    fs_overall    freq both     f women       f men
+--  -------------------------------------------  ---------  -----------------  ------------  -----------  ----------  ----------
+83  (61) Women and Gender                         97406.9            0.901918      0.879186   0.00873743  0.0350678   0.00381357
+82  (46) Family                                   18999.2            0.773872      0.753186   0.00623431  0.0154425   0.00451235
+81  (28) Holocaust                                14721.3            0.683299      0.611316   0.0141501   0.0258208   0.0119676
+80  (32) Body History                             14612.5            0.833359      0.758294   0.00260167  0.00798053  0.00159581
+79  (90) Cultural History of the U.S. Civil War   14082.7            0.690494      0.491617   0.0122915   0.0229678   0.0102951
+78  (59) Political Economy                        13657.5            0.700636      0.589033   0.0104491   0.0201914   0.00862729
+77  (50) 20th Century Labor History               13375.7            0.71341       0.542426   0.00872338  0.0175884   0.0070656
+76  (79) Legal History                            10392.5            0.636187      0.593071   0.0203999   0.031909    0.0182476
+75  (40) European Colonization of Asia             8058.22           0.687076      0.633953   0.00736031  0.0135991   0.00619364
+74  (43) Islamic History                           7342.91           0.643686      0.593335   0.012714    0.0203786   0.0112806
 ```
 
 More interesting here are the actual articles behind these topics. 
@@ -205,55 +208,41 @@ More interesting here are the actual articles behind these topics.
 So, among the 62 articles by women in the the top 5% military history, we're now selecting the 
 ones with the highest weight in gender and feminism.
 ```
-Topic 61 (Gender and Feminism). Highest scoring items:
+   (1990) Susan Zeiger: Finding a Cure for War: Women's Politics and the Peace Movement in the 1920s
    (1994) Philippa Levine: "Walking the Streets in a Way No Decent Woman Should": Women Police in World War I
+   (2002) Sharon Block: Rape without Women: Print Culture and the Politicization of Rape, 1765-1815
    (1996) Margaret H. Darrow: French Volunteer Nursing and the Myth of War Experience in World War I
    (1998) Sonya O. Rose: Sex, Citizenship, and the Nation in World War II Britain
-   (1990) Drew Gilpin Faust: Altars of Sacrifice: Confederate Women and the Narratives of War
-   (1997) Henriette Donner: Under the Cross: Why V.A.D.s Performed the Filthiest Task in the Dirtiest War: Red Cross Women Volunteers, 1914-1918
 ```
+
+Family:
+``` 
+   (2012) Jane Turner Censer: Finding the Southern Family in the Civil War
+   (2012) Sarah C. Chambers: The Paternal Obligation to Provide: Political Familialism in Early-Nineteenth-Century Chile
+   (1996) Megan J. McClintock: Civil War Pensions and the Reconstruction of Union Families
+   (2010) Christina Firpo: Crises Of Whiteness And Empire In Colonial Indochina: The Removal Of Abandoned Eurasian Children From The Vietnamese Milieu, 1890-1956
+   (2005) Tammy M. Proctor: Family Ties in the Making of Modern Intelligence
+```
+
+Holocaust:
+``` 
+   (2009) Kirsten Wächter; Judith Keilbach: Photographs, Symbolic Images, and the Holocaust: On the (IM)Possibility of Depicting Historical Truth
+   (1997) Marita Sturken: Reenactment, Fantasy, and the Paranoia of History: Oliver Stone's Docudramas
+   (1998) Julia A. Thomas: Photography, National Identity, and the "Cataract of Times": Wartime Images and the Case of Japan
+   (2001) Denise J. Youngblood: A War Remembered: Soviet Films of the Great Patriotic War
+   (2008) Lara Deeb: Exhibiting the "Just-Lived Past": Hizbullah's Nationalist Narratives in Transnational Political Context
+```
+
 
 Or Body History:
 ``` 
-Topic 32 (Body History). Highest scoring items:
+   (1979) D. Maier: Nineteenth-Century Asante Medical Practices
    (2007) Frances Clarke: So Lonesome I Could Die: Nostalgia and Debates over Emotional Control in the Civil War North
    (2001) Cheryl A. Wells: Battle Time: Gender, Modernity, and Confederate Hospitals
    (2003) Darlene Clark Hine: Black Professionals and Race Consciousness: Origins of the Civil Rights Movement, 1890-1950
    (1996) Margaret H. Darrow: French Volunteer Nursing and the Myth of War Experience in World War I
-   (1997) Henriette Donner: Under the Cross: Why V.A.D.s Performed the Filthiest Task in the Dirtiest War: Red Cross Women Volunteers, 1914-1918
 ```
 
-I think that's a useful illustration of how women write military history different, focusing on
-the role of women, hospitals, and care.
-
-The strength of the legal history topic is also interesting:
-``` 
-Topic 79 (Legal History). Highest scoring items:
-   (1994) Barbara Donagan: Atrocity, War Crime, and Treason in the English Civil War
-   (1985) Elaine Glovka Spencer: Police-Military Relations in Prussia, 1848-1914
-   (1994) Philippa Levine: "Walking the Streets in a Way No Decent Woman Should": Women Police in World War I
-   (2006) Melanie Perreault: "To Fear and to Love Us": Intercultural Violence in the English Atlantic
-   (1995) Gerda W. Ray: From Cossack to Trooper: Manliness, Police Reform, and the State
-```
-
-
-I don't know what to make of France and British Early Modern. Your guesses here are as good as mine.
-
-``` 
-Topic 37 (France). Highest scoring items:
-   (1968) Nuria Sales de Bohigas: Some Opinions on Exemption from Military Service in Nineteenth-Century Europe
-   (1985) Barbara Diefendorf: Prologue to a Massacre: Popular Unrest in Paris, 1557-1572
-   (1996) Margaret H. Darrow: French Volunteer Nursing and the Myth of War Experience in World War I
-   (1993) Joanna Waley-Cohen: China and Western Technology in the Late Eighteenth Century
-   (1984) Mona Ozouf: War and Terror in French Revolutionary Discourse (1792-1794)
-
-Topic 51 (British Early Modern Political History). Highest scoring items:
-   (1964) Lotte Glow: Pym and Parliament: The Methods of Moderation
-   (1994) Barbara Donagan: Atrocity, War Crime, and Treason in the English Civil War
-   (1954) Olive Gee: The British War Office in the Later Years of the American War of Independence
-   (2006) Melanie Perreault: "To Fear and to Love Us": Intercultural Violence in the English Atlantic
-   (1994) Anne McKernan: War, Gender, and Industrial Innovation: Recruiting Women Weavers in Early Nineteenth-Century Ireland
-```
 
 The data for the dissertations looks very similar:
 ``` 
@@ -268,15 +257,6 @@ topics distinctive for Corpus 1: women. 169 Documents
 79  (76) Consumption and consumerism     330.561           0.846427             0.141022    0.00158784  0.00507517  0.000920821
 ```
 
-The theory-heavy cultural turn topic is quite interesting here:
-``` 
-Topic 45 (Cultural Turn). Highest scoring items:
-   (2006) Daniela Baroffio-bota: The female soldier: Mediating promises and problematics of femininity, war, and the nation
-   (2008) Heather Marie Stur: Dragon ladies, gentle warriors, and girls next door: Gender and ideas that shaped the Vietnam War
-   (1992) Regina Marie Sweeney: Harmony and disharmony: French singing and musical entertainment during the Great War
-   (1996) Janet Sledge Kobrin Watson: ACTIVE SERVICE: GENDER, CLASS, AND BRITISH REPRESENTATION OF THE GREAT WAR
-   (2007) Anna Katherine Froula: Soldier Girls: Popular representations of America's women in uniform from World War II to the "War on Terror"
-```
 
 
 ## Gender differences in articles mentioning gender at least 10 times
