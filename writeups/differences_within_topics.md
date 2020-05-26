@@ -203,10 +203,10 @@ sub-sample, it is 0.90
 74  (43) Islamic History                           7342.91           0.643686      0.593335   0.012714    0.0203786   0.0112806
 ```
 
-More interesting here are the actual articles behind these topics. 
+More interesting here are the actual articles behind these topics. Within the top decile for military history,
+these are the articles written by women scoring the highest for:
 
-So, among the 62 articles by women in the the top 5% military history, we're now selecting the 
-ones with the highest weight in gender and feminism.
+Women and Gender
 ```
    (1990) Susan Zeiger: Finding a Cure for War: Women's Politics and the Peace Movement in the 1920s
    (1994) Philippa Levine: "Walking the Streets in a Way No Decent Woman Should": Women Police in World War I
