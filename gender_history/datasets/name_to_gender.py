@@ -2,14 +2,15 @@
 A class-based gender-guesser based on the messy older gender_inference.py
 '''
 
-from pathlib import Path
 import json
-from nameparser import HumanName
-
-from gender_history.datasets.dataset_dissertation import DissertationDataset
+from pathlib import Path
 
 import gender_guesser.detector
 import pandas as pd
+from nameparser import HumanName
+
+from gender_history.datasets.dataset_dissertation import DissertationDataset
+from gender_history.utilities import BASE_PATH
 
 
 class GenderGuesser:
@@ -20,14 +21,18 @@ class GenderGuesser:
         self._gender_guesser_instance = gender_guesser.detector.Detector()
         self._gender_of_name_assigned_by_hand_dict = self.get_hand_assigned_names()
 
-        census_df = pd.read_csv(Path('data', 'gender_inference', 'census_gender.csv'), sep=';')
+        census_df = pd.read_csv(Path(BASE_PATH, 'data', 'gender_inference', 'census_gender.csv'), sep=';')
         self._census_name_to_male_probability = {}
         for _, row in census_df.iterrows():
             self._census_name_to_male_probability[row.firstname] = row.percm
 
         self._handcoded_names_journals = {}
-        for _, row in pd.read_csv(Path('data', 'gender_inference',
-                                       'journals_handcoded_name_to_gender.csv')).iterrows():
+        for _, row in pd.read_csv(Path(
+                BASE_PATH,
+                'data',
+                'gender_inference',
+                'journals_handcoded_name_to_gender.csv')
+        ).iterrows():
             if isinstance(row['last_name'], str):
                 full_name = f'{row["first_name"]} {row["last_name"]}'
             elif isinstance(row['first_name'], str):

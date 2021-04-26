@@ -1,16 +1,13 @@
-from gender_history.datasets.dataset import Dataset
-
+import csv
+import re
 from pathlib import Path
-import pandas as pd
+
 import numpy as np
-
-from gender_history.utilities import BASE_PATH, WORD_SPLIT_REGEX
-
+import pandas as pd
 from IPython import embed
 
-import re
-import csv
-
+from gender_history.datasets.dataset import Dataset
+from gender_history.utilities import BASE_PATH, WORD_SPLIT_REGEX
 
 
 class JournalsDataset(Dataset):
